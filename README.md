@@ -869,20 +869,16 @@ linq20(){
 //c#
 public void Linq21()   
 { 
-    List<Customer> customers = GetCustomerList(); 
-  
-    var first3WAOrders = ( 
-        from c in customers 
-        from o in c.Orders 
-        where c.Region == "WA" 
-        select new { c.CustomerID, o.OrderID, o.OrderDate }) 
-        .Take(3); 
-  
-    Console.WriteLine("First 3 orders in WA:"); 
-    foreach (var order in first3WAOrders) 
-    { 
-        ObjectDumper.Write(order); 
-    } 
+    var customers = GetCustomerList();
+
+    var first3WAOrders = customers
+        .Where(c => c.Region == "WA")
+        .SelectMany(customer => customer.Orders, (customer, order) => new { customer, order })
+        .Select(x => new { x.customer.CustomerID, x.order.OrderID, x.order.OrderDate })
+        .Take(3);
+
+    Console.WriteLine("First 3 orders in WA:");
+    first3WAOrders.ForEach((order) => ObjectDumper.Write(order));
 }
 ```
 ```dart
@@ -949,21 +945,17 @@ linq22(){
 //c#
 public void Linq23()   
 { 
-    List<Customer> customers = GetCustomerList(); 
-  
-    var waOrders = 
-        from c in customers 
-        from o in c.Orders 
-        where c.Region == "WA" 
-        select new { c.CustomerID, o.OrderID, o.OrderDate }; 
-  
-    var allButFirst2Orders = waOrders.Skip(2); 
-  
-    Console.WriteLine("All but first 2 orders in WA:"); 
-    foreach (var order in allButFirst2Orders) 
-    { 
-        ObjectDumper.Write(order); 
-    } 
+    var customers = GetCustomerList();
+
+    var waOrders = customers
+        .Where(c => c.Region == "WA")
+        .SelectMany(customer => customer.Orders, (customer, order) => new { customer, order })
+        .Select(x => new { x.customer.CustomerID, x.order.OrderID, x.order.OrderDate });
+
+    var allButFirst2Orders = waOrders.Skip(2);
+
+    Console.WriteLine("All but first 2 orders in WA:");
+    allButFirst2Orders.ForEach(ObjectDumper.Write);
 }
 ```
 ```dart
@@ -1008,15 +1000,12 @@ linq23(){
 //c#
 public void Linq24() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
-  
-    var firstNumbersLessThan6 = numbers.TakeWhile(n => n < 6); 
-  
-    Console.WriteLine("First numbers less than 6:"); 
-    foreach (var n in firstNumbersLessThan6) 
-    { 
-        Console.WriteLine(n); 
-    } 
+    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+
+    var firstNumbersLessThan6 = numbers.TakeWhile(n => n < 6);
+
+    Console.WriteLine("First numbers less than 6:");
+    firstNumbersLessThan6.ForEach(Console.WriteLine);
 }
 ```
 ```dart
@@ -1043,15 +1032,12 @@ linq24(){
 //c#
 public void Linq25() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
-  
-    var firstSmallNumbers = numbers.TakeWhile((n, index) => n >= index); 
-  
-    Console.WriteLine("First numbers not less than their position:"); 
-    foreach (var n in firstSmallNumbers) 
-    { 
-        Console.WriteLine(n); 
-    } 
+    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+
+    var firstSmallNumbers = numbers.TakeWhile((n, index) => n >= index);
+
+    Console.WriteLine("First numbers not less than their position:");
+    firstSmallNumbers.ForEach(Console.WriteLine);
 }
 ```
 ```dart
@@ -1077,15 +1063,12 @@ linq25(){
 //c#
 public void Linq26() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
-  
-    var allButFirst3Numbers = numbers.SkipWhile(n => n % 3 != 0); 
-  
-    Console.WriteLine("All elements starting from first element divisible by 3:"); 
-    foreach (var n in allButFirst3Numbers) 
-    { 
-        Console.WriteLine(n); 
-    } 
+    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+
+    var allButFirst3Numbers = numbers.SkipWhile(n => n % 3 != 0);
+
+    Console.WriteLine("All elements starting from first element divisible by 3:");
+    allButFirst3Numbers.ForEach(Console.WriteLine);
 }
 ```
 ```dart
@@ -1114,15 +1097,12 @@ linq26(){
 //c#
 public void Linq27() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
-  
-    var laterNumbers = numbers.SkipWhile((n, index) => n >= index); 
-  
-    Console.WriteLine("All elements starting from first element less than its position:"); 
-    foreach (var n in laterNumbers) 
-    { 
-        Console.WriteLine(n); 
-    } 
+    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+
+    var laterNumbers = numbers.SkipWhile((n, index) => n >= index);
+
+    Console.WriteLine("All elements starting from first element less than its position:");
+    laterNumbers.ForEach(Console.WriteLine);
 }
 ```
 ```dart

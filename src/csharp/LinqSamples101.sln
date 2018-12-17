@@ -1,0 +1,31 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "linq-restrictions", "linq-restrictions\linq-restrictions.csproj", "{7E711DE9-B44C-4AA7-B4AF-0518224B409B}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "linq-shared", "linq-shared\linq-shared.shproj", "{8326DE7B-F4BB-4F86-8B5D-440175C2F0D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "linq-projections", "linq-projections\linq-projections.csproj", "{A7A45499-8C49-4B74-91CE-D147C0D76250}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "linq-partitioning", "linq-partitioning\linq-partitioning.csproj", "{85B4306F-5BB5-4E06-B8E5-8B2254E93063}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E711DE9-B44C-4AA7-B4AF-0518224B409B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E711DE9-B44C-4AA7-B4AF-0518224B409B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E711DE9-B44C-4AA7-B4AF-0518224B409B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E711DE9-B44C-4AA7-B4AF-0518224B409B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7A45499-8C49-4B74-91CE-D147C0D76250}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7A45499-8C49-4B74-91CE-D147C0D76250}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7A45499-8C49-4B74-91CE-D147C0D76250}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7A45499-8C49-4B74-91CE-D147C0D76250}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85B4306F-5BB5-4E06-B8E5-8B2254E93063}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85B4306F-5BB5-4E06-B8E5-8B2254E93063}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85B4306F-5BB5-4E06-B8E5-8B2254E93063}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85B4306F-5BB5-4E06-B8E5-8B2254E93063}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

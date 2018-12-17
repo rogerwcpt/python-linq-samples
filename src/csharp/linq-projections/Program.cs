@@ -210,7 +210,6 @@ namespace linq_projections
                             cust.Orders.Select(o => $"Customer #{custIndex + 1}) has an order with OrderID {o.OrderID}"));
 
             ObjectDumper.Write(customerOrders);
-
         }
     }
 }
