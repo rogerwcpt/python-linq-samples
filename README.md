@@ -1206,17 +1206,11 @@ linq28(){
 public void Linq29() 
 { 
     string[] words = { "cherry", "apple", "blueberry" }; 
-  
-    var sortedWords = 
-        from w in words 
-        orderby w.Length 
-        select w; 
-  
+
+    var sortedWords = words.OrderBy(w => w.Length);
+
     Console.WriteLine("The sorted list of words (by length):"); 
-    foreach (var w in sortedWords) 
-    { 
-        Console.WriteLine(w); 
-    } 
+    sortedWords.ForEach(Console.WriteLine);
 }
 ```
 ```dart
@@ -1242,12 +1236,11 @@ linq29(){
 //c#
 public void Linq30() 
 { 
-    string[] words = { "cherry", "apple", "blueberry" };
+    var products = GetProductList();
 
-    var sortedWords = words.OrderBy(w => w);
+    var sortedProducts = products.OrderBy(p => p.ProductName);
 
-    Console.WriteLine("The sorted list of words:");
-    sortedWords.ForEach(Console.WriteLine);
+    ObjectDumper.Write(sortedProducts);
 }
 ```
 ```dart
@@ -1275,9 +1268,9 @@ linq30(){
 public void Linq31() 
 { 
     string[] words = { "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" }; 
-  
-    var sortedWords = words.OrderBy(a => a, new CaseInsensitiveComparer()); 
-  
+
+    var sortedWords = words.OrderBy(a => a, StringComparer.CurrentCultureIgnoreCase); 
+
     ObjectDumper.Write(sortedWords); 
 } 
 ```
@@ -1305,18 +1298,12 @@ linq31(){
 //c#
 public void Linq32() 
 { 
-    double[] doubles = { 1.7, 2.3, 1.9, 4.1, 2.9 }; 
-  
-    var sortedDoubles = 
-        from d in doubles 
-        orderby d descending 
-        select d; 
-  
-    Console.WriteLine("The doubles from highest to lowest:"); 
-    foreach (var d in sortedDoubles) 
-    { 
-        Console.WriteLine(d); 
-    } 
+    double[] doubles = { 1.7, 2.3, 1.9, 4.1, 2.9 };
+
+    var sortedDoubles = doubles.OrderByDescending(d => d);
+
+    Console.WriteLine("The doubles from highest to lowest:");
+    sortedDoubles.ForEach(Console.WriteLine);
 }
 ```
 ```dart
@@ -1378,11 +1365,11 @@ linq33(){
 //c#
 public void Linq34() 
 { 
-    string[] words = { "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" }; 
-  
-    var sortedWords = words.OrderByDescending(a => a, new CaseInsensitiveComparer()); 
-  
-    ObjectDumper.Write(sortedWords); 
+    string[] words = { "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" };
+
+    var sortedWords = words.OrderByDescending(a => a, StringComparer.CurrentCultureIgnoreCase); 
+
+    ObjectDumper.Write(sortedWords);
 } 
 ```
 ```dart
@@ -1409,18 +1396,14 @@ linq34(){
 //c#
 public void Linq35() 
 { 
-    string[] digits = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" }; 
-  
-    var sortedDigits = 
-        from d in digits 
-        orderby d.Length, d 
-        select d; 
-  
-    Console.WriteLine("Sorted digits:"); 
-    foreach (var d in sortedDigits) 
-    { 
-        Console.WriteLine(d); 
-    } 
+    string[] digits = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+
+    var sortedDigits = digits
+        .OrderBy(d => d.Length)
+        .ThenBy(d => d);
+
+    Console.WriteLine("Sorted digits:");
+    sortedDigits.ForEach(Console.WriteLine);
 }
 ```
 ```dart
@@ -1455,9 +1438,9 @@ public void Linq36()
 { 
     string[] words = { "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" }; 
   
-    var sortedWords = 
-        words.OrderBy(a => a.Length) 
-             .ThenBy(a => a, new CaseInsensitiveComparer()); 
+    var sortedWords = words
+            .OrderBy(a => a.Length)
+            .ThenBy(a => a, StringComparer.CurrentCultureIgnoreCase);
   
     ObjectDumper.Write(sortedWords); 
 } 
@@ -1487,12 +1470,11 @@ linq36(){
 public void Linq37() 
 { 
     List<Product> products = GetProductList(); 
-  
-    var sortedProducts = 
-        from p in products 
-        orderby p.Category, p.UnitPrice descending 
-        select p; 
-  
+
+    var sortedProducts = products
+        .OrderBy(p => p.Category)
+        .ThenByDescending(p => p.UnitPrice);
+
     ObjectDumper.Write(sortedProducts); 
 }
 ```
@@ -1526,11 +1508,11 @@ public void Linq38()
 { 
     string[] words = { "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" }; 
   
-    var sortedWords = 
-        words.OrderBy(a => a.Length) 
-             .ThenByDescending(a => a, new CaseInsensitiveComparer()); 
-  
-    ObjectDumper.Write(sortedWords); 
+    var sortedWords = words
+        .OrderBy(a => a.Length)
+        .ThenByDescending(a => a, StringComparer.CurrentCultureIgnoreCase);
+
+    ObjectDumper.Write(sortedWords);
 } 
 ```
 ```dart
@@ -1558,19 +1540,14 @@ linq38(){
 //c#
 public void Linq39() 
 { 
-    string[] digits = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" }; 
-  
-    var reversedIDigits = ( 
-        from d in digits 
-        where d[1] == 'i' 
-        select d) 
-        .Reverse(); 
-  
-    Console.WriteLine("A backwards list of the digits with a second character of 'i':"); 
-    foreach (var d in reversedIDigits) 
-    { 
-        Console.WriteLine(d); 
-    } 
+    string[] digits = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+
+    var reversedIDigits = digits
+        .Where(d => d[1] == 'i')
+        .Reverse();
+
+    Console.WriteLine("A backwards list of the digits with a second character of 'i':");
+    reversedIDigits.ForEach(Console.WriteLine);
 }
 ```
 ```dart
