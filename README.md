@@ -1174,18 +1174,12 @@ caseInsensitiveComparer(a,b) =>
 //c#
 public void Linq28() 
 { 
-    string[] words = { "cherry", "apple", "blueberry" }; 
-  
-    var sortedWords = 
-        from w in words 
-        orderby w 
-        select w; 
-  
-    Console.WriteLine("The sorted list of words:"); 
-    foreach (var w in sortedWords) 
-    { 
-        Console.WriteLine(w); 
-    } 
+    string[] words = { "cherry", "apple", "blueberry" };
+
+    var sortedWords = words.OrderBy(w => w);
+
+    Console.WriteLine("The sorted list of words:");
+    sortedWords.ForEach(Console.WriteLine);
 }
 ```
 ```dart
@@ -1248,14 +1242,12 @@ linq29(){
 //c#
 public void Linq30() 
 { 
-    List<Product> products = GetProductList(); 
-  
-    var sortedProducts = 
-        from p in products 
-        orderby p.ProductName 
-        select p; 
-  
-    ObjectDumper.Write(sortedProducts); 
+    string[] words = { "cherry", "apple", "blueberry" };
+
+    var sortedWords = words.OrderBy(w => w);
+
+    Console.WriteLine("The sorted list of words:");
+    sortedWords.ForEach(Console.WriteLine);
 }
 ```
 ```dart
