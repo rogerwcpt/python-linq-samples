@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>{8326DE7B-F4BB-4F86-8B5D-440175C2F0D5}</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>linq-shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)IEnumerableExtensions.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="$(MSBuildThisFileDirectory)ProgramBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EmptyClass.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Product.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ObjectDumper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestHelper.cs" />
+  </ItemGroup>
+</Project>

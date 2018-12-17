@@ -59,18 +59,12 @@ LINQ - Restriction Operators
 //c#
 public void Linq1() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
-  
-    var lowNums = 
-        from n in numbers 
-        where n < 5 
-        select n; 
-  
-    Console.WriteLine("Numbers < 5:"); 
-    foreach (var x in lowNums) 
-    { 
-        Console.WriteLine(x); 
-    } 
+    var numbers = new int[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+
+    var lowNums = numbers.Where(n => n < 5);
+
+    Console.WriteLine("Numbers < 5:");
+    lowNums.ForEach((x) => Console.WriteLine(x));
 }  
 ```
 ```dart
@@ -99,18 +93,12 @@ linq1(){
 //c#
 public void Linq2() 
 { 
-    List<Product> products = GetProductList(); 
-  
-    var soldOutProducts = 
-        from p in products 
-        where p.UnitsInStock == 0 
-        select p; 
-  
-    Console.WriteLine("Sold out products:"); 
-    foreach (var product in soldOutProducts) 
-    { 
-        Console.WriteLine("{0} is sold out!", product.ProductName); 
-    } 
+    var products = GetProductList();
+
+    var soldOutProducts = products.Where(p => p.UnitsInStock == 0);
+
+    Console.WriteLine("Sold out products:");
+    soldOutProducts.ForEach((x) => Console.WriteLine("{0} is sold out!", x.ProductName));
 } 
 ```
 ```dart
@@ -271,15 +259,10 @@ public void Linq6()
 { 
     int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
   
-    var numsPlusOne = 
-        from n in numbers 
-        select n + 1; 
-  
-    Console.WriteLine("Numbers + 1:"); 
-    foreach (var i in numsPlusOne) 
-    { 
-        Console.WriteLine(i); 
-    } 
+    var numsPlusOne = numbers.Select(n => n + 1);
+
+    Console.WriteLine("Numbers + 1:");
+    numsPlusOne.ForEach((i) => Console.WriteLine(i));
 }
 ```
 ```dart
@@ -437,14 +420,9 @@ public void Linq10()
     int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
     string[] strings = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" }; 
   
-    var digitOddEvens = 
-        from n in numbers 
-        select new { Digit = strings[n], Even = (n % 2 == 0) }; 
-  
-    foreach (var d in digitOddEvens) 
-    { 
-        Console.WriteLine("The digit {0} is {1}.", d.Digit, d.Even ? "even" : "odd"); 
-    } 
+    var digitOddEvens = numbers.Select(n => new { Digit = strings[n], Even = (n % 2 == 0) });
+    
+    digitOddEvens.ForEach((d) => Console.WriteLine("The digit {0} is {1}.", d.Digit, d.Even ? "even" : "odd"));
 }
 ```
 ```dart
@@ -479,16 +457,12 @@ linq10(){
 public void Linq11() 
 { 
     List<Product> products = GetProductList(); 
-  
-    var productInfos = 
-        from p in products 
-        select new { p.ProductName, p.Category, Price = p.UnitPrice }; 
-  
-    Console.WriteLine("Product Info:"); 
-    foreach (var productInfo in productInfos) 
-    { 
-        Console.WriteLine("{0} is in the category {1} and costs {2} per unit.", productInfo.ProductName, productInfo.Category, productInfo.Price); 
-    } 
+
+    var productInfos = products
+      .Select(p => new { p.ProductName, p.Category, Price = p.UnitPrice});
+
+    Console.WriteLine("Product Info:");
+    productInfos.ForEach((productInfo) => Console.WriteLine("{0} is in the category {1} and costs {2} per unit.", productInfo.ProductName, productInfo.Category, productInfo.Price));
 }
 ```
 ```dart
@@ -517,15 +491,12 @@ linq11(){
 //c#
 public void Linq12() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
-  
-    var numsInPlace = numbers.Select((num, index) => new { Num = num, InPlace = (num == index) }); 
-  
-    Console.WriteLine("Number: In-place?"); 
-    foreach (var n in numsInPlace) 
-    { 
-        Console.WriteLine("{0}: {1}", n.Num, n.InPlace); 
-    } 
+    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+
+    var numsInPlace = numbers.Select((num, index) => new { Num = num, InPlace = (num == index) });
+
+    Console.WriteLine("Number: In-place?");
+    numsInPlace.ForEach((n) => Console.WriteLine("{0}: {1}", n.Num, n.InPlace));
 }
 ```
 ```dart
@@ -561,20 +532,15 @@ linq12(){
 //c#
 public void Linq13() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
-    string[] digits = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" }; 
-  
-    var lowNums = 
-        from n in numbers 
-        where n < 5 
-        select digits[n]; 
-  
-    Console.WriteLine("Numbers < 5:"); 
-    foreach (var num in lowNums) 
-    { 
-        Console.WriteLine(num); 
-    } 
-}
+    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+    string[] digits = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+
+    var lowNums = numbers
+        .Where(n => n < 5)
+        .Select(n => digits[n]);
+
+    Console.WriteLine("Numbers < 5:");
+    lowNums.ForEach((num) => Console.WriteLine(num));
 ```
 ```dart
 //dart
@@ -604,20 +570,15 @@ linq13(){
 //c#
 public void Linq14() 
 { 
-    int[] numbersA = { 0, 2, 4, 5, 6, 8, 9 }; 
-    int[] numbersB = { 1, 3, 5, 7, 8 }; 
-  
-    var pairs = 
-        from a in numbersA 
-        from b in numbersB 
-        where a < b 
-        select new { a, b }; 
-  
-    Console.WriteLine("Pairs where a < b:"); 
-    foreach (var pair in pairs) 
-    { 
-        Console.WriteLine("{0} is less than {1}", pair.a, pair.b); 
-    } 
+    int[] numbersA = { 0, 2, 4, 5, 6, 8, 9 };
+    int[] numbersB = { 1, 3, 5, 7, 8 };
+
+    var pairs = numbersA
+        .SelectMany(a => numbersB, (a, b) => new { a, b })
+        .Where(x => x.a < x.b);
+
+    Console.WriteLine("Pairs where a < b:");
+    pairs.ForEach(pair => Console.WriteLine("{0} is less than {1}", pair.a, pair.b));
 }
 ```
 ```dart
@@ -661,15 +622,14 @@ linq14(){
 //c#
 public void Linq15() 
 { 
-    List<Customer> customers = GetCustomerList(); 
-  
-    var orders = 
-        from c in customers 
-        from o in c.Orders 
-        where o.Total < 500.00M 
-        select new { c.CustomerID, o.OrderID, o.Total }; 
-  
-    ObjectDumper.Write(orders); 
+    var customers = GetCustomerList();
+
+    var orders = customers
+        .SelectMany(customer => customer.Orders, (customer, order) => new { customer, order })
+        .Where(x => x.order.Total < 500.00M)
+        .Select(x =>  new { x.customer.CustomerID, x.order.OrderID, x.order.Total });
+
+    ObjectDumper.Write(orders);
 }
 ```
 ```dart
@@ -698,15 +658,14 @@ linq15(){
 //c#
 public void Linq16() 
 { 
-    List<Customer> customers = GetCustomerList(); 
-  
-    var orders = 
-        from c in customers 
-        from o in c.Orders 
-        where o.OrderDate >= new DateTime(1998, 1, 1) 
-        select new { c.CustomerID, o.OrderID, o.OrderDate }; 
-  
-    ObjectDumper.Write(orders); 
+    var customers = GetCustomerList();
+
+    var orders = customers
+        .SelectMany(customer => customer.Orders, (customer, order) => new { customer, order })
+        .Where(x => x.order.OrderDate >= new DateTime(1998, 1, 1))
+        .Select(x => new { x.customer.CustomerID, x.order.OrderID, x.order.OrderDate });
+
+    ObjectDumper.Write(orders);
 }
 ```
 ```dart
@@ -738,11 +697,10 @@ public void Linq17()
 { 
     List<Customer> customers = GetCustomerList(); 
   
-    var orders = 
-        from c in customers 
-        from o in c.Orders 
-        where o.Total >= 2000.0M 
-        select new { c.CustomerID, o.OrderID, o.Total }; 
+    var orders = customers
+        .SelectMany(customer => customer.Orders, (customer, order) => new { customer, order })
+        .Where(x => x.order.Total >= 2000.00M)
+        .Select(x => new { x.customer.CustomerID, x.order.OrderID, x.order.Total });
   
     ObjectDumper.Write(orders); 
 }
@@ -774,18 +732,17 @@ linq17(){
 //c#
 public void Linq18() 
 { 
-    List<Customer> customers = GetCustomerList(); 
-  
-    DateTime cutoffDate = new DateTime(1997, 1, 1); 
-  
-    var orders = 
-        from c in customers 
-        where c.Region == "WA" 
-        from o in c.Orders 
-        where o.OrderDate >= cutoffDate 
-        select new { c.CustomerID, o.OrderID }; 
-  
-    ObjectDumper.Write(orders); 
+    var customers = GetCustomerList();
+
+    DateTime cutoffDate = new DateTime(1997, 1, 1);
+
+    var orders = customers
+        .Where(c => c.Region == "WA")
+        .SelectMany(customer => customer.Orders, (customer, order) => new { customer, order })
+        .Where(x => x.order.OrderDate >= cutoffDate)
+        .Select(x => new { x.customer.CustomerID, x.customer.Region, x.order.OrderID });
+
+    ObjectDumper.Write(orders);
 }
 ```
 ```dart
@@ -829,15 +786,14 @@ linq18(){
 //c#
 public void Linq19() 
 { 
-    List<Customer> customers = GetCustomerList(); 
-  
-    var customerOrders = 
-        customers.SelectMany( 
-            (cust, custIndex) => 
-            cust.Orders.Select(o => "Customer #" + (custIndex + 1) + 
-                                    " has an order with OrderID " + o.OrderID)); 
-  
-    ObjectDumper.Write(customerOrders); 
+    var customers = GetCustomerList();
+
+    var customerOrders =
+            customers.SelectMany(
+                (cust, custIndex) =>
+                    cust.Orders.Select(o => $"Customer #{custIndex + 1}) has an order with OrderID {o.OrderID}"));
+
+    ObjectDumper.Write(customerOrders);
 }
 ```
 ```dart

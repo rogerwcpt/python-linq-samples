@@ -1,0 +1,216 @@
+﻿using System;
+using System.ComponentModel;
+using linqshared;
+using System.Linq;
+using System.Globalization;
+
+namespace linq_projections
+{
+    class Program : ProgramBase
+    {
+        static void Main(string[] args)
+        {
+            //Linq6();
+            //Linq7();
+            //Linq8();
+            //Linq9();
+            //Linq10();
+            //Linq11();
+            //Linq12();
+            //Linq13();
+            //Linq14();
+            //Linq15();
+            //Linq16();
+            //Linq17();
+            //Linq18();
+            Linq19();
+        }
+
+        [Category("Projection Operators")]
+        [Description("This sample uses select to produce a sequence of ints one higher than those in an existing array of ints.")]
+        private static void Linq6()
+        {
+            var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+
+            var numsPlusOne = numbers.Select(n => n + 1);
+
+            Console.WriteLine("Numbers + 1:");
+            numsPlusOne.ForEach((i) => Console.WriteLine(i));
+        }
+
+        [Category("Projection Operators")]
+        [Description("This sample uses select to return a sequence of just the names of a list of products.")]
+        private static void Linq7()
+        {
+            var products = GetProductList();
+
+            var productNames = products.Select(p => p.ProductName);
+
+            Console.WriteLine("Product Names:");
+            productNames.ForEach((productName) => Console.WriteLine(productName));
+        }
+
+        [Category("Projection Operators")]
+        [Description("This sample uses select to produce a sequence of strings representing the text version of a sequence of ints.")]
+        private static void Linq8()
+        {
+            int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+            string[] strings = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+
+            var textNums = numbers.Select(n => strings[n]);
+
+            Console.WriteLine("Number strings:");
+            textNums.ForEach((s) => Console.WriteLine(s));
+        }
+
+        [Category("Projection Operators")]
+        [Description("This sample uses select to produce a sequence of the uppercase and lowercase versions of each word in the original array.")]
+        private static void Linq9()
+        {
+            string[] words = { "aPPLE", "BlUeBeRrY", "cHeRry" };
+
+            var upperLowerWords = words.Select(w => new { Upper = w.ToUpper(), Lower = w.ToLower() });
+            upperLowerWords.ForEach((ul) => Console.WriteLine("Uppercase: {0}, Lowercase: {1}", ul.Upper, ul.Lower));
+        }
+
+        [Category("Projection Operators")]
+        [Description("This sample uses select to produce a sequence containing text representations of digits and whether their length is even or odd.")]
+        private static void Linq10()
+        {
+            int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+            string[] strings = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+
+            var digitOddEvens = numbers.Select(n => new { Digit = strings[n], Even = (n % 2 == 0) });
+            digitOddEvens.ForEach((d) => Console.WriteLine("The digit {0} is {1}.", d.Digit, d.Even ? "even" : "odd"));
+        }
+
+        [Category("Projection Operators")]
+        [Description("This sample uses select to produce a sequence containing some properties of Products, including UnitPrice which is renamed to Price in the resulting type.")]
+        private static void Linq11()
+        {
+            var products = GetProductList();
+
+            var productInfos = products.Select(p => new { p.ProductName, p.Category, Price = p.UnitPrice });
+
+            Console.WriteLine("Product Info:");
+            productInfos.ForEach((productInfo) => Console.WriteLine("{0} is in the category {1} and costs {2} per unit.", productInfo.ProductName, productInfo.Category, productInfo.Price));
+        }
+
+
+        [Category("Projection Operators")]
+        [Description("This sample uses an indexed Select clause to determine if the value of ints in an array match their position in the array.")]
+        private static void Linq12()
+        {
+            int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+
+            var numsInPlace = numbers.Select((num, index) => new { Num = num, InPlace = (num == index) });
+
+            Console.WriteLine("Number: In-place?");
+            numsInPlace.ForEach((n) => Console.WriteLine("{0}: {1}", n.Num, n.InPlace));
+        }
+
+        [Category("Projection Operators")]
+        [Description("This sample combines select and where to make a simple query that returns the text form of each digit less than 5.")]
+        private static void Linq13()
+        {
+            int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+            string[] digits = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+
+            var lowNums = numbers
+                .Where(n => n < 5)
+                .Select(n => digits[n]);
+
+            Console.WriteLine("Numbers < 5:");
+            lowNums.ForEach((num) => Console.WriteLine(num));
+        }
+
+        [Category("Projection Operators")]
+        [Description("This sample uses a compound from clause to make a query that returns all pairs of numbers from both arrays such that the number from numbersA is less than the number from numbersB.")]
+        public static void Linq14()
+        {
+            int[] numbersA = { 0, 2, 4, 5, 6, 8, 9 };
+            int[] numbersB = { 1, 3, 5, 7, 8 };
+
+            var pairs = numbersA
+                .SelectMany(a => numbersB, (a, b) => new { a, b })
+                .Where(x => x.a < x.b);
+
+            Console.WriteLine("Pairs where a < b:");
+            pairs.ForEach(pair => Console.WriteLine("{0} is less than {1}", pair.a, pair.b));
+        }
+
+        [Category("Projection Operators")]
+        [Description("This sample uses a compound from clause to select all orders where the order total is less than 500.00.")]
+        public static void Linq15()
+        {
+            var customers = GetCustomerList();
+
+            var orders = customers
+                .SelectMany(customer => customer.Orders, (customer, order) => new { customer, order })
+                .Where(x => x.order.Total < 500.00M)
+                .Select(x => new { x.customer.CustomerID, x.order.OrderID, x.order.Total });
+
+            ObjectDumper.Write(orders);
+        }
+
+        [Category("Projection Operators")]
+        [Description("This sample uses a compound from clause to select all orders where the order was made in 1998 or later.")]
+        private static void Linq16()
+        {
+            var customers = GetCustomerList();
+
+            var orders = customers
+                .SelectMany(customer => customer.Orders, (customer, order) => new { customer, order })
+                .Where(x => x.order.OrderDate >= new DateTime(1998, 1, 1))
+                .Select(x => new { x.customer.CustomerID, x.order.OrderID, x.order.OrderDate });
+
+            ObjectDumper.Write(orders);
+        }
+
+        [Category("Projection Operators")]
+        [Description("This sample uses a compound from clause to select all orders where the order total is greater than 2000.00 and uses from assignment to avoid requesting the total twice.")]
+        private static void Linq17()
+        {
+            var customers = GetCustomerList();
+
+            var orders = customers
+                .SelectMany(customer => customer.Orders, (customer, order) => new { customer, order })
+                .Where(x => x.order.Total >= 2000.00M)
+                .Select(x => new { x.customer.CustomerID, x.order.OrderID, x.order.Total });
+
+            ObjectDumper.Write(orders);
+        }
+
+        [Category("Projection Operators")]
+        [Description("This sample uses multiple from clauses so that filtering on customers can be done before selecting their orders.  This makes the query more efficient by not selecting and then discarding orders for customers outside of Washington.")]
+        private static void Linq18()
+        {
+            var customers = GetCustomerList();
+
+            DateTime cutoffDate = new DateTime(1997, 1, 1);
+
+            var orders = customers
+                .Where(c => c.Region == "WA")
+                .SelectMany(customer => customer.Orders, (customer, order) => new { customer, order })
+                .Where(x => x.order.OrderDate >= cutoffDate)
+                .Select(x => new { x.customer.CustomerID, x.customer.Region, x.order.OrderID });
+
+            ObjectDumper.Write(orders);
+        }
+
+        [Category("Projection Operators")]
+        [Description("This sample uses an indexed SelectMany clause to select all orders, while referring to customers by the order in which they are returned from the query.")]
+        private static void Linq19()
+        {
+            var customers = GetCustomerList();
+
+            var customerOrders =
+                   customers.SelectMany(
+                       (cust, custIndex) =>
+                            cust.Orders.Select(o => $"Customer #{custIndex + 1}) has an order with OrderID {o.OrderID}"));
+
+            ObjectDumper.Write(customerOrders);
+
+        }
+    }
+}
