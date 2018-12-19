@@ -1697,21 +1697,17 @@ linq40(){
 //c#
 public void Linq41() 
 { 
-    string[] words = { "blueberry", "chimpanzee", "abacus", "banana", "apple", "cheese" }; 
-  
-    var wordGroups = 
-        from w in words 
-        group w by w[0] into g 
-        select new { FirstLetter = g.Key, Words = g }; 
-  
-    foreach (var g in wordGroups) 
-    { 
-        Console.WriteLine("Words that start with the letter '{0}':", g.FirstLetter); 
-        foreach (var w in g.Words) 
-        { 
-            Console.WriteLine(w); 
-        } 
-    } 
+    var words = new []{ "blueberry", "chimpanzee", "abacus", "banana", "apple", "cheese" }; 
+
+    var wordGroups = words
+        .GroupBy(w => w[0])
+        .Select(g => new { FirstLetter = g.Key, Words = g });
+
+    wordGroups.ForEach((g) => 
+    {
+        Console.WriteLine($"Words that start with the letter '{g.FirstLetter}':");
+        g.Words.ForEach(Console.WriteLine);
+    });
 }
 ```
 ```dart
@@ -1776,28 +1772,33 @@ linq42(){
 //c#
 public void Linq43() 
 { 
-    List<Customer> customers = GetCustomerList(); 
-  
-    var customerOrderGroups = 
-        from c in customers 
-        select 
-            new 
-            { 
-                c.CompanyName, 
-                YearGroups = 
-                    from o in c.Orders 
-                    group o by o.OrderDate.Year into yg 
-                    select 
-                        new 
-                        { 
-                            Year = yg.Key, 
-                            MonthGroups = 
-                                from o in yg 
-                                group o by o.OrderDate.Month into mg 
-                                select new { Month = mg.Key, Orders = mg } 
-                        } 
-            }; 
-  
+    var customers = GetCustomerList(); 
+
+    var customerOrderGroups = customers
+        .Select(c => new 
+        {
+            c.CompanyName,
+            YearGroups = 
+            (
+                c.Orders
+                    .GroupBy(y => y.OrderDate.Year)
+                    .Select(YearGroup => new 
+                    {
+                        Year = YearGroup.Key,
+                        MonthGroups = 
+                        (
+                            YearGroup
+                            .GroupBy(m =>  m.OrderDate.Month)
+                            .Select(MonthGroup => new
+                            {
+                                Month = MonthGroup.Key, Orders = MonthGroup
+                            })
+
+                        )
+                    })
+            )
+        });
+        
     ObjectDumper.Write(customerOrderGroups, 3); 
 } 
 ```

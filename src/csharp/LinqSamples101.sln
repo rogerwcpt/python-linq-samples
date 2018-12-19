@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "linq-partitioning", "linq-p
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "linq-ordering", "linq-ordering\linq-ordering.csproj", "{6860BB9E-6A74-4D4E-8D18-AB922034D9D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "linq-grouping", "linq-grouping\linq-grouping.csproj", "{3FA4951F-4FF1-469C-838F-8C467B1EF467}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,5 +35,9 @@ Global
 		{6860BB9E-6A74-4D4E-8D18-AB922034D9D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6860BB9E-6A74-4D4E-8D18-AB922034D9D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6860BB9E-6A74-4D4E-8D18-AB922034D9D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FA4951F-4FF1-469C-838F-8C467B1EF467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FA4951F-4FF1-469C-838F-8C467B1EF467}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FA4951F-4FF1-469C-838F-8C467B1EF467}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FA4951F-4FF1-469C-838F-8C467B1EF467}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

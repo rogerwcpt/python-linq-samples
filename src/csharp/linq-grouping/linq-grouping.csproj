@@ -6,4 +6,5 @@
     <RootNamespace>linq_grouping</RootNamespace>
   </PropertyGroup>
 
+  <Import Project="..\linq-shared\linq-shared.projitems" Label="Shared" Condition="Exists('..\linq-shared\linq-shared.projitems')" />
 </Project>
