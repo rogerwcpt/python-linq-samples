@@ -7,3 +7,6 @@
 .vscode
 bin
 obj
+.idea
+.vs
+tools

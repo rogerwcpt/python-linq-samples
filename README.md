@@ -1,3 +1,33 @@
+### Why the fork?
+
+- Uses the more generally accepted Extension method/lambda syntax, which is similar to Dart
+- The original examples use the SQL / DSL Linq syntax but not all the methods are available , example DISTINCT, FIRST, TAKE and UNION, so you would have to mix the two synaxes
+
+##### Mixed syntax (bad)
+```csharp
+var categoryNames = ( 
+    from p in products 
+    select p.Category) 
+    .Distinct(); 
+```
+- The SQL / DSL Linq syntax is more long winded.
+
+
+##### Lonq winded Linq syntax
+```csharp
+var sortedWords =
+    from w in words
+    orderby w
+    select w;
+```
+
+##### More succinct extension method Linq syntax
+```csharp
+var sortedWords = words
+    .OrderBy(x => x);
+```
+
+
 101 LINQ Samples in Dart
 ========================
 
@@ -1898,15 +1928,12 @@ LINQ - Set Operators
 //c#
 public void Linq46() 
 { 
-    int[] factorsOf300 = { 2, 2, 3, 5, 5 }; 
-  
-    var uniqueFactors = factorsOf300.Distinct(); 
-  
-    Console.WriteLine("Prime factors of 300:"); 
-    foreach (var f in uniqueFactors) 
-    { 
-        Console.WriteLine(f); 
-    } 
+    int[] factorsOf300 = { 2, 2, 3, 5, 5 };
+
+    var uniqueFactors = factorsOf300.Distinct();
+
+    Console.WriteLine("Prime factors of 300:");
+    uniqueFactors.ForEach(Console.WriteLine); 
 }
 ```
 ```dart
@@ -1932,18 +1959,14 @@ linq46(){
 //c#
 public void Linq47() 
 { 
-    List<Product> products = GetProductList(); 
-  
-    var categoryNames = ( 
-        from p in products 
-        select p.Category) 
-        .Distinct(); 
-  
-    Console.WriteLine("Category names:"); 
-    foreach (var n in categoryNames) 
-    { 
-        Console.WriteLine(n); 
-    } 
+    var products = GetProductList();
+
+    var categoryNames = products
+        .Select(p => p.Category)
+        .Distinct();
+
+    Console.WriteLine("Category names:");
+    categoryNames.ForEach(Console.WriteLine);
 }
 ```
 ```dart
@@ -1976,16 +1999,13 @@ linq47(){
 //c#
 public void Linq48() 
 { 
-    int[] numbersA = { 0, 2, 4, 5, 6, 8, 9 }; 
-    int[] numbersB = { 1, 3, 5, 7, 8 }; 
-  
-    var uniqueNumbers = numbersA.Union(numbersB); 
-  
-    Console.WriteLine("Unique numbers from both arrays:"); 
-    foreach (var n in uniqueNumbers) 
-    { 
-        Console.WriteLine(n); 
-    } 
+    int[] numbersA = { 0, 2, 4, 5, 6, 8, 9 };
+    int[] numbersB = { 1, 3, 5, 7, 8 };
+
+    var uniqueNumbers = numbersA.Union(numbersB);
+
+    Console.WriteLine("Unique numbers from both arrays:");
+    uniqueNumbers.ForEach(Console.WriteLine);
 }
 ```
 ```dart
@@ -2019,23 +2039,18 @@ linq48(){
 //c#
 public void Linq49() 
 { 
-    List<Product> products = GetProductList(); 
-    List<Customer> customers = GetCustomerList(); 
-  
-    var productFirstChars = 
-        from p in products 
-        select p.ProductName[0]; 
-    var customerFirstChars = 
-        from c in customers 
-        select c.CompanyName[0]; 
-  
-    var uniqueFirstChars = productFirstChars.Union(customerFirstChars); 
-  
-    Console.WriteLine("Unique first letters from Product names and Customer names:"); 
-    foreach (var ch in uniqueFirstChars) 
-    { 
-        Console.WriteLine(ch); 
-    } 
+    var products = GetProductList();
+    var customers = GetCustomerList();
+
+    var productFirstChars = products
+        .Select(p => p.ProductName[0]);
+    var customerFirstChars = customers
+        .Select(c => c.CompanyName[0]);
+
+    var uniqueFirstChars = productFirstChars.Union(customerFirstChars);
+
+    Console.WriteLine("Unique first letters from Product names and Customer names:");
+    uniqueFirstChars.ForEach(Console.WriteLine);
 }
 ```
 ```dart
@@ -2088,16 +2103,13 @@ linq49(){
 //c#
 public void Linq50() 
 { 
-    int[] numbersA = { 0, 2, 4, 5, 6, 8, 9 }; 
-    int[] numbersB = { 1, 3, 5, 7, 8 }; 
-  
-    var commonNumbers = numbersA.Intersect(numbersB); 
-  
-    Console.WriteLine("Common numbers shared by both arrays:"); 
-    foreach (var n in commonNumbers) 
-    { 
-        Console.WriteLine(n); 
-    } 
+    int[] numbersA = { 0, 2, 4, 5, 6, 8, 9 };
+    int[] numbersB = { 1, 3, 5, 7, 8 };
+
+    var commonNumbers = numbersA.Intersect(numbersB);
+
+    Console.WriteLine("Common numbers shared by both arrays:");
+    commonNumbers.ForEach(Console.WriteLine);
 }
 ```
 ```dart
@@ -2123,23 +2135,18 @@ linq50(){
 //c#
 public void Linq51() 
 { 
-    List<Product> products = GetProductList(); 
-    List<Customer> customers = GetCustomerList(); 
-  
-    var productFirstChars = 
-        from p in products 
-        select p.ProductName[0]; 
-    var customerFirstChars = 
-        from c in customers 
-        select c.CompanyName[0]; 
-  
-    var commonFirstChars = productFirstChars.Intersect(customerFirstChars); 
-  
-    Console.WriteLine("Common first letters from Product names and Customer names:"); 
-    foreach (var ch in commonFirstChars) 
-    { 
-        Console.WriteLine(ch); 
-    } 
+    var products = GetProductList();
+    var customers = GetCustomerList();
+
+    var productFirstChars = products
+        .Select(p => p.ProductName[0]);
+    var customerFirstChars = customers
+        .Select(c => c.CompanyName[0]);
+
+    var commonFirstChars = productFirstChars.Intersect(customerFirstChars);
+
+    Console.WriteLine("Common first letters from Product names and Customer names:");
+    commonFirstChars.ForEach(Console.WriteLine);
 }
 ```
 ```dart
@@ -2187,16 +2194,13 @@ linq51(){
 //c#
 public void Linq52() 
 { 
-    int[] numbersA = { 0, 2, 4, 5, 6, 8, 9 }; 
-    int[] numbersB = { 1, 3, 5, 7, 8 }; 
-  
-    IEnumerable<int> aOnlyNumbers = numbersA.Except(numbersB); 
-  
-    Console.WriteLine("Numbers in first array but not second array:"); 
-    foreach (var n in aOnlyNumbers) 
-    { 
-        Console.WriteLine(n); 
-    } 
+    int[] numbersA = { 0, 2, 4, 5, 6, 8, 9 };
+    int[] numbersB = { 1, 3, 5, 7, 8 };
+
+    var aOnlyNumbers = numbersA.Except(numbersB);
+
+    Console.WriteLine("Numbers in first array but not second array:");
+    aOnlyNumbers.ForEach(Console.WriteLine);
 }
 ```
 ```dart
@@ -2225,23 +2229,18 @@ linq52(){
 //c#
 public void Linq53() 
 { 
-    List<Product> products = GetProductList(); 
-    List<Customer> customers = GetCustomerList(); 
-  
-    var productFirstChars = 
-        from p in products 
-        select p.ProductName[0]; 
-    var customerFirstChars = 
-        from c in customers 
-        select c.CompanyName[0]; 
-  
-    var productOnlyFirstChars = productFirstChars.Except(customerFirstChars); 
-  
-    Console.WriteLine("First letters from Product names, but not from Customer names:"); 
-    foreach (var ch in productOnlyFirstChars) 
-    { 
-        Console.WriteLine(ch); 
-    } 
+    var products = GetProductList();
+    var customers = GetCustomerList();
+
+    var productFirstChars = products
+        .Select(p => p.ProductName[0]);
+    var customerFirstChars = customers
+        .Select(c => c.CompanyName[0]);
+
+    var productOnlyFirstChars = productFirstChars.Except(customerFirstChars);
+
+    Console.WriteLine("First letters from Product names, but not from Customer names:");
+    productOnlyFirstChars.ForEach(Console.WriteLine);
 }
 ```
 ```dart
@@ -2290,19 +2289,17 @@ ofType(List seq, type) =>
 //c#
 public void Linq54() 
 { 
-    double[] doubles = { 1.7, 2.3, 1.9, 4.1, 2.9 }; 
-  
-    var sortedDoubles = 
-        from d in doubles 
-        orderby d descending 
-        select d; 
-    var doublesArray = sortedDoubles.ToArray(); 
-  
-    Console.WriteLine("Every other double from highest to lowest:"); 
-    for (int d = 0; d < doublesArray.Length; d += 2) 
-    { 
-        Console.WriteLine(doublesArray[d]); 
-    } 
+    double[] doubles = { 1.7, 2.3, 1.9, 4.1, 2.9 };
+
+    var sortedDoubles = doubles.OrderByDescending(d => d);
+        
+    var doublesArray = sortedDoubles.ToArray();
+
+    Console.WriteLine("Every other double from highest to lowest:");
+    for (int d = 0; d < doublesArray.Length; d += 2)
+    {
+        Console.WriteLine(doublesArray[d]);
+    }
 }
 ```
 ```dart
@@ -2332,19 +2329,14 @@ linq54(){
 //c#
 public void Linq55() 
 { 
-    string[] words = { "cherry", "apple", "blueberry" }; 
-  
-    var sortedWords = 
-        from w in words 
-        orderby w 
-        select w; 
-    var wordList = sortedWords.ToList(); 
-  
-    Console.WriteLine("The sorted word list:"); 
-    foreach (var w in wordList) 
-    { 
-        Console.WriteLine(w); 
-    } 
+    string[] words = { "cherry", "apple", "blueberry" };
+
+    var sortedWords = words.OrderBy(x => x);
+
+    var wordList = sortedWords.ToList();
+
+    Console.WriteLine("The sorted word list:");
+    wordList.ForEach(Console.WriteLine);
 }
 ```
 ```dart
@@ -2372,14 +2364,16 @@ linq55(){
 //c#
 public void Linq56() 
 { 
-    var scoreRecords = new[] { new {Name = "Alice", Score = 50}, 
-                                new {Name = "Bob"  , Score = 40}, 
-                                new {Name = "Cathy", Score = 45} 
-                            }; 
-  
-    var scoreRecordsDict = scoreRecords.ToDictionary(sr => sr.Name); 
-  
-    Console.WriteLine("Bob's score: {0}", scoreRecordsDict["Bob"]); 
+    var scoreRecords = new[] 
+    { 
+        new {Name = "Alice", Score = 50},
+        new {Name = "Bob"  , Score = 40},
+        new {Name = "Cathy", Score = 45}
+    };
+
+    var scoreRecordsDict = scoreRecords.ToDictionary(sr => sr.Name);
+
+    Console.WriteLine("Bob's score: {0}", scoreRecordsDict["Bob"]);
 }
 ```
 ```dart
@@ -2403,15 +2397,12 @@ linq56(){
 //c#
 public void Linq57() 
 { 
-    object[] numbers = { null, 1.0, "two", 3, "four", 5, "six", 7.0 }; 
-  
-    var doubles = numbers.OfType<double>(); 
-  
-    Console.WriteLine("Numbers stored as doubles:"); 
-    foreach (var d in doubles) 
-    { 
-        Console.WriteLine(d); 
-    } 
+    object[] numbers = { null, 1.0, "two", 3, "four", 5, "six", 7.0 };
+
+    var doubles = numbers.OfType<double>();
+
+    Console.WriteLine("Numbers stored as doubles:");
+    doubles.ForEach(Console.WriteLine);
 }
 ```
 ```dart
@@ -2440,15 +2431,11 @@ LINQ - Element Operators
 //c#
 public void Linq58() 
 { 
-    List<Product> products = GetProductList(); 
- 
-    Product product12 = ( 
-        from p in products 
-        where p.ProductID == 12 
-        select p) 
-        .First(); 
-  
-    ObjectDumper.Write(product12); 
+    var products = GetProductList();
+
+    Product product12 = products.First(p => p.ProductID == 12);
+
+    ObjectDumper.Write(product12);
 }
 ```
 ```dart
@@ -2472,11 +2459,11 @@ linq58(){
 //c#
 public void Linq59() 
 { 
-    string[] strings = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" }; 
-  
-    string startsWithO = strings.First(s => s[0] == 'o'); 
-  
-    Console.WriteLine("A string starting with 'o': {0}", startsWithO); 
+    string[] strings = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+
+    string startsWithO = strings.First(s => s.StartsWith('o'));
+
+    Console.WriteLine("A string starting with 'o': {0}", startsWithO);
 }
 ```
 ```dart
@@ -2500,7 +2487,7 @@ public void Linq61()
 { 
     int[] numbers = { }; 
   
-    int firstNumOrDefault = numbers.FirstOrDefault(); 
+    var firstNumOrDefault = numbers.FirstOrDefault(); 
   
     Console.WriteLine(firstNumOrDefault); 
 }
@@ -2524,11 +2511,11 @@ linq61(){
 //c#
 public void Linq62() 
 { 
-    List<Product> products = GetProductList(); 
-  
-    Product product789 = products.FirstOrDefault(p => p.ProductID == 789); 
- 
-    Console.WriteLine("Product 789 exists: {0}", product789 != null); 
+    var products = GetProductList();
+
+    var product789 = products.FirstOrDefault(p => p.ProductID == 789);
+
+    Console.WriteLine("Product 789 exists: {0}", product789 != null);
 }
 ```
 ```dart
@@ -2550,15 +2537,13 @@ linq62(){
 //c#
 public void Linq64() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
-  
-    int fourthLowNum = ( 
-        from n in numbers 
-        where n > 5 
-        select n) 
-        .ElementAt(1);  // second number is index 1 because sequences use 0-based indexing 
- 
-    Console.WriteLine("Second number > 5: {0}", fourthLowNum); 
+    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+
+    var fourthLowNum = numbers
+        .Where(num => num > 5)
+        .ElementAt(1);
+
+    Console.WriteLine("Second number > 5: {0}", fourthLowNum);
 }
 ```
 ```dart
