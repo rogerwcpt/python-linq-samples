@@ -21,9 +21,9 @@ namespace linq_quantifiers
                        contain the substring 'ei'.")]
         static void Linq67()
         {
-            string[] words = { "believe", "relief", "receipt", "field" };
+            var words = new []{ "believe", "relief", "receipt", "field" };
 
-            bool iAfterE = words.Any(w => w.Contains("ei"));
+            var iAfterE = words.Any(w => w.Contains("ei"));
 
             Console.WriteLine($"There is a word in the list that contains 'ei': {iAfterE}");
         }
@@ -47,16 +47,15 @@ namespace linq_quantifiers
         [Description("This sample uses All to determine whether an array contains only odd numbers.")]
         static void Linq70()
         {
-            int[] numbers = { 1, 11, 3, 19, 41, 65, 19 };
+            var numbers = new [] { 1, 11, 3, 19, 41, 65, 19 };
 
-            bool onlyOdd = numbers.All(n => n % 2 == 1);
+            var onlyOdd = numbers.All(n => n % 2 == 1);
 
             Console.WriteLine($"The list contains only odd numbers: {onlyOdd}");
         }
 
         [Category("Quantifiers")]
-        [Description(@"This sample uses All to return a grouped a list of products only for categories
-                       that have all of their products in stock.")]
+        [Description("This sample uses All to return a grouped a list of products only for categories that have all of their products in stock.")]
         static void Linq72()
         {
             var products = GetProductList();

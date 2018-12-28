@@ -68,7 +68,7 @@ namespace linq_miscellaneous
 
             var match = wordsA.SequenceEqual(wordsB);
 
-            Console.WriteLine("The sequences match: {0}", match);
+            Console.WriteLine($"The sequences match: {match}");
         }          
 }
 }

@@ -36,7 +36,7 @@ namespace linq_aggregate
         [Description("This sample uses Count to get the number of unique prime factors of 300.")]
         static void Linq73()
         {
-            int[] primeFactorsOf300 = { 2, 2, 3, 5, 5 };
+            var primeFactorsOf300 = new [] { 2, 2, 3, 5, 5 };
 
             var uniqueFactors = primeFactorsOf300.Distinct().Count();
 
@@ -47,9 +47,9 @@ namespace linq_aggregate
         [Description("This sample uses Count to get the number of odd ints in the array.")]
         static void Linq74()
         {
-            int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+            var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
-            int oddNumbers = numbers.Count(n => n % 2 == 1);
+            var oddNumbers = numbers.Count(n => n % 2 == 1);
 
             Console.WriteLine($"There are {oddNumbers} odd numbers in the list.");
         }
@@ -83,9 +83,9 @@ namespace linq_aggregate
         [Description("This sample uses Sum to add all the numbers in an array.")]
         static void Linq78()
         {
-            int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+            var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
-            double numSum = numbers.Sum();
+            var numSum = numbers.Sum();
 
             Console.WriteLine($"The sum of the numbers is {numSum}.");
         }
@@ -94,9 +94,9 @@ namespace linq_aggregate
         [Description("This sample uses Sum to get the total number of characters of all words in the array.")]
         static void Linq79()
         {
-            string[] words = { "cherry", "apple", "blueberry" };
+            var  words = new [] { "cherry", "apple", "blueberry" };
 
-            double totalChars = words.Sum(w => w.Length);
+            var totalChars = words.Sum(w => w.Length);
 
             Console.WriteLine($"There are a total of {totalChars} characters in these words.");
         }
@@ -118,9 +118,9 @@ namespace linq_aggregate
         [Description("This sample uses Min to get the lowest number in an array.")]
         static void Linq81()
         {
-            int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+            var numbers = new []{ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
-            int minNum = numbers.Min();
+            var minNum = numbers.Min();
 
             Console.WriteLine($"The minimum number is {minNum}.");
         } 
@@ -129,7 +129,7 @@ namespace linq_aggregate
         [Description("This sample uses Min to get the length of the shortest word in an array.")]
         static void Linq82()
         {
-            string[] words = { "cherry", "apple", "blueberry" };
+            var words = new [] { "cherry", "apple", "blueberry" };
 
             var shortestWord = words.Min(w => w.Length);
 
@@ -170,9 +170,9 @@ namespace linq_aggregate
         [Description("This sample uses Max to get the highest number in an array. Note that the method returns a single value.")]
         static void Linq85()
         {
-            int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+            var numbers = new []{ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
-            int maxNum = numbers.Max();
+            var maxNum = numbers.Max();
 
             Console.WriteLine($"The maximum number is {maxNum}.");
         }
@@ -181,9 +181,9 @@ namespace linq_aggregate
         [Description("This sample uses Max to get the length of the longest word in an array.")]
         static void Linq86()
         {
-            string[] words = { "cherry", "apple", "blueberry" };
+            var words = new [] { "cherry", "apple", "blueberry" };
 
-            int longestLength = words.Max(w => w.Length);
+            var longestLength = words.Max(w => w.Length);
 
             Console.WriteLine($"The longest word is {longestLength} characters long.");
         }
@@ -222,7 +222,7 @@ namespace linq_aggregate
         [Description("This sample uses Average to get the average of all numbers in an array.")]
         static void Linq89()
         {
-            int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+            var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
             var averageNum = numbers.Average();
 
@@ -230,58 +230,58 @@ namespace linq_aggregate
         }
 
 
-            [Category("Aggregate Operators")]
-            [Description("This sample uses Average to get the average length of the words in the array.")]
-            static void Linq90()
-            {
-                string[] words = { "cherry", "apple", "blueberry" };
+        [Category("Aggregate Operators")]
+        [Description("This sample uses Average to get the average length of the words in the array.")]
+        static void Linq90()
+        {
+            var words = new [] { "cherry", "apple", "blueberry" };
 
-                double averageLength = words.Average(w => w.Length);
+            var averageLength = words.Average(w => w.Length);
 
-                Console.WriteLine($"The average word length is {averageLength} characters.");
-            }
+            Console.WriteLine($"The average word length is {averageLength} characters.");
+        }
 
-            [Category("Aggregate Operators")]
-            [Description("This sample uses Average to get the average price of each category's products.")]
-            static void Linq91()
-            {
-                var  products = GetProductList();
+        [Category("Aggregate Operators")]
+        [Description("This sample uses Average to get the average price of each category's products.")]
+        static void Linq91()
+        {
+            var  products = GetProductList();
 
-                var categories = products
-                    .GroupBy(prod => prod.Category)
-                    .Select(prodGroup => new { Category = prodGroup.Key, AveragePrice = prodGroup.Average(p => p.UnitPrice) });
+            var categories = products
+                .GroupBy(prod => prod.Category)
+                .Select(prodGroup => new { Category = prodGroup.Key, AveragePrice = prodGroup.Average(p => p.UnitPrice) });
 
-                ObjectDumper.Write(categories);
-            }
+            ObjectDumper.Write(categories);
+        }
 
-            [Category("Aggregate Operators")]
-            [Description("This sample uses Aggregate to create a running product on the array that calculates the total product of all elements.")]
-            static void Linq92()
-            {
-                double[] doubles = { 1.7, 2.3, 1.9, 4.1, 2.9 };
+        [Category("Aggregate Operators")]
+        [Description("This sample uses Aggregate to create a running product on the array that calculates the total product of all elements.")]
+        static void Linq92()
+        {
+            var doubles = new [] { 1.7, 2.3, 1.9, 4.1, 2.9 };
 
-                var product = doubles.Aggregate((runningProduct, nextFactor) => runningProduct * nextFactor);
+            var product = doubles.Aggregate((runningProduct, nextFactor) => runningProduct * nextFactor);
 
-                Console.WriteLine($"Total product of all numbers: {product}");
-            }
+            Console.WriteLine($"Total product of all numbers: {product}");
+        }
 
-            [Category("Aggregate Operators")]
-            [Description(@"This sample uses Aggregate to create a running account balance that
-                         subtracts each withdrawal from the initial balance of 100, as long as
-                         the balance never drops below 0.")]
-            static void Linq93()
-            {
-                double startBalance = 100.0;
+        [Category("Aggregate Operators")]
+        [Description(@"This sample uses Aggregate to create a running account balance that
+                     subtracts each withdrawal from the initial balance of 100, as long as
+                     the balance never drops below 0.")]
+        static void Linq93()
+        {
+            var startBalance = 100.0;
 
-                int[] attemptedWithdrawals = { 20, 10, 40, 50, 10, 70, 30 };
+            var attemptedWithdrawals = new []{ 20, 10, 40, 50, 10, 70, 30 };
 
-                var endBalance = attemptedWithdrawals
-                    .Aggregate(startBalance, 
-                               (balance, nextWithdrawal) =>
-                                ((nextWithdrawal <= balance) ? (balance - nextWithdrawal) : balance));
+            var endBalance = attemptedWithdrawals
+                .Aggregate(startBalance, 
+                           (balance, nextWithdrawal) =>
+                            ((nextWithdrawal <= balance) ? (balance - nextWithdrawal) : balance));
 
-                Console.WriteLine($"Ending balance: {endBalance}");
-            }           
+            Console.WriteLine($"Ending balance: {endBalance}");
+        }           
 
     }
 }

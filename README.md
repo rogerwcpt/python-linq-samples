@@ -82,8 +82,28 @@ The samples below mirrors the C# LINQ samples layout with the names of the top-l
 ||`OfType`||Custom [ofType](#dart-utils-added-2) utility added|
 |**Element**|`First`|`first`||
 ||`First(lambda)`|`firstWhere(lambda)`||
-||`FirstOrDefault`|`firstWhere(lamba, default)`|
+||`FirstOrDefault`|`firstWhere(lambda, default)`|
 ||`ElementAt`|`elementAt`||
+|**Generation**|`Enumerable.Range`||Custom [range](#dart-utils-added-3) utility added|
+||`Enumerable.Repeat`|`List.filled`||
+|**Quantifiers**|`Any`|`any`||
+||`All`|`every`||
+|**Aggregate**|`Count`|`length`||
+||`Count(lamda)`|`where(lambda).length`||
+||`Sum`||Custom [sum](#dart-utils-added-4) utility  added|
+||`Min`||Custom [min](#dart-utils-added-4) utility  added|
+||`Max`||Custom [max](#dart-utils-added-4) utility  added|
+||`Avg`||Custom [avg](#dart-utils-added-4) utility  added|
+||`Sum(lambda)`||Custom [sum](#dart-utils-added-4) utility  added|
+||`Min(lambda)`||Custom [min](#dart-utils-added-4) utility  added|
+||`Max(lambda)`||Custom [max](#dart-utils-added-4) utility  added|
+||`Avg(lambda)`||Custom [avg](#dart-utils-added-4) utility  added|
+||`Aggregate`|reduce||
+||`Aggregate(seed)`|fold||
+|**Miscellaneous**|`Concat`||Custom [concat](#dart-utils-added-5) utility  added|
+||`SequenceEqual`|SequenceEqual|||Custom [seqEq](#dart-utils-added-5) utility  added|
+|**Join**|Join||Custom [join](#dart-utils-added-6) utility  added|
+||GroupJoin||Custom [joinGroup](#dart-utils-added-6) utility  added|
 
 #### Source
 - [Restriction Operators](#linq1-where---simple-1)
@@ -110,22 +130,22 @@ The samples below mirrors the C# LINQ samples layout with the names of the top-l
 - [Element Operators](#linq---element-operators)
   - [Dart](bin/linq-elementoperations.dart)
   - [C#](src/csharp/linq-element/Program.cs)
-- Generation Operators
+- [Generation Operators](#linq---generation-operators)
   - [Dart](bin/linq-generationoperations.dart)
   - [C#](src/csharp/linq-generation/Program.cs)
-- Quantifiers
+- [Quantifiers](#linq---quantifiers)
   - [Dart](bin/linq-quantifiers.dart)
   - [C#](src/csharp/linq-quantifiers/Program.cs)
-- Aggregate Operators
+- [Aggregate Operators](#linq---aggregate-operators)
   - [Dart](bin/linq-aggregateoperations.dart)
   - [C#](src/csharp/linq-aggregate/Program.cs)
-- Miscellaneous Operators
+- [Miscellaneous Operators](#linq---miscellaneous-operators)
   - [Dart](bin/linq-miscellaneousoperations.dart)
   - [C#](src/csharp/linq-miscellaneous/Program.cs)
-- Query Execution
+- [Query Execution](#linq---query-execution)
   - [Dart](bin/linq-queryexecution.dart)
   - [C#](src/csharp/linq-query/Program.cs)
-- Join Operators
+- [Join Operators](#linq---join-operators)
   - [Dart](bin/linq-joinoperators.dart)
   - [C#](src/csharp/linq-join/Program.cs)
 
@@ -2675,9 +2695,9 @@ LINQ - Quantifiers
 //c#
 public void Linq67() 
 { 
-    string[] words = { "believe", "relief", "receipt", "field" };
+    var words = new []{ "believe", "relief", "receipt", "field" };
 
-    bool iAfterE = words.Any(w => w.Contains("ei"));
+    var iAfterE = words.Any(w => w.Contains("ei"));
 
     Console.WriteLine($"There is a word in the list that contains 'ei': {iAfterE}");
 }
@@ -2732,9 +2752,9 @@ linq69(){
 //c#
 public void Linq70() 
 {  
-    int[] numbers = { 1, 11, 3, 19, 41, 65, 19 };
+    var numbers = new [] { 1, 11, 3, 19, 41, 65, 19 };
 
-    bool onlyOdd = numbers.All(n => n % 2 == 1);
+    var onlyOdd = numbers.All(n => n % 2 == 1);
 
     Console.WriteLine($"The list contains only odd numbers: {onlyOdd}");
 }
@@ -2809,9 +2829,9 @@ avg(Iterable seq) => sum(seq) / seq.length;
 //c#
 public void Linq73() 
 { 
-    int[] primeFactorsOf300 = { 2, 2, 3, 5, 5 };
+    var primeFactorsOf300 = new [] { 2, 2, 3, 5, 5 };
 
-    int uniqueFactors = primeFactorsOf300.Distinct().Count();
+    var uniqueFactors = primeFactorsOf300.Distinct().Count();
 
     Console.WriteLine($"There are {uniqueFactors} unique prime factors of 300.");
 }
@@ -2835,9 +2855,9 @@ linq73(){
 //c#
 public void Linq74() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+    var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
-    int oddNumbers = numbers.Count(n => n % 2 == 1);
+    var oddNumbers = numbers.Count(n => n % 2 == 1);
 
     Console.WriteLine($"There are {oddNumbers} odd numbers in the list.");
 }
@@ -2932,9 +2952,9 @@ linq77(){
 //c#
 public void Linq78() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+    var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
-    double numSum = numbers.Sum();
+    var numSum = numbers.Sum();
 
     Console.WriteLine($"The sum of the numbers is {numSum}.");
 }
@@ -2958,9 +2978,9 @@ linq78(){
 //c#
 public void Linq79() 
 { 
-    string[] words = { "cherry", "apple", "blueberry" };
+    var  words = new [] { "cherry", "apple", "blueberry" };
 
-    double totalChars = words.Sum(w => w.Length);
+    var totalChars = words.Sum(w => w.Length);
 
     Console.WriteLine($"There are a total of {totalChars} characters in these words.");
 }
@@ -3020,7 +3040,7 @@ linq80(){
 //c#
 public void Linq81() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+    var numbers = new []{ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
     var minNum = numbers.Min();
 
@@ -3046,7 +3066,7 @@ linq81(){
 //c#
 public void Linq82() 
 { 
-    string[] words = { "cherry", "apple", "blueberry" };
+    var words = new [] { "cherry", "apple", "blueberry" };
 
     var shortestWord = words.Min(w => w.Length);
 
@@ -3151,9 +3171,9 @@ linq84(){
 //c#
 public void Linq85() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+    var numbers = new []{ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
-    int maxNum = numbers.Max();
+    var maxNum = numbers.Max();
 
     Console.WriteLine($"The maximum number is {maxNum}.");
 }
@@ -3177,12 +3197,11 @@ linq85(){
 //c#
 public void Linq86() 
 { 
-    int[] primeFactorsOf300 = { 2, 2, 3, 5, 5 };
+    var words = new [] { "cherry", "apple", "blueberry" };
 
-    var uniqueFactors = primeFactorsOf300.Distinct().Count();
+    var longestLength = words.Max(w => w.Length);
 
-    Console.WriteLine($"There are {uniqueFactors} unique prime factors of 300.");
-}
+    Console.WriteLine($"The longest word is {longestLength} characters long.");}
 ```
 ```dart
 //dart
@@ -3282,7 +3301,7 @@ linq88(){
 //c#
 public void Linq89() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+    var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
     var averageNum = numbers.Average();
 
@@ -3308,9 +3327,9 @@ linq89(){
 //c#
 public void Linq90() 
 { 
-    string[] words = { "cherry", "apple", "blueberry" };
+    var words = new [] { "cherry", "apple", "blueberry" };
 
-    double averageLength = words.Average(w => w.Length);
+    var averageLength = words.Average(w => w.Length);
 
     Console.WriteLine($"The average word length is {averageLength} characters.");
 }
@@ -3370,7 +3389,7 @@ linq91(){
 //c#
 public void Linq92() 
 { 
-    double[] doubles = { 1.7, 2.3, 1.9, 4.1, 2.9 };
+    var doubles = new [] { 1.7, 2.3, 1.9, 4.1, 2.9 };
 
     var product = doubles.Aggregate((runningProduct, nextFactor) => runningProduct * nextFactor);
 
@@ -3396,9 +3415,9 @@ linq92(){
 //c#
 public void Linq93() 
 { 
-    double startBalance = 100.0;
+    var startBalance = 100.0;
 
-    int[] attemptedWithdrawals = { 20, 10, 40, 50, 10, 70, 30 };
+    var attemptedWithdrawals = new []{ 20, 10, 40, 50, 10, 70, 30 };
 
     var endBalance = attemptedWithdrawals
         .Aggregate(startBalance, 
@@ -3568,7 +3587,7 @@ public void Linq97()
 
     var match = wordsA.SequenceEqual(wordsB);
 
-    Console.WriteLine("The sequences match: {0}", match);
+    Console.WriteLine($"The sequences match: {match}");
 }
 ```
 ```dart
