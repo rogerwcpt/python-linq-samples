@@ -56,8 +56,12 @@ To see the full output of all the examples, run [play.dart](https://github.com/d
 
 The samples below mirrors the C# LINQ samples layout with the names of the top-level Dart methods matching their corresponding C# examples.
 
-#### [LINQ - Restriction Operators](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-restrictions.dart) / [MSDN C#](http://code.msdn.microsoft.com/LINQ-Restriction-Operators-b15d29ca)
-#### [LINQ - Projection Operators](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-projections.dart) / [MSDN C#](http://code.msdn.microsoft.com/LINQ-to-DataSets-09787825)
+#### Source
+- Restriction Operators (Filter/Where)
+  -  [Dart](bin/linq-restrictions.dart) 
+  -  [C#](src/csharp/linq-restrictions/Program.cs)
+- Projection Operators
+  - [Dart](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-projections.dart) / [MSDN C#]- (http://code.msdn.microsoft.com/LINQ-to-DataSets-09787825)
 #### [LINQ - Partitioning Operators](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-partitioning.dart) / [MSDN C#](http://code.msdn.microsoft.com/LINQ-Partitioning-Operators-c68aaccc)
 #### [LINQ - Ordering Operators](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-ordering.dart) / [MSDN C#](http://code.msdn.microsoft.com/SQL-Ordering-Operators-050af19e)
 #### [LINQ - Grouping Operators](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-grouping.dart) / [MSDN C#](http://code.msdn.microsoft.com/LINQ-to-DataSets-Grouping-c62703ea)
@@ -67,7 +71,7 @@ The samples below mirrors the C# LINQ samples layout with the names of the top-l
 #### [LINQ - Generation Operators](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-generationoperations.dart) / [MSDN C#](http://code.msdn.microsoft.com/LINQ-Generation-Operators-8a3fbff7)
 #### [LINQ - Quantifiers](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-quantifiers.dart) / [MSDN C#](http://code.msdn.microsoft.com/LINQ-Quantifiers-f00e7e3e)
 #### [LINQ - Aggregate Operators](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-aggregateoperations.dart) / [MSDN C#](http://code.msdn.microsoft.com/LINQ-Aggregate-Operators-c51b3869)
-#### [LINQ - Miscellaneous Operators](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-miscellaneousoperations.dart) / [MSDN C#](http://code.msdn.microsoft.com/LINQ-Miscellaneous-6b72bb2a)
+#### [LINQ - Miscellaneous Operators](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-miscellaneousoperations.dart) / [MSDN C#](http://code.msdn.microsoft.com/LINQ-Miscellandoteous-6b72bb2a)
 #### [LINQ - Query Execution](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-queryexecution.dart) / [MSDN C#](http://code.msdn.microsoft.com/LINQ-Query-Execution-ce0d3b95)
 #### [LINQ - Join Operators](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-joinoperators.dart) / [MSDN C#](http://code.msdn.microsoft.com/LINQ-Join-Operators-dabef4e9)
 
@@ -2579,15 +2583,11 @@ List range(int from, [int to]) =>
 //c#
 public void Linq65() 
 { 
-    var numbers = 
-        from n in Enumerable.Range(100, 50) 
-  
-        select new { Number = n, OddEven = n % 2 == 1 ? "odd" : "even" }; 
-  
-    foreach (var n in numbers) 
-    { 
-        Console.WriteLine("The number {0} is {1}.", n.Number, n.OddEven); 
-    } 
+    var numbers = Enumerable.Range(100, 50)
+        .Select(n => new { Number = n, OddEven = n % 2 == 1 ? "odd" : "even" });
+
+    numbers.ForEach((n) => Console.WriteLine("The number {0} is {1}.", n.Number, n.OddEven));
+
 }
 ```
 ```dart
@@ -2620,12 +2620,9 @@ linq65(){
 //c#
 public void Linq66() 
 { 
-    var numbers = Enumerable.Repeat(7, 10); 
-  
-    foreach (var n in numbers) 
-    {  
-        Console.WriteLine(n); 
-    } 
+    var numbers = Enumerable.Repeat(7, 10);
+
+    numbers.ForEach(Console.WriteLine);
 }
 ```
 ```dart
@@ -2658,11 +2655,11 @@ LINQ - Quantifiers
 //c#
 public void Linq67() 
 { 
-    string[] words = { "believe", "relief", "receipt", "field" }; 
-  
-    bool iAfterE = words.Any(w => w.Contains("ei")); 
- 
-    Console.WriteLine("There is a word that contains in the list that contains 'ei': {0}", iAfterE); 
+    string[] words = { "believe", "relief", "receipt", "field" };
+
+    bool iAfterE = words.Any(w => w.Contains("ei"));
+
+    Console.WriteLine($"There is a word in the list that contains 'ei': {iAfterE}");
 }
 ```
 ```dart
@@ -2684,14 +2681,14 @@ linq67(){
 //c#
 public void Linq69() 
 { 
-    List<Product> products = GetProductList(); 
-    var productGroups = 
-        from p in products 
-        group p by p.Category into g 
-        where g.Any(p => p.UnitsInStock == 0) 
-        select new { Category = g.Key, Products = g }; 
- 
-    ObjectDumper.Write(productGroups, 1);  
+    var products = GetProductList();
+
+    var productGroups = products
+        .GroupBy(prod => prod.Category)
+        .Where(prodGroup => prodGroup.Any(p => p.UnitsInStock == 0))
+        .Select(prodGroup => new { Category = prodGroup.Key, Products = prodGroup });
+
+    ObjectDumper.Write(productGroups, 1);
 }
 ```
 ```dart
@@ -2715,11 +2712,11 @@ linq69(){
 //c#
 public void Linq70() 
 {  
-    int[] numbers = { 1, 11, 3, 19, 41, 65, 19 }; 
-  
-    bool onlyOdd = numbers.All(n => n % 2 == 1); 
-  
-    Console.WriteLine("The list contains only odd numbers: {0}", onlyOdd); 
+    int[] numbers = { 1, 11, 3, 19, 41, 65, 19 };
+
+    bool onlyOdd = numbers.All(n => n % 2 == 1);
+
+    Console.WriteLine($"The list contains only odd numbers: {onlyOdd}");
 }
 ```
 ```dart
@@ -2741,15 +2738,14 @@ linq70(){
 //c#
 public void Linq72() 
 { 
-    List<Product> products = GetProductList(); 
-  
-    var productGroups = 
-        from p in products 
-        group p by p.Category into g 
-        where g.All(p => p.UnitsInStock > 0) 
-        select new { Category = g.Key, Products = g }; 
-     
-    ObjectDumper.Write(productGroups, 1); 
+    var products = GetProductList();
+
+    var productGroups = products
+        .GroupBy(prod => prod.Category)
+        .Where(prodGroup => prodGroup.All(p => p.UnitsInStock > 0))
+        .Select(prodGroup => new { Category = prodGroup.Key, Products = prodGroup });
+
+    ObjectDumper.Write(productGroups, 1);
 }
 ```
 ```dart
@@ -2793,11 +2789,11 @@ avg(Iterable seq) => sum(seq) / seq.length;
 //c#
 public void Linq73() 
 { 
-    int[] factorsOf300 = { 2, 2, 3, 5, 5 }; 
-  
-    int uniqueFactors = factorsOf300.Distinct().Count(); 
-  
-    Console.WriteLine("There are {0} unique factors of 300.", uniqueFactors); 
+    int[] primeFactorsOf300 = { 2, 2, 3, 5, 5 };
+
+    int uniqueFactors = primeFactorsOf300.Distinct().Count();
+
+    Console.WriteLine($"There are {uniqueFactors} unique prime factors of 300.");
 }
 ```
 ```dart
@@ -2819,11 +2815,11 @@ linq73(){
 //c#
 public void Linq74() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
-  
-    int oddNumbers = numbers.Count(n => n % 2 == 1); 
-  
-    Console.WriteLine("There are {0} odd numbers in the list.", oddNumbers); 
+    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+
+    int oddNumbers = numbers.Count(n => n % 2 == 1);
+
+    Console.WriteLine($"There are {oddNumbers} odd numbers in the list.");
 }
 ```
 ```dart
@@ -2845,13 +2841,12 @@ linq74(){
 //c#
 public void Linq76() 
 { 
-    List<Customer> customers = GetCustomerList(); 
-  
-    var orderCounts = 
-        from c in customers 
-        select new { c.CustomerID, OrderCount = c.Orders.Count() }; 
-  
-    ObjectDumper.Write(orderCounts); 
+    var customers = GetCustomerList();
+
+    var orderCounts = customers
+        .Select(cust => new { cust.CustomerID, OrderCount = cust.Orders.Count() });
+
+    ObjectDumper.Write(orderCounts);
 }
 ```
 ```dart
@@ -2881,14 +2876,13 @@ linq76(){
 //c#
 public void Linq77() 
 { 
-    List<Product> products = GetProductList(); 
-  
-    var categoryCounts = 
-        from p in products 
-        group p by p.Category into g 
-        select new { Category = g.Key, ProductCount = g.Count() }; 
-  
-    ObjectDumper.Write(categoryCounts 
+    var products = GetProductList();
+
+    var categoryCounts = products
+        .GroupBy(prod => prod.Category)
+        .Select(prodGroup => new { Category = prodGroup.Key, ProductCount = prodGroup.Count() });
+
+    ObjectDumper.Write(categoryCounts);
 }
 ```
 ```dart
@@ -2918,11 +2912,11 @@ linq77(){
 //c#
 public void Linq78() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
-  
-    double numSum = numbers.Sum(); 
-  
-    Console.WriteLine("The sum of the numbers is {0}.", numSum); 
+    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+
+    double numSum = numbers.Sum();
+
+    Console.WriteLine($"The sum of the numbers is {numSum}.");
 }
 ```
 ```dart
@@ -2944,11 +2938,11 @@ linq78(){
 //c#
 public void Linq79() 
 { 
-    string[] words = { "cherry", "apple", "blueberry" }; 
-  
-    double totalChars = words.Sum(w => w.Length); 
-  
-    Console.WriteLine("There are a total of {0} characters in these words.", totalChars); 
+    string[] words = { "cherry", "apple", "blueberry" };
+
+    double totalChars = words.Sum(w => w.Length);
+
+    Console.WriteLine($"There are a total of {totalChars} characters in these words.");
 }
 ```
 ```dart
@@ -2970,14 +2964,13 @@ linq79(){
 //c#
 public void Linq80() 
 { 
-    List<Product> products = GetProductList(); 
-  
-    var categories = 
-        from p in products 
-        group p by p.Category into g 
-        select new { Category = g.Key, TotalUnitsInStock = g.Sum(p => p.UnitsInStock) }; 
-  
-    ObjectDumper.Write(categories); 
+    var products = GetProductList();
+
+    var categories = products
+        .GroupBy(prod => prod.Category)
+        .Select(prodGroup => new { Category = prodGroup.Key, TotalUnitsInStock = prodGroup.Sum(p => p.UnitsInStock) });
+
+    ObjectDumper.Write(categories);
 }
 ```
 ```dart
@@ -3007,11 +3000,11 @@ linq80(){
 //c#
 public void Linq81() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
-  
-    int minNum = numbers.Min(); 
-  
-    Console.WriteLine("The minimum number is {0}.", minNum); 
+    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+
+    var minNum = numbers.Min();
+
+    Console.WriteLine($"The minimum number is {minNum}.");
 }
 ```
 ```dart
@@ -3033,11 +3026,11 @@ linq81(){
 //c#
 public void Linq82() 
 { 
-    string[] words = { "cherry", "apple", "blueberry" }; 
-  
-    int shortestWord = words.Min(w => w.Length); 
-  
-    Console.WriteLine("The shortest word is {0} characters long.", shortestWord); 
+    string[] words = { "cherry", "apple", "blueberry" };
+
+    var shortestWord = words.Min(w => w.Length);
+
+    Console.WriteLine($"The shortest word is {shortestWord} characters long.");
 }
 ```
 ```dart
@@ -3059,14 +3052,13 @@ linq82(){
 //c#
 public void Linq83() 
 { 
-    List<Product> products = GetProductList(); 
-  
-    var categories = 
-        from p in products 
-        group p by p.Category into g 
-        select new { Category = g.Key, CheapestPrice = g.Min(p => p.UnitPrice) }; 
-  
-    ObjectDumper.Write(categories); 
+    var products = GetProductList();
+
+    var categories = products
+        .GroupBy(prod => prod.Category)
+        .Select(prodGroup => new { Category = prodGroup.Key, CheapestPrice = prodGroup.Min(p => p.UnitPrice) });
+
+    ObjectDumper.Write(categories);
 }
 ```
 ```dart
@@ -3096,15 +3088,17 @@ linq83(){
 //c#
 public void Linq84() 
 { 
-    List<Product> products = GetProductList(); 
-  
-    var categories = 
-        from p in products 
-        group p by p.Category into g 
-        let minPrice = g.Min(p => p.UnitPrice) 
-        select new { Category = g.Key, CheapestProducts = g.Where(p => p.UnitPrice == minPrice) }; 
-  
-    ObjectDumper.Write(categories, 1); 
+    var products = GetProductList();
+
+    var categories = products.GroupBy(prod => prod.Category)
+        .Select(prodGroup => new {prodGroup, minPrice = prodGroup.Min(p => p.UnitPrice)})
+        .Select(x => new
+        {
+            Category = x.prodGroup.Key,
+            CheapestProducts = x.prodGroup.Where(p => p.UnitPrice == x.minPrice)
+        });
+
+    ObjectDumper.Write(categories, 1);
 }
 ```
 ```dart
@@ -3137,11 +3131,11 @@ linq84(){
 //c#
 public void Linq85() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
-  
-    int maxNum = numbers.Max(); 
-  
-    Console.WriteLine("The maximum number is {0}.", maxNum); 
+    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+
+    int maxNum = numbers.Max();
+
+    Console.WriteLine($"The maximum number is {maxNum}.");
 }
 ```
 ```dart
@@ -3163,11 +3157,11 @@ linq85(){
 //c#
 public void Linq86() 
 { 
-    string[] words = { "cherry", "apple", "blueberry" }; 
-  
-    int longestLength = words.Max(w => w.Length); 
-  
-    Console.WriteLine("The longest word is {0} characters long.", longestLength); 
+    int[] primeFactorsOf300 = { 2, 2, 3, 5, 5 };
+
+    var uniqueFactors = primeFactorsOf300.Distinct().Count();
+
+    Console.WriteLine($"There are {uniqueFactors} unique prime factors of 300.");
 }
 ```
 ```dart
@@ -3189,14 +3183,13 @@ linq86(){
 //c#
 public void Linq87() 
 { 
-    List<Product> products = GetProductList(); 
-  
-    var categories = 
-        from p in products 
-        group p by p.Category into g 
-        select new { Category = g.Key, MostExpensivePrice = g.Max(p => p.UnitPrice) }; 
-  
-    ObjectDumper.Write(categories); 
+    var products = GetProductList();
+
+    var categories = products
+        .GroupBy(prod => prod.Category)
+        .Select(prodGroup => new { Category = prodGroup.Key, MostExpensivePrice = prodGroup.Max(p => p.UnitPrice) });
+
+    ObjectDumper.Write(categories);
 }
 ```
 ```dart
@@ -3226,15 +3219,17 @@ linq87(){
 //c#
 public void Linq88() 
 { 
-    List<Product> products = GetProductList(); 
-  
-    var categories = 
-        from p in products 
-        group p by p.Category into g 
-        let maxPrice = g.Max(p => p.UnitPrice) 
-        select new { Category = g.Key, MostExpensiveProducts = g.Where(p => p.UnitPrice == maxPrice) }; 
-  
-    ObjectDumper.Write(categories, 1); 
+    var products = GetProductList();
+
+    var categories = products.GroupBy(prod => prod.Category)
+        .Select(prodGroup => new {prodGroup, maxPrice = prodGroup.Max(p => p.UnitPrice)})
+        .Select(x => new
+        {
+            Category = x.prodGroup.Key,
+            MostExpensiveProducts = x.prodGroup.Where(p => p.UnitPrice == x.maxPrice)
+        });
+
+    ObjectDumper.Write(categories, 1);
 }
 ```
 ```dart
@@ -3267,11 +3262,11 @@ linq88(){
 //c#
 public void Linq89() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
-  
-    double averageNum = numbers.Average(); 
-  
-    Console.WriteLine("The average number is {0}.", averageNum); 
+    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+
+    var averageNum = numbers.Average();
+
+    Console.WriteLine($"The average number is {averageNum}.");
 }
 ```
 ```dart
@@ -3293,11 +3288,11 @@ linq89(){
 //c#
 public void Linq90() 
 { 
-    string[] words = { "cherry", "apple", "blueberry" }; 
-  
-    double averageLength = words.Average(w => w.Length); 
-  
-    Console.WriteLine("The average word length is {0} characters.", averageLength); 
+    string[] words = { "cherry", "apple", "blueberry" };
+
+    double averageLength = words.Average(w => w.Length);
+
+    Console.WriteLine($"The average word length is {averageLength} characters.");
 }
 ```
 ```dart
@@ -3319,14 +3314,13 @@ linq90(){
 //c#
 public void Linq91() 
 { 
-    List<Product> products = GetProductList(); 
-  
-    var categories = 
-        from p in products 
-        group p by p.Category into g 
-        select new { Category = g.Key, AveragePrice = g.Average(p => p.UnitPrice) }; 
-  
-    ObjectDumper.Write(categories); 
+    var  products = GetProductList();
+
+    var categories = products
+        .GroupBy(prod => prod.Category)
+        .Select(prodGroup => new { Category = prodGroup.Key, AveragePrice = prodGroup.Average(p => p.UnitPrice) });
+
+    ObjectDumper.Write(categories);
 }
 ```
 ```dart
@@ -3356,11 +3350,11 @@ linq91(){
 //c#
 public void Linq92() 
 { 
-    double[] doubles = { 1.7, 2.3, 1.9, 4.1, 2.9 }; 
-  
-    double product = doubles.Aggregate((runningProduct, nextFactor) => runningProduct * nextFactor); 
-  
-    Console.WriteLine("Total product of all numbers: {0}", product); 
+    double[] doubles = { 1.7, 2.3, 1.9, 4.1, 2.9 };
+
+    var product = doubles.Aggregate((runningProduct, nextFactor) => runningProduct * nextFactor);
+
+    Console.WriteLine($"Total product of all numbers: {product}");
 }
 ```
 ```dart
@@ -3382,16 +3376,16 @@ linq92(){
 //c#
 public void Linq93() 
 { 
-    double startBalance = 100.0; 
-  
-    int[] attemptedWithdrawals = { 20, 10, 40, 50, 10, 70, 30 }; 
-  
-    double endBalance = 
-        attemptedWithdrawals.Aggregate(startBalance, 
-            (balance, nextWithdrawal) => 
-                ((nextWithdrawal <= balance) ? (balance - nextWithdrawal) : balance)); 
-  
-    Console.WriteLine("Ending balance: {0}", endBalance); 
+    double startBalance = 100.0;
+
+    int[] attemptedWithdrawals = { 20, 10, 40, 50, 10, 70, 30 };
+
+    var endBalance = attemptedWithdrawals
+        .Aggregate(startBalance, 
+                    (balance, nextWithdrawal) =>
+                    ((nextWithdrawal <= balance) ? (balance - nextWithdrawal) : balance));
+
+    Console.WriteLine($"Ending balance: {endBalance}");
 }
 ```
 ```dart
@@ -3432,16 +3426,13 @@ bool seqEq(Iterable seq, Iterable withSeq) =>
 //c#
 public void Linq94() 
 { 
-    int[] numbersA = { 0, 2, 4, 5, 6, 8, 9 }; 
-    int[] numbersB = { 1, 3, 5, 7, 8 }; 
-  
-    var allNumbers = numbersA.Concat(numbersB); 
-  
-    Console.WriteLine("All numbers from both arrays:"); 
-    foreach (var n in allNumbers) 
-    { 
-        Console.WriteLine(n); 
-    } 
+    int[] numbersA = { 0, 2, 4, 5, 6, 8, 9 };
+    int[] numbersB = { 1, 3, 5, 7, 8 };
+
+    var allNumbers = numbersA.Concat(numbersB);
+
+    Console.WriteLine("All numbers from both arrays:");
+    allNumbers.ForEach(Console.WriteLine);
 }
 ```
 ```dart
@@ -3477,23 +3468,18 @@ linq94(){
 //c#
 public void Linq95() 
 { 
-    List<Customer> customers = GetCustomerList(); 
-    List<Product> products = GetProductList(); 
-  
-    var customerNames = 
-        from c in customers 
-        select c.CompanyName; 
-    var productNames = 
-        from p in products 
-        select p.ProductName; 
-  
-    var allNames = customerNames.Concat(productNames); 
-  
-    Console.WriteLine("Customer and product names:"); 
-    foreach (var n in allNames) 
-    { 
-        Console.WriteLine(n); 
-    } 
+    var customers = GetCustomerList();
+    var products = GetProductList();
+
+    var customerNames = customers
+        .Select(cust => cust.CompanyName);
+    var productNames = products
+        .Select(prod => prod.ProductName);
+
+    var allNames = customerNames.Concat(productNames);
+
+    Console.WriteLine("Customer and product names:");
+    allNames.ForEach(Console.WriteLine);
 }
 ```
 ```dart
@@ -3529,12 +3515,12 @@ linq95(){
 //c#
 public void Linq96() 
 { 
-    var wordsA = new string[] { "cherry", "apple", "blueberry" }; 
-    var wordsB = new string[] { "cherry", "apple", "blueberry" }; 
-  
-    bool match = wordsA.SequenceEqual(wordsB); 
-  
-    Console.WriteLine("The sequences match: {0}", match); 
+    var wordsA = new string[] { "cherry", "apple", "blueberry" };
+    var wordsB = new string[] { "cherry", "apple", "blueberry" };
+
+    var match = wordsA.SequenceEqual(wordsB);
+
+    Console.WriteLine($"The sequences match: {match}");
 }
 ```
 ```dart
@@ -3557,12 +3543,12 @@ linq96(){
 //c#
 public void Linq97() 
 { 
-    var wordsA = new string[] { "cherry", "apple", "blueberry" }; 
-    var wordsB = new string[] { "apple", "blueberry", "cherry" }; 
-  
-    bool match = wordsA.SequenceEqual(wordsB); 
-  
-    Console.WriteLine("The sequences match: {0}", match); 
+    var wordsA = new string[] { "cherry", "apple", "blueberry" };
+    var wordsB = new string[] { "apple", "blueberry", "cherry" };
+
+    var match = wordsA.SequenceEqual(wordsB);
+
+    Console.WriteLine("The sequences match: {0}", match);
 }
 ```
 ```dart
@@ -3588,22 +3574,17 @@ LINQ - Query Execution
 //c#
 public void Linq99() 
 { 
-    // Sequence operators form first-class queries that 
-    // are not executed until you enumerate over them. 
-  
-    int[] numbers = new int[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
-  
-    int i = 0; 
-    var q = 
-        from n in numbers 
-        select ++i; 
-  
-    // Note, the local variable 'i' is not incremented 
-    // until each element is evaluated (as a side-effect): 
-    foreach (var v in q) 
-    { 
-        Console.WriteLine("v = {0}, i = {1}", v, i); 
-    } 
+    // Queries are not executed until you enumerate over them.
+    int[] numbers = new int[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+
+    int i = 0;
+    var simpleQuery = numbers
+        .Select(x => i++);
+
+    // The local variable 'i' is not incremented until the query is executed in the foreach loop.
+    Console.WriteLine($"The current value of i is {i}"); //i is still zero
+
+    simpleQuery.ForEach(item => Console.WriteLine($"v = {item}, i = {i}")); // now i is incremented  
 }
 ```
 ```dart
@@ -3636,23 +3617,17 @@ linq99(){
 //c#
 public void Linq100() 
 { 
-    // Methods like ToList() cause the query to be 
-    // executed immediately, caching the results. 
-  
-    int[] numbers = new int[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
-  
-    int i = 0; 
-    var q = ( 
-        from n in numbers 
-        select ++i) 
-        .ToList(); 
-  
-    // The local variable i has already been fully 
-    // incremented before we iterate the results: 
-    foreach (var v in q) 
-    { 
-        Console.WriteLine("v = {0}, i = {1}", v, i); 
-    } 
+    // Methods like ToList(), Max(), and Count() cause the query to be executed immediately.            
+    int[] numbers = new int[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+
+    int i = 0;
+    var immediateQuery = numbers
+        .Select(x =>  ++i)
+        .ToList();
+
+    Console.WriteLine("The current value of i is {0}", i); //i has been incremented
+
+    immediateQuery.ForEach(item => Console.WriteLine($"v = {item}, i = {i}"));
 } 
 ```
 ```dart
@@ -3685,34 +3660,25 @@ linq100(){
 //c#
 public void Linq101() 
 { 
-    // Deferred execution lets us define a query once 
-    // and then reuse it later after data changes. 
-  
-    int[] numbers = new int[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
-    var lowNumbers = 
-        from n in numbers 
-        where n <= 3 
-        select n; 
-  
-    Console.WriteLine("First run numbers <= 3:"); 
-    foreach (int n in lowNumbers) 
-    { 
-        Console.WriteLine(n); 
-    } 
-  
-    for (int i = 0; i < 10; i++) 
-    { 
-        numbers[i] = -numbers[i]; 
-    } 
-  
-    // During this second run, the same query object, 
-    // lowNumbers, will be iterating over the new state 
-    // of numbers[], producing different results: 
-    Console.WriteLine("Second run numbers <= 3:"); 
-    foreach (int n in lowNumbers) 
-    { 
-        Console.WriteLine(n); 
-    } 
+    // Deferred execution lets us define a query once and then reuse it later in various ways.
+    int[] numbers = new int[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+    var lowNumbers = numbers
+        .Where(num => num <= 3);
+
+    Console.WriteLine("First run numbers <= 3:");
+    lowNumbers.ForEach(Console.WriteLine);
+
+    // Modify the source data.
+    for (int i = 0; i < 10; i++)
+    {
+        numbers[i] = -numbers[i];
+    }
+
+    // During this second run, the same query object,
+    // lowNumbers, will be iterating over the new state
+    // of numbers[], producing different results:
+    Console.WriteLine("Second run numbers <= 3:");
+    lowNumbers.ForEach(Console.WriteLine);
 } 
 ```
 ```dart
@@ -3773,24 +3739,15 @@ joinGroup(Iterable seq, Iterable withSeq, bool match(x,y)) =>
 //c#
 public void Linq102() 
 { 
-    string[] categories = new string[]{  
-        "Beverages",   
-        "Condiments",   
-        "Vegetables",   
-        "Dairy Products",   
-        "Seafood" };  
-  
-    List<Product> products = GetProductList(); 
-  
-    var q = 
-        from c in categories 
-        join p in products on c equals p.Category 
-        select new { Category = c, p.ProductName }; 
- 
-    foreach (var v in q) 
-    { 
-        Console.WriteLine(v.ProductName + ": " + v.Category);  
-    } 
+    var categories = new [] {"Beverages","Condiments","Vegetables","Dairy Products","Seafood" };
+
+    var products = GetProductList();
+
+    var q = categories
+        .Join(products, c => c, p => p.Category, 
+            (c, p) => new {Category = c, p.ProductName});
+
+    q.ForEach(v => Console.WriteLine($"Category: {v.Category}: Product {v.ProductName}"));
 }
 ```
 ```dart
@@ -3823,28 +3780,19 @@ linq102(){
 //c#
 public void Linq103() 
 { 
-    string[] categories = new string[]{  
-        "Beverages",  
-        "Condiments",  
-        "Vegetables",  
-        "Dairy Products",  
-        "Seafood" }; 
-  
-    List<Product> products = GetProductList(); 
-  
-    var q = 
-        from c in categories 
-        join p in products on c equals p.Category into ps 
-        select new { Category = c, Products = ps }; 
-  
-    foreach (var v in q) 
-    { 
+    var categories = new [] {"Beverages","Condiments","Vegetables","Dairy Products","Seafood" };  
+
+    var products = GetProductList(); 
+
+    var q = categories
+        .GroupJoin(products, c => c, p => p.Category,
+            (c, ps) => new {Category = c, Products = ps}); 
+
+    q.ForEach((v) => 
+    {
         Console.WriteLine(v.Category + ":"); 
-        foreach (var p in v.Products) 
-        { 
-            Console.WriteLine("   " + p.ProductName); 
-        } 
-    } 
+        v.Products.ForEach(p => Console.WriteLine($"\t{p.ProductName}"));
+    });
 }
 ```
 ```dart
@@ -3896,25 +3844,16 @@ linq103(){
 //c#
 public void Linq104() 
 { 
-    string[] categories = new string[]{   
-        "Beverages",  
-        "Condiments",  
-        "Vegetables", 
-        "Dairy Products",   
-        "Seafood" }; 
-  
-    List<Product> products = GetProductList(); 
-  
-    var q = 
-        from c in categories 
-        join p in products on c equals p.Category into ps 
-        from p in ps 
-        select new { Category = c, p.ProductName }; 
-  
-    foreach (var v in q) 
-    { 
-        Console.WriteLine(v.ProductName + ": " + v.Category); 
-    } 
+    var categories = new [] {"Beverages","Condiments","Vegetables","Dairy Products","Seafood" };  
+
+    var products = GetProductList();
+
+    var prodByCategory = categories
+        .GroupJoin(products, cat => cat, prod => prod.Category, 
+            (category, prods) => new {category, prods})
+        .SelectMany(x => x.prods, (x, plist) => new {Category = x.category, plist.ProductName});
+
+    prodByCategory.ForEach(item => Console.WriteLine($"{item.ProductName }: {item.Category}"));
 }
 ```
 ```dart
@@ -3954,25 +3893,17 @@ linq104(){
 //c#
 public void Linq105()  
 { 
-    string[] categories = new string[]{   
-        "Beverages",  
-        "Condiments",   
-        "Vegetables",   
-        "Dairy Products",  
-        "Seafood" }; 
-  
-    List<Product> products = GetProductList(); 
-  
-    var q = 
-        from c in categories 
-        join p in products on c equals p.Category into ps 
-        from p in ps.DefaultIfEmpty() 
-        select new { Category = c, ProductName = p == null ? "(No products)" : p.ProductName }; 
-  
-    foreach (var v in q) 
-    { 
-        Console.WriteLine(v.ProductName + ": " + v.Category); 
-    } 
+    var categories = new [] {"Beverages","Condiments","Vegetables","Dairy Products","Seafood" };  
+
+    var products = GetProductList(); 
+
+    var q = categories
+        .GroupJoin(products, cat => cat, prod => prod.Category, 
+            (category, prods) => new {category, prods})
+        .SelectMany(x => x.prods.DefaultIfEmpty(),
+            (x, p) => new {Category = x.category, ProductName = p == null ? "(No products)" : p.ProductName}); 
+
+    q.ForEach(item => Console.WriteLine($"{item.ProductName }: {item.Category}"));
 }
 ```
 ```dart
