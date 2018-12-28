@@ -61,19 +61,44 @@ The samples below mirrors the C# LINQ samples layout with the names of the top-l
   -  [Dart](bin/linq-restrictions.dart) 
   -  [C#](src/csharp/linq-restrictions/Program.cs)
 - Projection Operators
-  - [Dart](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-projections.dart) / [MSDN C#]- (http://code.msdn.microsoft.com/LINQ-to-DataSets-09787825)
-#### [LINQ - Partitioning Operators](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-partitioning.dart) / [MSDN C#](http://code.msdn.microsoft.com/LINQ-Partitioning-Operators-c68aaccc)
-#### [LINQ - Ordering Operators](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-ordering.dart) / [MSDN C#](http://code.msdn.microsoft.com/SQL-Ordering-Operators-050af19e)
-#### [LINQ - Grouping Operators](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-grouping.dart) / [MSDN C#](http://code.msdn.microsoft.com/LINQ-to-DataSets-Grouping-c62703ea)
-#### [LINQ - Set Operators](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-setoperations.dart) / [MSDN C#](http://code.msdn.microsoft.com/LINQ-Set-Operators-374f34fe)
-#### [LINQ - Conversion Operators](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-conversionoperations.dart) / [MSDN C#](http://code.msdn.microsoft.com/LINQ-Conversion-Operators-e4e59714)
-#### [LINQ - Element Operators](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-elementoperations.dart) / [MSDN C#](http://code.msdn.microsoft.com/LINQ-Element-Operators-0f3f12ce)
-#### [LINQ - Generation Operators](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-generationoperations.dart) / [MSDN C#](http://code.msdn.microsoft.com/LINQ-Generation-Operators-8a3fbff7)
-#### [LINQ - Quantifiers](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-quantifiers.dart) / [MSDN C#](http://code.msdn.microsoft.com/LINQ-Quantifiers-f00e7e3e)
-#### [LINQ - Aggregate Operators](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-aggregateoperations.dart) / [MSDN C#](http://code.msdn.microsoft.com/LINQ-Aggregate-Operators-c51b3869)
-#### [LINQ - Miscellaneous Operators](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-miscellaneousoperations.dart) / [MSDN C#](http://code.msdn.microsoft.com/LINQ-Miscellandoteous-6b72bb2a)
-#### [LINQ - Query Execution](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-queryexecution.dart) / [MSDN C#](http://code.msdn.microsoft.com/LINQ-Query-Execution-ce0d3b95)
-#### [LINQ - Join Operators](https://github.com/dartist/101LinqSamples/blob/master/bin/linq-joinoperators.dart) / [MSDN C#](http://code.msdn.microsoft.com/LINQ-Join-Operators-dabef4e9)
+  - [Dart](bin/linq-projections.dart)
+  - [C#](src/csharp/linq-projections/Program.cs)
+- Partitioning Operators]
+  - [Dart](bin/linq-partitioning.dart)
+  - [C#](src/csharp/linq-partitioning/Program.cs)
+- Ordering Operators
+  - [Dart](bin/linq-ordering.dart)
+  - [C#](src/csharp/linq-ordering/Program.cs)
+- Grouping Operators
+  - [Dart](bin/linq-grouping.dart)
+  - [C#](src/csharp/linq-grouping/Program.cs)
+- Set Operators
+  - [Dart](bin/linq-setoperations.dart)
+  - [C#](src/csharp/linq-sets/Program.cs)
+- Conversion Operators
+  - [Dart](bin/linq-conversionoperations.dart)
+  - [C#](src/csharp/linq-conversion/Program.cs)
+- Element Operators
+  - [Dart](bin/linq-elementoperations.dart)
+  - [C#](src/csharp/linq-element/Program.cs)
+- Generation Operators
+  - [Dart](bin/linq-generationoperations.dart)
+  - [C#](src/csharp/linq-generation/Program.cs)
+- Quantifiers
+  - [Dart](bin/linq-quantifiers.dart)
+  - [C#](src/csharp/linq-quantifiers/Program.cs)
+- Aggregate Operators
+  - [Dart](bin/linq-aggregateoperations.dart)
+  - [C#](src/csharp/linq-aggregate/Program.cs)
+- Miscellaneous Operators
+  - [Dart](bin/linq-miscellaneousoperations.dart)
+  - [C#](src/csharp/linq-miscellaneous/Program.cs)
+- Query Execution
+  - [Dart](bin/linq-queryexecution.dart)
+  - [C#](src/csharp/linq-query/Program.cs)
+- Join Operators
+  - [Dart](bin/linq-joinoperators.dart)
+  - [C#](src/csharp/linq-join/Program.cs)
 
 ##  Side-by-side - C# LINQ vs Dart functional collections
 
