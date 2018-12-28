@@ -24,7 +24,7 @@ namespace linq_sets
         [Description("This sample uses Distinct to remove duplicate elements in a sequence of factors of 300.")]
         private static void Linq46()
         {
-            int[] factorsOf300 = { 2, 2, 3, 5, 5 };
+            var factorsOf300 = new [] { 2, 2, 3, 5, 5 };
 
             var uniqueFactors = factorsOf300.Distinct();
 
