@@ -1,7 +1,11 @@
 ### Why the fork?
 
-- Uses the more generally accepted Extension method/lambda syntax, which is similar to Dart
-- The original examples use the SQL / DSL Linq syntax but not all the methods are available , example DISTINCT, FIRST, TAKE and UNION, so you would have to mix the two synaxes
+- The original MSDN C# examples use the SQL / DSL Linq syntax which is "baby-speak" for the more generally accepted  Extension method/lambda syntax.
+  -  which is very similar to Dart
+  -  has all the methods such as Distinct, Take, Union First etc so that you don't have to mix the styles (see mixed syntax example below)
+ - This fork uses more up to date C# syntax, including the `var` keyword wherever possible and string interpolatation
+ - This fork has included the modified C# source locally so that you don't have to visit the outdated MSDN site.
+ - This fork has included a [Operation Comparison Matrix](#operation-comparison-matrix)
 
 ##### Mixed syntax (bad)
 ```csharp
@@ -42,15 +46,6 @@ Compare Dart to other LINQ examples written in:
  - [Elixir](https://github.com/omnibs/elixir-linq-examples)
  - [Templates](http://templates.servicestack.net/linq/restriction-operators)
 
-## [Call .NET Web Services from Dart](http://docs.servicestack.net/dart-add-servicestack-reference)
-
-If you're looking for an effortles typed API for consuming .NET Web Services in Flutter, Dart VM, AngularDart or Dart Web Apps checkout ServiceStack's [Dart Add ServiceStack Reference](http://docs.servicestack.net/dart-add-servicestack-reference).
-
-### Running the examples
-
-You can choose to run specific examples by commenting the sections you're not interested in [play.dart](https://github.com/dartist/101LinqSamples/blob/master/bin/play.dart). 
-
-To see the full output of all the examples, run [play.dart](https://github.com/dartist/101LinqSamples/blob/master/bin/play.dart) locally.
 
 ### Contents
 
