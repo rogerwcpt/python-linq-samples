@@ -42,7 +42,7 @@ namespace linq_grouping
         [Description("This sample uses group by to partition a list of numbers by their remainder when divided by 5.")]
         private static void Linq40()
         {
-            int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
+            var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
 
             var numberGroups = numbers
                 .GroupBy(n => n % 5)
@@ -59,7 +59,7 @@ namespace linq_grouping
         [Description("This sample uses group by to partition a list of words by their first letter.")]
         private static void Linq41()
         {
-            var words = new []{ "blueberry", "chimpanzee", "abacus", "banana", "apple", "cheese" }; 
+            var words = new [] { "blueberry", "chimpanzee", "abacus", "banana", "apple", "cheese" }; 
 
             var wordGroups = words
                 .GroupBy(w => w[0])
@@ -123,7 +123,7 @@ namespace linq_grouping
         [Description("This sample uses GroupBy to partition trimmed elements of an array using a custom comparer that matches words that are anagrams of each other.")]
         private static void Linq44()
         {
-            var anagrams = new []{ "from    ", " salt", " earn ", "  last   ", " near ", " form  " }; 
+            var anagrams = new [] { "from    ", " salt", " earn ", "  last   ", " near ", " form  " }; 
             var orderGroups = anagrams
                 .GroupBy(w => w.Trim(), new AnagramEqualityComparer());
 
@@ -134,7 +134,7 @@ namespace linq_grouping
         [Description("This sample uses GroupBy to partition trimmed elements of an array using a custom comparer that matches words that are anagrams of each other, and then converts the results to uppercase.")]
         private static void Linq45()
         {
-            string[] anagrams = { "from   ", " salt", " earn ", "  last   ", " near ", " form  " }; 
+            var anagrams = new [] { "from   ", " salt", " earn ", "  last   ", " near ", " form  " }; 
         
             var orderGroups = anagrams.GroupBy( 
                         w => w.Trim(),

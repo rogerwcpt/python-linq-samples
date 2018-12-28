@@ -10,20 +10,20 @@ namespace linq_partitioning
         static void Main(string[] args)
         {
             //Linq20();
-            //Linq21();
+            Linq21();
             //Linq22();
             //Linq23();
             //Linq24();
             //Linq25();
             //Linq26();
-            Linq27();
+            //Linq27();
         }
 
         [Category("Partitioning Operators")]
         [Description("This sample uses Take to get only the first 3 elements of the array.")]
         private static void Linq20()
         {
-            int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+            var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
             var first3Numbers = numbers.Take(3);
 
@@ -44,7 +44,7 @@ namespace linq_partitioning
                 .Take(3);
 
             Console.WriteLine("First 3 orders in WA:");
-            first3WAOrders.ForEach((order) => ObjectDumper.Write(order));
+            first3WAOrders.ForEach(ObjectDumper.Write);
         }
 
         [Category("Partitioning Operators")]
@@ -80,7 +80,7 @@ namespace linq_partitioning
         [Description("This sample uses TakeWhile to return elements starting from the beginning of the array until a number is read whose value is not less than 6.")]
         public static void Linq24()
         {
-            int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+            var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
             var firstNumbersLessThan6 = numbers.TakeWhile(n => n < 6);
 
@@ -92,7 +92,7 @@ namespace linq_partitioning
         [Description("This sample uses TakeWhile to return elements starting from the beginning of the array until a number is hit that is less than its position in the array.")]
         public static void Linq25()
         {
-            int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+            var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
             var firstSmallNumbers = numbers.TakeWhile((n, index) => n >= index);
 
@@ -104,7 +104,7 @@ namespace linq_partitioning
         [Description("This sample uses SkipWhile to get the elements of the array starting from the first element divisible by 3.")]
         public static void Linq26()
         {
-            int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+            var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
             var allButFirst3Numbers = numbers.SkipWhile(n => n % 3 != 0);
 
@@ -116,7 +116,7 @@ namespace linq_partitioning
         [Description("This sample uses SkipWhile to get the elements of the array starting from the first element less than its position.")]
         public static void Linq27()
         {
-            int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+            var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
             var laterNumbers = numbers.SkipWhile((n, index) => n >= index);
 

@@ -22,7 +22,9 @@ namespace linq_element
         {
             var products = GetProductList();
 
-            Product product12 = products.First(p => p.ProductID == 12);
+            var product12 = products
+                .Where(p => p.ProductID == 12)
+                .First();
 
             ObjectDumper.Write(product12);
         }
@@ -31,9 +33,10 @@ namespace linq_element
         [Description("This sample uses First to find the first element in the array that starts with 'o'.")]
         static void Linq59()
         {
-            string[] strings = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+             var strings = new []{ "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 
-            string startsWithO = strings.First(s => s.StartsWith('o'));
+            var startsWithO = strings
+                .First(s => s.StartsWith('o'));
 
             Console.WriteLine("A string starting with 'o': {0}", startsWithO);
         }
@@ -45,7 +48,7 @@ namespace linq_element
                      is returned. FirstOrDefault is useful for creating outer joins.")]
         static void Linq61()
         {
-            int[] numbers = { };
+            var numbers = new int[0];
 
             var firstNumOrDefault = numbers.FirstOrDefault();
 
@@ -69,7 +72,7 @@ namespace linq_element
                        from an array.")]
         static void Linq64()
         {
-            int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+            var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
             var fourthLowNum = numbers
                 .Where(num => num > 5)

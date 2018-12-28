@@ -56,29 +56,58 @@ To see the full output of all the examples, run [play.dart](https://github.com/d
 
 The samples below mirrors the C# LINQ samples layout with the names of the top-level Dart methods matching their corresponding C# examples.
 
+### Operation Comparison Matrix
+|Operation|C#|Dart|Comment|
+|---------|--|----|-------|
+|**Restriction**|`Where`|`where`||
+|**Projection**|`Select`|`map`||
+||`SelectMany`|`expand`||
+|**Partitioning**|`Take`|`take`||
+||`TakeWhile`|`takeWhile`||
+||`Skip`|`skip`||
+||`SkipWhile`|`skipWhile`||
+|**Ordering**|`OrderBy`||Custom [order](#dart-utils-added) utility added| 
+||`OrderByDescending`||Custom [order](#dart-utils-added) utility added, followed by `reversed`|
+||`ThenBy`||Custom [order](#dart-utils-added) utility added| 
+||`ThenByDescending`||Custom [order](#dart-utils-added) utility added, followed by `reversed`|
+||`Reverse`|`reverse`||
+|**Grouping**|`GroupBy`||Custom [group](#dart-utils-added-1) utility added
+|**Sets**|`Distinct`|`toSet`||
+||`Union`|`union`||
+||`Interect`|`intersection`||
+||`Except`|`difference`||
+|**Conversion**|`ToArray`|`toList`||
+||`ToList`|`toList`||
+||`ToDictionary`||Custom [toMap](#dart-utils-added-2) utility added|
+||`OfType`||Custom [ofType](#dart-utils-added-2) utility added|
+|**Element**|`First`|`first`||
+||`First(lambda)`|`firstWhere(lambda)`||
+||`FirstOrDefault`|`firstWhere(lamba, default)`|
+||`ElementAt`|`elementAt`||
+
 #### Source
-- Restriction Operators (Filter/Where)
+- [Restriction Operators](#linq1-where---simple-1)
   -  [Dart](bin/linq-restrictions.dart) 
   -  [C#](src/csharp/linq-restrictions/Program.cs)
-- Projection Operators
+- [Projection Operators](#linq---projection-operators)
   - [Dart](bin/linq-projections.dart)
   - [C#](src/csharp/linq-projections/Program.cs)
-- Partitioning Operators]
+- [Partitioning Operators](#linq---partitioning-operators)
   - [Dart](bin/linq-partitioning.dart)
   - [C#](src/csharp/linq-partitioning/Program.cs)
-- Ordering Operators
+- [Ordering Operators](#linq---ordering-operators)
   - [Dart](bin/linq-ordering.dart)
   - [C#](src/csharp/linq-ordering/Program.cs)
-- Grouping Operators
+- [Grouping Operators](#linq---grouping-operators)
   - [Dart](bin/linq-grouping.dart)
   - [C#](src/csharp/linq-grouping/Program.cs)
-- Set Operators
+- [Set Operators](#linq---set-operators)
   - [Dart](bin/linq-setoperations.dart)
   - [C#](src/csharp/linq-sets/Program.cs)
-- Conversion Operators
+- [Conversion Operators](#linq---conversion-operators)
   - [Dart](bin/linq-conversionoperations.dart)
   - [C#](src/csharp/linq-conversion/Program.cs)
-- Element Operators
+- [Element Operators](#linq---element-operators)
   - [Dart](bin/linq-elementoperations.dart)
   - [C#](src/csharp/linq-element/Program.cs)
 - Generation Operators
@@ -120,7 +149,8 @@ public void Linq1()
 { 
     var numbers = new int[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
-    var lowNums = numbers.Where(n => n < 5);
+    var lowNums = numbers
+        .Where(n => n < 5);
 
     Console.WriteLine("Numbers < 5:");
     lowNums.ForEach((x) => Console.WriteLine(x));
@@ -154,10 +184,11 @@ public void Linq2()
 { 
     var products = GetProductList();
 
-    var soldOutProducts = products.Where(p => p.UnitsInStock == 0);
+    var soldOutProducts = products
+        .Where(p => p.UnitsInStock == 0);
 
     Console.WriteLine("Sold out products:");
-    soldOutProducts.ForEach((x) => Console.WriteLine("{0} is sold out!", x.ProductName));
+    soldOutProducts.ForEach(x => Console.WriteLine($"{x.ProductName} is sold out!"));
 } 
 ```
 ```dart
@@ -186,18 +217,14 @@ linq2(){
 //c#
 public void Linq3() 
 { 
-    List<Product> products = GetProductList(); 
+    var products = GetProductList();
+
+    var expensiveInStockProducts = products
+        .Where(p => p.UnitsInStock > 0 && p.UnitPrice > 3.00M);
+
+    Console.WriteLine("In-stock products that cost more than 3.00:");
+    expensiveInStockProducts.ForEach((product) => Console.WriteLine($"{product.ProductName} is in stock and costs more than 3.00."));
   
-    var expensiveInStockProducts = 
-        from p in products 
-        where p.UnitsInStock > 0 && p.UnitPrice > 3.00M 
-        select p; 
-  
-    Console.WriteLine("In-stock products that cost more than 3.00:"); 
-    foreach (var product in expensiveInStockProducts) 
-    { 
-        Console.WriteLine("{0} is in stock and costs more than 3.00.", product.ProductName); 
-    } 
 } 
 ```
 ```dart
@@ -226,22 +253,20 @@ linq3(){
 //c#
 public void Linq4() 
 { 
-    List<Customer> customers = GetCustomerList(); 
-  
-    var waCustomers = 
-        from c in customers 
-        where c.Region == "WA" 
-        select c; 
-  
-    Console.WriteLine("Customers from Washington and their orders:"); 
-    foreach (var customer in waCustomers) 
-    { 
-        Console.WriteLine("Customer {0}: {1}", customer.CustomerID, customer.CompanyName); 
-        foreach (var order in customer.Orders) 
-        { 
-            Console.WriteLine("  Order {0}: {1}", order.OrderID, order.OrderDate); 
-        } 
-    } 
+    var customers = GetCustomerList();
+
+    Console.WriteLine("Customers from Washington and their orders:");
+    var waCustomers = customers
+        .Where(c => c.Region == "WA");
+    
+    waCustomers.ForEach((customer) =>
+    {
+        Console.WriteLine("Customer {customer.CustomerID}: {customer.CompanyName}");
+        customer.Orders.ForEach((order) => 
+        {
+            Console.WriteLine($"  Order {order.OrderID}: {order.OrderDate}");
+        });
+    });
 } 
 ```
 ```dart
@@ -275,15 +300,12 @@ linq4(){
 //c#
 public void Linq5() 
 { 
-    string[] digits = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" }; 
-  
-    var shortDigits = digits.Where((digit, index) => digit.Length < index); 
-  
-    Console.WriteLine("Short digits:"); 
-    foreach (var d in shortDigits) 
-    { 
-        Console.WriteLine("The word {0} is shorter than its value.", d); 
-    } 
+    var digits = new[] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+
+    var shortDigits = digits.Where((digit, index) => digit.Length < index);
+
+    Console.WriteLine("Short digits:");
+    shortDigits.ForEach(d => Console.WriteLine($"The word {d} is shorter than its value."));
 }
 ```
 ```dart
@@ -316,12 +338,13 @@ LINQ - Projection Operators
 //c#
 public void Linq6() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
-  
-    var numsPlusOne = numbers.Select(n => n + 1);
+    var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+
+    var numsPlusOne = numbers
+        .Select(n => n + 1);
 
     Console.WriteLine("Numbers + 1:");
-    numsPlusOne.ForEach((i) => Console.WriteLine(i));
+    numsPlusOne.ForEach(Console.WriteLine);
 }
 ```
 ```dart
@@ -355,17 +378,13 @@ linq6(){
 //c#
 public void Linq7() 
 { 
-    List<Product> products = GetProductList(); 
-  
-    var productNames = 
-        from p in products 
-        select p.ProductName; 
-  
-    Console.WriteLine("Product Names:"); 
-    foreach (var productName in productNames) 
-    { 
-        Console.WriteLine(productName); 
-    } 
+    var products = GetProductList();
+
+    var productNames = products
+        .Select(p => p.ProductName);
+
+    Console.WriteLine("Product Names:");
+    productNames.ForEach(Console.WriteLine);
 }
 ```
 ```dart
@@ -395,18 +414,14 @@ linq7(){
 //c#
 public void Linq8() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
-    string[] strings = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" }; 
-  
-    var textNums = 
-        from n in numbers 
-        select strings[n]; 
-  
-    Console.WriteLine("Number strings:"); 
-    foreach (var s in textNums) 
-    { 
-        Console.WriteLine(s); 
-    } 
+    var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+    var strings = new [] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+
+    var textNums = numbers
+        .Select(n => strings[n]);
+
+    Console.WriteLine("Number strings:");
+    textNums.ForEach(Console.WriteLine);
 }
 ```
 ```dart
@@ -441,16 +456,12 @@ linq8(){
 //c#
 public void Linq9() 
 { 
-    string[] words = { "aPPLE", "BlUeBeRrY", "cHeRry" }; 
-  
-    var upperLowerWords = 
-        from w in words 
-        select new { Upper = w.ToUpper(), Lower = w.ToLower() }; 
-  
-    foreach (var ul in upperLowerWords) 
-    { 
-        Console.WriteLine("Uppercase: {0}, Lowercase: {1}", ul.Upper, ul.Lower); 
-    } 
+    var words = new[] { "aPPLE", "BlUeBeRrY", "cHeRry" };
+
+    var upperLowerWords = words
+        .Select(w => new { Upper = w.ToUpper(), Lower = w.ToLower() });
+
+    upperLowerWords.ForEach(ul => Console.WriteLine($"Uppercase: {ul.Upper}, Lowercase: {ul.Lower}"));
 }
 ```
 ```dart
@@ -476,12 +487,13 @@ linq9(){
 //c#
 public void Linq10() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
-    string[] strings = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" }; 
-  
-    var digitOddEvens = numbers.Select(n => new { Digit = strings[n], Even = (n % 2 == 0) });
+    var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+    var strings = new[] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+
+    var digitOddEvens = numbers
+        .Select(n => new { Digit = strings[n], Even = (n % 2 == 0) });
     
-    digitOddEvens.ForEach((d) => Console.WriteLine("The digit {0} is {1}.", d.Digit, d.Even ? "even" : "odd"));
+    digitOddEvens.ForEach(d => Console.WriteLine($"The digit {d.Digit} is {(d.Even ? "even" : "odd")}."));
 }
 ```
 ```dart
@@ -515,14 +527,14 @@ linq10(){
 //c#
 public void Linq11() 
 { 
-    List<Product> products = GetProductList(); 
+    var products = GetProductList();
 
     var productInfos = products
-      .Select(p => new { p.ProductName, p.Category, Price = p.UnitPrice});
+        .Select(p => new { p.ProductName, p.Category, Price = p.UnitPrice });
 
     Console.WriteLine("Product Info:");
-    productInfos.ForEach((productInfo) => Console.WriteLine("{0} is in the category {1} and costs {2} per unit.", productInfo.ProductName, productInfo.Category, productInfo.Price));
-}
+    productInfos.ForEach(productInfo => Console.WriteLine($"{productInfo.ProductName} is in the category {productInfo.Category} and costs {productInfo.Price} per unit."));
+ }
 ```
 ```dart
 //dart
@@ -550,12 +562,13 @@ linq11(){
 //c#
 public void Linq12() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+    var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
-    var numsInPlace = numbers.Select((num, index) => new { Num = num, InPlace = (num == index) });
+    var numsInPlace = numbers
+        .Select((num, index) => new { Num = num, InPlace = (num == index) });
 
     Console.WriteLine("Number: In-place?");
-    numsInPlace.ForEach((n) => Console.WriteLine("{0}: {1}", n.Num, n.InPlace));
+    numsInPlace.ForEach(n => Console.WriteLine($"{n.Num}: {n.InPlace}"));
 }
 ```
 ```dart
@@ -591,15 +604,15 @@ linq12(){
 //c#
 public void Linq13() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
-    string[] digits = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+    var numbers = new []{ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+    var  digits = new [] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 
     var lowNums = numbers
         .Where(n => n < 5)
         .Select(n => digits[n]);
 
     Console.WriteLine("Numbers < 5:");
-    lowNums.ForEach((num) => Console.WriteLine(num));
+    lowNums.ForEach(Console.WriteLine);
 ```
 ```dart
 //dart
@@ -629,8 +642,8 @@ linq13(){
 //c#
 public void Linq14() 
 { 
-    int[] numbersA = { 0, 2, 4, 5, 6, 8, 9 };
-    int[] numbersB = { 1, 3, 5, 7, 8 };
+    var numbersA = new [] { 0, 2, 4, 5, 6, 8, 9 };
+    var numbersB = new []{ 1, 3, 5, 7, 8 };
 
     var pairs = numbersA
         .SelectMany(a => numbersB, (a, b) => new { a, b })
@@ -754,14 +767,14 @@ linq16(){
 //c#
 public void Linq17() 
 { 
-    List<Customer> customers = GetCustomerList(); 
-  
+    var customers = GetCustomerList();
+
     var orders = customers
         .SelectMany(customer => customer.Orders, (customer, order) => new { customer, order })
         .Where(x => x.order.Total >= 2000.00M)
         .Select(x => new { x.customer.CustomerID, x.order.OrderID, x.order.Total });
-  
-    ObjectDumper.Write(orders); 
+
+    ObjectDumper.Write(orders);
 }
 ```
 ```dart
@@ -793,7 +806,7 @@ public void Linq18()
 { 
     var customers = GetCustomerList();
 
-    DateTime cutoffDate = new DateTime(1997, 1, 1);
+    var cutoffDate = new DateTime(1997, 1, 1);
 
     var orders = customers
         .Where(c => c.Region == "WA")
@@ -893,16 +906,12 @@ LINQ - Partitioning Operators
 //c#
 public void Linq20() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
+    var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
-    var first3Numbers = numbers.Take(3); 
-  
-    Console.WriteLine("First 3 numbers:"); 
-  
-    foreach (var n in first3Numbers) 
-    { 
-        Console.WriteLine(n); 
-    } 
+    var first3Numbers = numbers.Take(3);
+
+    Console.WriteLine("First 3 numbers:");
+    first3Numbers.ForEach(Console.WriteLine);
 }
 ```
 ```dart
@@ -937,7 +946,7 @@ public void Linq21()
         .Take(3);
 
     Console.WriteLine("First 3 orders in WA:");
-    first3WAOrders.ForEach((order) => ObjectDumper.Write(order));
+    first3WAOrders.ForEach(ObjectDumper.Write);
 }
 ```
 ```dart
@@ -968,15 +977,12 @@ linq21(){
 //c#
 public void Linq22() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
-  
-    var allButFirst4Numbers = numbers.Skip(4); 
-  
-    Console.WriteLine("All but first 4 numbers:"); 
-    foreach (var n in allButFirst4Numbers) 
-    { 
-        Console.WriteLine(n); 
-    } 
+    var numbers = new []{ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+
+    var allButFirst4Numbers = numbers.Skip(4);
+
+    Console.WriteLine("All but first 4 numbers:");
+    allButFirst4Numbers.ForEach(Console.WriteLine);
 }
 ```
 ```dart
@@ -1059,7 +1065,7 @@ linq23(){
 //c#
 public void Linq24() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+    var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
     var firstNumbersLessThan6 = numbers.TakeWhile(n => n < 6);
 
@@ -1091,7 +1097,7 @@ linq24(){
 //c#
 public void Linq25() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+    var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
     var firstSmallNumbers = numbers.TakeWhile((n, index) => n >= index);
 
@@ -1122,7 +1128,7 @@ linq25(){
 //c#
 public void Linq26() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+    var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
     var allButFirst3Numbers = numbers.SkipWhile(n => n % 3 != 0);
 
@@ -1156,7 +1162,7 @@ linq26(){
 //c#
 public void Linq27() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+    var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
     var laterNumbers = numbers.SkipWhile((n, index) => n >= index);
 
@@ -1195,13 +1201,8 @@ LINQ - Ordering Operators
 ### C# utils added
 
 ```csharp  
-public class CaseInsensitiveComparer : IComparer<string> 
-{ 
-    public int Compare(string x, string y) 
-    { 
-        return string.Compare(x, y, StringComparison.OrdinalIgnoreCase); 
-    } 
-}
+// No utils reuired, use built in comparer
+StringComparer.CurrentCultureIgnoreCase
 ```
 
 ### Dart utils added
@@ -1233,7 +1234,7 @@ caseInsensitiveComparer(a,b) =>
 //c#
 public void Linq28() 
 { 
-    string[] words = { "cherry", "apple", "blueberry" };
+    var words = new [] { "cherry", "apple", "blueberry" };
 
     var sortedWords = words.OrderBy(w => w);
 
@@ -1264,7 +1265,7 @@ linq28(){
 //c#
 public void Linq29() 
 { 
-    string[] words = { "cherry", "apple", "blueberry" }; 
+    var words = new [] { "cherry", "apple", "blueberry" };
 
     var sortedWords = words.OrderBy(w => w.Length);
 
@@ -1326,7 +1327,7 @@ linq30(){
 //c#
 public void Linq31() 
 { 
-    string[] words = { "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" }; 
+    var words = new [] { "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" }; 
 
     var sortedWords = words.OrderBy(a => a, StringComparer.CurrentCultureIgnoreCase); 
 
@@ -1357,7 +1358,7 @@ linq31(){
 //c#
 public void Linq32() 
 { 
-    double[] doubles = { 1.7, 2.3, 1.9, 4.1, 2.9 };
+    var doubles = new[]{ 1.7, 2.3, 1.9, 4.1, 2.9 };
 
     var sortedDoubles = doubles.OrderByDescending(d => d);
 
@@ -1390,14 +1391,11 @@ linq32(){
 //c#
 public void Linq33() 
 { 
-    List<Product> products = GetProductList(); 
-  
-    var sortedProducts = 
-        from p in products 
-        orderby p.UnitsInStock descending 
-        select p; 
-  
-    ObjectDumper.Write(sortedProducts); 
+    var products = GetProductList();
+
+    var sortedProducts = products.OrderByDescending(p => p.UnitsInStock);
+
+    ObjectDumper.Write(sortedProducts);
 }
 ```
 ```dart
@@ -1424,7 +1422,7 @@ linq33(){
 //c#
 public void Linq34() 
 { 
-    string[] words = { "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" };
+    var words = new [] { "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" };
 
     var sortedWords = words.OrderByDescending(a => a, StringComparer.CurrentCultureIgnoreCase); 
 
@@ -1455,7 +1453,7 @@ linq34(){
 //c#
 public void Linq35() 
 { 
-    string[] digits = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+    var digits = new [] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 
     var sortedDigits = digits
         .OrderBy(d => d.Length)
@@ -1495,13 +1493,13 @@ linq35(){
 //c#
 public void Linq36() 
 { 
-    string[] words = { "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" }; 
-  
+    var words = new [] { "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" };
+
     var sortedWords = words
-            .OrderBy(a => a.Length)
-            .ThenBy(a => a, StringComparer.CurrentCultureIgnoreCase);
-  
-    ObjectDumper.Write(sortedWords); 
+        .OrderBy(a => a.Length)
+        .ThenBy(a => a, StringComparer.CurrentCultureIgnoreCase);
+
+    ObjectDumper.Write(sortedWords);
 } 
 ```
 ```dart
@@ -1565,8 +1563,8 @@ linq37(){
 //c#
 public void Linq38() 
 { 
-    string[] words = { "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" }; 
-  
+    var words = new [] { "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" };
+
     var sortedWords = words
         .OrderBy(a => a.Length)
         .ThenByDescending(a => a, StringComparer.CurrentCultureIgnoreCase);
@@ -1599,7 +1597,7 @@ linq38(){
 //c#
 public void Linq39() 
 { 
-    string[] digits = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+    var digits = new [] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 
     var reversedIDigits = digits
         .Where(d => d[1] == 'i')
@@ -1702,21 +1700,17 @@ class Group extends IterableBase {
 //c#
 public void Linq40() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
-  
-    var numberGroups = 
-        from n in numbers 
-        group n by n % 5 into g 
-        select new { Remainder = g.Key, Numbers = g }; 
-  
-    foreach (var g in numberGroups) 
-    { 
-        Console.WriteLine("Numbers with a remainder of {0} when divided by 5:", g.Remainder); 
-        foreach (var n in g.Numbers) 
-        { 
-            Console.WriteLine(n); 
-        } 
-    } 
+    var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
+
+    var numberGroups = numbers
+        .GroupBy(n => n % 5)
+        .Select(x => new {Remainder = x.Key, Numbers = x});
+
+    numberGroups.ForEach((g) => 
+    {
+            Console.WriteLine("Numbers with a remainder of {0} when divided by 5:", g.Remainder);
+            g.Numbers.ForEach(Console.WriteLine);
+    });
 }
 ```
 ```dart
@@ -1756,7 +1750,7 @@ linq40(){
 //c#
 public void Linq41() 
 { 
-    var words = new []{ "blueberry", "chimpanzee", "abacus", "banana", "apple", "cheese" }; 
+    var words = new [] { "blueberry", "chimpanzee", "abacus", "banana", "apple", "cheese" }; 
 
     var wordGroups = words
         .GroupBy(w => w[0])
@@ -1800,13 +1794,12 @@ linq41(){
 //c#
 public void Linq42() 
 { 
-    List<Product> products = GetProductList(); 
-  
-    var orderGroups = 
-        from p in products 
-        group p by p.Category into g 
-        select new { Category = g.Key, Products = g }; 
-  
+    var products = GetProductList(); 
+    
+    var orderGroups = products
+        .GroupBy(p => p.Category)
+        .Select(g => new { Category = g.Key, Products = g }); 
+
     ObjectDumper.Write(orderGroups, 1); 
 } 
 ```
@@ -1890,10 +1883,10 @@ linq43(){
 //c#
 public void Linq44() 
 { 
-    string[] anagrams = { "from   ", " salt", " earn ", "  last   ", " near ", " form  " }; 
-  
-    var orderGroups = anagrams.GroupBy(w => w.Trim(), new AnagramEqualityComparer()); 
-  
+    var anagrams = new [] { "from    ", " salt", " earn ", "  last   ", " near ", " form  " }; 
+    var orderGroups = anagrams
+        .GroupBy(w => w.Trim(), new AnagramEqualityComparer());
+
     ObjectDumper.Write(orderGroups, 1); 
 } 
 ```
@@ -1918,14 +1911,14 @@ linq44(){
 //c#
 public void Linq45() 
 { 
-    string[] anagrams = { "from   ", " salt", " earn ", "  last   ", " near ", " form  " }; 
-  
+    var anagrams = new [] { "from   ", " salt", " earn ", "  last   ", " near ", " form  " }; 
+
     var orderGroups = anagrams.GroupBy( 
-                w => w.Trim(), 
+                w => w.Trim(),
                 a => a.ToUpper(), 
                 new AnagramEqualityComparer() 
                 ); 
-  
+
     ObjectDumper.Write(orderGroups, 1); 
 } 
 ```
@@ -2462,7 +2455,9 @@ public void Linq58()
 { 
     var products = GetProductList();
 
-    Product product12 = products.First(p => p.ProductID == 12);
+    var product12 = products
+        .Where(p => p.ProductID == 12)
+        .First();
 
     ObjectDumper.Write(product12);
 }
@@ -2488,9 +2483,9 @@ linq58(){
 //c#
 public void Linq59() 
 { 
-    string[] strings = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+    var strings = new []{ "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 
-    string startsWithO = strings.First(s => s.StartsWith('o'));
+    var startsWithO = strings.First(s => s.StartsWith('o'));
 
     Console.WriteLine("A string starting with 'o': {0}", startsWithO);
 }
@@ -2514,11 +2509,11 @@ linq59(){
 //c#
 public void Linq61() 
 { 
-    int[] numbers = { }; 
-  
-    var firstNumOrDefault = numbers.FirstOrDefault(); 
-  
-    Console.WriteLine(firstNumOrDefault); 
+    var numbers = new int[0];
+
+    var firstNumOrDefault = numbers.FirstOrDefault();
+
+    Console.WriteLine(firstNumOrDefault);
 }
 ```
 ```dart
@@ -2566,7 +2561,7 @@ linq62(){
 //c#
 public void Linq64() 
 { 
-    int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+    var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
     var fourthLowNum = numbers
         .Where(num => num > 5)
