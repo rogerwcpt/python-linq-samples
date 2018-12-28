@@ -1,6 +1,6 @@
 ### Why the fork?
 
-- The original MSDN C# examples use the SQL / DSL Linq syntax which is "baby-speak" for the more generally accepted  Extension method/lambda syntax.
+- The original MSDN C# examples use the SQL Query / DSL Linq syntax instead for the more generally accepted Extension method/lambda syntax.
   -  which is very similar to Dart
   -  has all the methods such as Distinct, Take, Union First etc so that you don't have to mix the styles (see mixed syntax example below)
  - This fork uses more up to date C# syntax, including the `var` keyword wherever possible and string interpolatation
