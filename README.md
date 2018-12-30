@@ -1,3 +1,9 @@
+
+101 LINQ Samples in Dart
+========================
+
+Port of the [C# 101 LINQ Samples](http://code.msdn.microsoft.com/101-LINQ-Samples-3fb9811b) rewritten into idiomatic Dart and utilizing its functional collection mixins.
+
 ### Why the fork?
 
 - The original MSDN C# examples use the SQL Query / DSL Linq syntax instead for the more generally accepted Extension method/lambda syntax.
@@ -32,21 +38,6 @@ var sortedWords = words
 ```
 
 
-101 LINQ Samples in Dart
-========================
-
-Port of the [C# 101 LINQ Samples](http://code.msdn.microsoft.com/101-LINQ-Samples-3fb9811b) rewritten into idiomatic Dart and utilizing its functional collection mixins.
-
-Compare Dart to other LINQ examples written in:
-
- - [Swift](https://github.com/mythz/swift-linq-examples)
- - [Java](https://github.com/mythz/java-linq-examples)
- - [Kotlin](https://github.com/mythz/kotlin-linq-examples)
- - [Clojure](https://github.com/mythz/clojure-linq-examples)
- - [Elixir](https://github.com/omnibs/elixir-linq-examples)
- - [Templates](http://templates.servicestack.net/linq/restriction-operators)
-
-
 ### Contents
 
 The samples below mirrors the C# LINQ samples layout with the names of the top-level Dart methods matching their corresponding C# examples.
@@ -54,7 +45,7 @@ The samples below mirrors the C# LINQ samples layout with the names of the top-l
 ### Operation Comparison Matrix
 |Operation|C#|Dart|Comment|
 |---------|--|----|-------|
-|**Restriction**|`Where`|`where`||
+|**Restriction**|`Where`|`filter`||
 |**Projection**|`Select`|`map`||
 ||`SelectMany`|`expand`||
 |**Partitioning**|`Take`|`take`||
@@ -102,7 +93,7 @@ The samples below mirrors the C# LINQ samples layout with the names of the top-l
 
 #### Source
 - [Restriction Operators](#linq1-where---simple-1)
-  -  [Dart](bin/linq-restrictions.dart) 
+  -  [Phython](src/python/linq-restrictions.py) 
   -  [C#](src/csharp/linq-restrictions/Program.cs)
 - [Projection Operators](#linq---projection-operators)
   - [Dart](bin/linq-projections.dart)
@@ -171,17 +162,14 @@ public void Linq1()
     lowNums.ForEach((x) => Console.WriteLine(x));
 }  
 ```
-```dart
-//dart
-linq1(){
-  var numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]; 
-  
-  var lowNums = numbers
-    .where((n) => n < 5); 
-  
-  print("Numbers < 5:"); 
-  lowNums.forEach(print);
-}
+```python
+#python
+def linq1():
+    numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]
+    lowNums = filter(lambda x: x < 5, numbers)
+    
+    print("Numbers < 5:")
+    printS(lowNums)
 ```
 #### Output
 
@@ -206,17 +194,15 @@ public void Linq2()
     soldOutProducts.ForEach(x => Console.WriteLine($"{x.ProductName} is sold out!"));
 } 
 ```
-```dart
-//dart
-linq2(){
-  var products = productsList(); 
-  
-  var soldOutProducts = products
-    .where((p) => p.unitsInStock == 0);
-  
-  print("Sold out products:");
-  soldOutProducts.forEach((p) => print("${p.productName} is sold out!"));
-}
+```python
+#python
+def linq2():
+    products = shared.getProductList()
+    soldOutProducts = filter(lambda x: x.UnitsInStock == 0, products)
+
+    print("Sold out products:")
+    for item in soldOutProducts:
+        print("%s is sold out!" % (item.ProductName))
 ```
 #### Output
 
@@ -242,18 +228,16 @@ public void Linq3()
   
 } 
 ```
-```dart
-//dart
-linq3(){  
-  var products = productsList(); 
-  
-  var expensiveInStockProducts = products
-    .where((p) => p.unitsInStock > 0 && p.unitPrice > 3.00);
-      
-  print("In-stock products that cost more than 3.00:");
-  expensiveInStockProducts.forEach((p) =>
-    print("${p.productName} is in stock and costs more than 3.00."));
-} 
+```python
+#python
+def linq3():
+    products = shared.getProductList()
+    expensiveInStockProducts = filter(lambda x: x.UnitsInStock > 0 and x.UnitPrice > 3.0000, products) 
+
+    print("In-stock products that cost more than 3.00:")
+    for item in expensiveInStockProducts:
+        print("%s is in stock and costs more than 3.00." % (item.ProductName))
+
 ```
 #### Output
 
@@ -284,19 +268,17 @@ public void Linq4()
     });
 } 
 ```
-```dart
-//dart
-linq4(){
-  var customers = customersList(); 
-  var waCustomers = customers
-      .where((c) => c.region == "WA"); 
+```python
+#python
+def linq4():
+    customers = shared.getCustomerList()
+    waCustomers = filter(lambda x: x.Region == "WA", customers)
 
-  print("Customers from Washington and their orders:");
-  waCustomers.forEach((Customer c){
-    print("Customer ${c.customerId}: ${c.companyName}");
-    c.orders.forEach((o) => print("  Order ${o.orderId}: ${o.orderDate}"));
-  });
-}
+    print("Customers from Washington and their orders:")
+    for customer in waCustomers:
+            print("Customer %s : %s" % (customer.CustomerID, customer.CompanyName))
+            for order in customer.Orders:
+                    print("     Order %s: %s" % (order.OrderID, order.OrderDate))
 ```
 #### Output
 
@@ -323,17 +305,25 @@ public void Linq5()
     shortDigits.ForEach(d => Console.WriteLine($"The word {d} is shorter than its value."));
 }
 ```
-```dart
-//dart
-linq5(){ 
-  var digits = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]; 
+```python
+#python
+def linq5():
+        digits = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
   
-  int index=0;
-  var shortDigits = digits.where((digit) => digit.length < index++); 
+        index=0
+
+        # Lambdas cant have multiple lines, so create a fitler function
+        def FilterFunc(digit):
+                nonlocal index
+                result = len(digit) < index
+                index += 1
+                return result
+
+        shortDigits = filter(lambda digit: FilterFunc(digit), digits)
   
-  print("Short digits:"); 
-  shortDigits.forEach((d) => print("The word $d is shorter than its value."));
-}
+        print("Short digits:"); 
+        for d in shortDigits:
+                print("The word %s is shorter than its value." % (d))
 ```
 #### Output
 
@@ -362,31 +352,19 @@ public void Linq6()
     numsPlusOne.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
-linq6(){
-  var numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]; 
-  
-  var numsPlusOne = numbers
-    .map((n) => n + 1); 
-  
-  print("Numbers + 1:"); 
-  numsPlusOne.forEach(print);
-}
+```python
+#python
+def linq6():
+    numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]
+    numsPlusOne = map(lambda n: n + 1, numbers)
+
+    print("Numbers + 1:")
+    print(list(numsPlusOne))
 ```
 #### Output
 
-    Numbers + 1:
-    6
-    5
-    2
-    4
-    10
-    9
-    7
-    8
-    3
-    1
+Numbers + 1:
+[6, 5, 2, 4, 10, 9, 7, 8, 3, 1]
 
 ### linq7: Select - Simple 2
 ```csharp
@@ -402,17 +380,15 @@ public void Linq7()
     productNames.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
-linq7(){
-  var products = productsList(); 
+```python
+#python
+def linq7():
+    products = shared.getProductList()
+
+    productNames = map(lambda p: p.ProductName, products)
   
-  var productNames = products
-    .map((p) => p.productName); 
-  
-  print("Product Names:"); 
-  productNames.forEach(print);  
-}
+    print("Product Names:")
+    shared.printS(productNames)
 ```
 #### Output
 
@@ -439,18 +415,16 @@ public void Linq8()
     textNums.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
-linq8(){
-  var numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]; 
-  var strings = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]; 
+```python
+#python
+def linq8():
+    numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
+    strings = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
   
-  var textNums = numbers
-    .map((n) => strings[n]); 
+    textNums = map(lambda n : strings[n], numbers) 
   
-  print("Number strings:"); 
-  textNums.forEach(print);  
-}
+    print("Number strings:")
+    shared.printS(textNums)
 ```
 #### Output
 
@@ -479,17 +453,14 @@ public void Linq9()
     upperLowerWords.ForEach(ul => Console.WriteLine($"Uppercase: {ul.Upper}, Lowercase: {ul.Lower}"));
 }
 ```
-```dart
-//dart
-linq9(){
-  var words = ["aPPLE", "BlUeBeRrY", "cHeRry"]; 
-  
-  var upperLowerWords = words 
-    .map((w) => { 'Upper': w.toUpperCase(), 'Lower': w.toLowerCase() });
-      
-  upperLowerWords.forEach((ul) => 
-    print("Uppercase: ${ul['Upper']}, Lowercase: ${ul['Lower']}")); 
-}
+```python
+#python
+def linq9():
+    words = ["aPPLE", "BlUeBeRrY", "cHeRry"]
+    
+    upperLowerWords = map(lambda w : SimpleNamespace(Upper=w.upper(), Lower=w.lower()), words)
+    for word in upperLowerWords:
+        print("Uppercase: %s, Lowercase: %s" % (word.Upper, word.Lower))
 ```
 #### Output
 
@@ -511,18 +482,16 @@ public void Linq10()
     digitOddEvens.ForEach(d => Console.WriteLine($"The digit {d.Digit} is {(d.Even ? "even" : "odd")}."));
 }
 ```
-```dart
-//dart
-linq10(){
-  var numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]; 
-  var strings = [ "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" ]; 
+```python
+#python
+def linq10():
+    numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]; 
+    strings = [ "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" ]
   
-  var digitOddEvens = numbers 
-    .map((n) => { 'Digit': strings[n], 'Even': (n % 2 == 0) }); 
+    digitOddEvens = map(lambda n : SimpleNamespace(Digit=strings[n], Even=(n % 2 == 0) ), numbers)
       
-  digitOddEvens.forEach((d) => 
-    print("The digit ${d['Digit']} is ${d['Even'] ? 'even' : 'odd'}.")); 
-}
+    for d in digitOddEvens:
+        print("The digit %s is %s" % (d.Digit, 'even' if d.Even else 'odd'))
 ```
 #### Output
 
@@ -551,18 +520,16 @@ public void Linq11()
     productInfos.ForEach(productInfo => Console.WriteLine($"{productInfo.ProductName} is in the category {productInfo.Category} and costs {productInfo.Price} per unit."));
  }
 ```
-```dart
-//dart
-linq11(){
-  var products = productsList(); 
+```python
+#python
+def linq11():
+    products = shared.getProductList()
   
-  var productInfos = products 
-    .map((p) => { 'ProductName':p.productName, 'Category':p.category, 'Price': p.unitPrice }); 
+    productInfos = map(lambda p: SimpleNamespace(ProductName=p.ProductName, Category=p.Category, Price=p.UnitPrice), products) 
       
-  print("Product Info:"); 
-  productInfos.forEach((p) =>
-    print("${p['ProductName']} is in the category ${p['Category']} and costs ${p['Price']} per unit."));
-}
+    print("Product Info:")
+    for p in productInfos:
+        print("%s is in the category %s and costs %.2f per unit." % (p.ProductName, p.Category, p.Price))
 ```
 #### Output
 
@@ -586,19 +553,24 @@ public void Linq12()
     numsInPlace.ForEach(n => Console.WriteLine($"{n.Num}: {n.InPlace}"));
 }
 ```
-```dart
-//dart
-linq12(){
-  var numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]; 
+```python
+#python
+def linq12():
+    numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]
   
-  int index = 0;
-  var numsInPlace = numbers
-    .map((num) => { 'Num': num, 'InPlace': (num == index++) }); 
+    index = 0
+
+    def CheckInPlace(digit):
+        nonlocal index
+        result = digit == index
+        index += 1
+        return result
+
+    numsInPlace = map(lambda num: SimpleNamespace(Num=num, InPlace=CheckInPlace(num)), numbers)
   
-  print("Number: In-place?"); 
-  numsInPlace.forEach((n) =>
-    print("${n['Num']}: ${n['InPlace']}"));
-}
+    print("Number: In-place?"); 
+    for n in numsInPlace:
+        print("%d: %s" % (n.Num, n.InPlace))
 ```
 #### Output
 
@@ -629,19 +601,17 @@ public void Linq13()
     Console.WriteLine("Numbers < 5:");
     lowNums.ForEach(Console.WriteLine);
 ```
-```dart
-//dart
-linq13(){
-  var numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]; 
-  var digits = [ "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" ]; 
-  
-  var lowNums = numbers 
-    .where((n) => n < 5)
-    .map((n) => digits[n]); 
-  
-  print("Numbers < 5:"); 
-  lowNums.forEach(print);   
-}
+```python
+#python
+def linq13():
+    numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
+    digits = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+
+    result = map(lambda n: digits[n], filter(lambda n: n < 5, numbers))
+
+    print("Numbers < 5:")
+    shared.printS(result)
+
 ```
 #### Output
 

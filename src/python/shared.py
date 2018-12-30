@@ -1,5 +1,8 @@
 import json
 
+def printS(sequence):
+    print ("\n".join(list(sequence)))
+
 class Product(object):
     def __init__(self, ProductID=None, ProductName=None, Category=None, UnitPrice=None, UnitsInStock=None):
         self.ProductID = ProductID
@@ -10,12 +13,12 @@ class Product(object):
 
 class Order(object):
     def __init__(self, OrderId=None, OrderDate=None, Total=None):
-        self.OrderID = Order
+        self.OrderID = OrderId
         self.OrderDate = OrderDate
         self.Total = Total
     
 class Customer(object):
-    def __init__(self, CustomerID=None, CompanyName=None, Address=None, City=None, Region=None, PostalCode=None, Country=None, Phone=None, Fax=None, Order = None):
+    def __init__(self, CustomerID=None, CompanyName=None, Address=None, City=None, Region=None, PostalCode=None, Country=None, Phone=None, Fax=None):
         self.CustomerID = CustomerID
         self.CompanyName = CompanyName
         self.Address = Address
@@ -25,7 +28,7 @@ class Customer(object):
         self.Country = Country
         self.Phone = Phone
         self.Fax = Fax
-        self.Orders = Order
+        self.Orders = []
 
 def getProductList():
     result = []
@@ -116,8 +119,18 @@ def getCustomerList():
             cust = Customer(customer["id"], customer["name"])
             if "region" in customer:
                 cust.Region = customer["region"]
-            # for order in customer["orders"]:
-            #     ord = Order(order["id"], order["orderdate"], order["total"])
-            #     cust.Orders.append(ord)
+            if "postalcode" in customer:
+                cust.PostalCode = customer["postalcode"]
+            if "country" in customer:
+                cust.PostalCode = customer["country"]
+            if "phone" in customer:
+                cust.PostalCode = customer["phone"]
+            if "fax" in customer:
+                cust.PostalCode = customer["fax"]
+
+            if "orders" in customer:
+                for order in customer["orders"]["order"]:
+                    ord = Order(order["id"], order["orderdate"], order["total"])
+                    cust.Orders.append(ord)
             result.append(cust)
     return result

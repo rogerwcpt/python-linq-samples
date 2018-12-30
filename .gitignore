@@ -10,3 +10,4 @@ obj
 .idea
 .vs
 tools
+__pycache__
