@@ -1,24 +1,6 @@
 import shared
+import functions
 from types import SimpleNamespace
-
-
-def select(item, the_list):
-    return map(lambda b: SimpleNamespace(item_a=item, item_b=b), the_list)
-
-
-def left_outer_join(outer_list, inner_list):
-
-    result = []
-    for outer_item in outer_list:
-        result.extend(select(outer_item, inner_list))
-    return result
-
-
-def select_many(outer_list, inner_item_list_key):
-    result = []
-    for outer_item in outer_list:
-        result.extend(select(outer_item, getattr(outer_item, inner_item_list_key)))
-    return result
 
 
 def linq6():
@@ -109,7 +91,7 @@ def linq14():
     numbers_a = [0, 2, 4, 5, 6, 8, 9]
     numbers_b = [1, 3, 5, 7, 8]
 
-    pairs = filter(lambda pair: pair.item_a < pair.item_b, left_outer_join(numbers_a, numbers_b))
+    pairs = filter(lambda pair: pair.item_a < pair.item_b, functions.left_outer_join(numbers_a, numbers_b))
 
     print("Pairs where a < b:")
     for p in pairs:
@@ -121,7 +103,7 @@ def linq15():
 
     orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID, order_id=x.item_b.OrderID, total=x.item_b.Total),
                  filter(lambda x: x.item_b.Total < 500.00,
-                        select_many(customers, "Orders")))
+                        functions.select_many(customers, "Orders")))
 
     shared.print_namespace(orders)
 
@@ -135,4 +117,4 @@ def linq15():
 # linq12()
 # linq13()
 #linq14()
-# linq15()
+linq15()

@@ -6,6 +6,7 @@ Port of the [C# 101 LINQ Samples](http://code.msdn.microsoft.com/101-LINQ-Sample
 
 Python doesn't really lend itself well to functional programming because is functional methods are really procedural.  There is support for lambda expressions, but you can't chain or compose your your functional operations very well as you will see compare to C# equivalent below.
 
+
 ### Why the fork?
 
 - The original MSDN C# examples use the SQL Query / DSL Linq syntax instead for the more generally accepted Extension method/lambda syntax.
@@ -51,12 +52,14 @@ The samples below mirrors the C# LINQ samples layout with the names of the top-l
 |**Projection**|`Select`|`map`||
 ||`SelectMany`||Customer select_many utility added|
 |**Partitioning**|`IEnumerable.Take(n)`|`array[:n]`||
-||`TakeWhile`|`takeWhile`||
+||`IEnumerable.TakeWhile(predicate)`|`itertools.takewhile(predicate, sequence)`||
 ||`IEnumerable.Skip(n)`|`array[n:]`||
-||`SkipWhile`|`skipWhile`||
-|**Ordering**|`OrderBy`||Custom [order](#dart-utils-added) utility added| 
-||`OrderByDescending`||Custom [order](#dart-utils-added) utility added, followed by `reversed`|
-||`ThenBy`||Custom [order](#dart-utils-added) utility added| 
+||`SkipWhile`|`itertools.dropwhile(predicate, sequence)`||
+|**Ordering**|`OrderBy`|`sequence.sort` or</br> `sorted(sequence)`|| 
+||`OrderBy(lambda)`|`sequence.sort(key=lambda)` or </br> `sorted(sequence, key=lambda)`|| 
+||`OrderByDescending`|`sequence.sort(reverseTrue)` or </br>  `sorted(sequence, reverse=true)`|| 
+||`OrderByDescending(lambda)`|`sequence.sort(key=lambda, reverseTrue)` or </br> `sorted(sequence, key=lambda, reverse=true)`|| 
+||`ThenBy`||`sequence.sort(key=lambda (key1, key2))` or </br> `sorted(sequence, key=lambda (key1, key))`|| 
 ||`ThenByDescending`||Custom [order](#dart-utils-added) utility added, followed by `reversed`|
 ||`Reverse`|`reverse`||
 |**Grouping**|`GroupBy`||Custom [group](#dart-utils-added-1) utility added
@@ -104,7 +107,7 @@ The samples below mirrors the C# LINQ samples layout with the names of the top-l
   - [Phython]src/python/linq-partitions.py)
   - [C#](src/csharp/linq-partitioning/Program.cs)
 - [Ordering Operators](#linq---ordering-operators)
-  - [Dart](bin/linq-ordering.dart)
+  - [Phython]src/python/linq-ordering.py)
   - [C#](src/csharp/linq-ordering/Program.cs)
 - [Grouping Operators](#linq---grouping-operators)
   - [Dart](bin/linq-grouping.dart)
@@ -980,15 +983,14 @@ public void Linq22()
     allButFirst4Numbers.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
-linq22(){
-  var numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]; 
-  var allButFirst4Numbers = numbers.skip(4); 
+```python
+#python
+def linq22():
+    numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
+    all_but_first4_numbers = numbers[4:]
 
-  print("All but first 4 numbers:");
-  allButFirst4Numbers.forEach(print);
-}
+    print("All but first 4 numbers:")
+    shared.printN(all_but_first4_numbers)
 ```
 #### Output
 
@@ -1018,21 +1020,19 @@ public void Linq23()
     allButFirst2Orders.ForEach(ObjectDumper.Write);
 }
 ```
-```dart
-//dart
-linq23(){
-  var customers = customersList(); 
-  
-  var waOrders = customers
-    .where((c) => c.region == "WA")
-    .expand((c) => c.orders
-      .map((o) => { 'CustomerId': c.customerId, 'OrderId':o.orderId, 'OrderDate':o.orderDate }));
+```python
+#python
+def linq23():
+    customers = shared.getCustomerList()
 
-  var allButFirst2Orders = waOrders.skip(2);
-  
-  print("All but first 2 orders in WA:");
-  allButFirst2Orders.forEach(print);
-}
+    wa_customers = filter(lambda c: c.Region == "WA", customers)
+    wa_customer_orders = functions.select_many(wa_customers, "Orders")
+    customer_orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID, order_id=x.item_b.OrderID, order_date=x.item_b.OrderDate), wa_customer_orders)
+
+    all_but_first2 = list(customer_orders)[2:]
+
+    print("All but first 2 orders in WA:");
+    shared.print_namespace(all_but_first2)
 ```
 #### Output
 
@@ -1068,8 +1068,8 @@ public void Linq24()
     firstNumbersLessThan6.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
+```python
+#python
 linq24(){
   var numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]; 
   
@@ -1100,17 +1100,23 @@ public void Linq25()
     firstSmallNumbers.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
-linq25(){
-  var numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]; 
-  
-  int index = 0;
-  var firstSmallNumbers = numbers.takeWhile((n) => n >= index++); 
+```python
+#python
+def linq25():
+    numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
 
-  print("First numbers not less than their position:"); 
-  firstSmallNumbers.forEach(print);
-}
+    index = 0
+
+    def digit_greater_equal_to_index(digit):
+        nonlocal index
+        result = digit >= index
+        index += 1
+        return result
+
+    first_small_numbers = itertools.takewhile(lambda x: digit_greater_equal_to_index(x), numbers)
+
+    print("First numbers not less than their position:")
+    shared.printN(first_small_numbers)
 ```
 #### Output
 
@@ -1131,15 +1137,15 @@ public void Linq26()
     allButFirst3Numbers.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
-linq26(){
-  var numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]; 
-  
-  var allButFirst3Numbers = numbers.skipWhile((n) => n % 3 != 0); 
-  print("All elements starting from first element divisible by 3:"); 
-  allButFirst3Numbers.forEach(print);
-}
+```python
+#python
+def linq26():
+    numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
+
+    all_but_first3_numbers = itertools.dropwhile(lambda n:  n % 3 != 0, numbers)
+
+    print("All elements starting from first element divisible by 3:")
+    shared.printN(all_but_first3_numbers)
 ```
 #### Output
 
@@ -1165,8 +1171,8 @@ public void Linq27()
     laterNumbers.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
+```python
+#python
 linq27(){
   var numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]; 
   
@@ -1203,25 +1209,7 @@ StringComparer.CurrentCultureIgnoreCase
 ### Python utils added
 
 ```python
-wrap(value, fn(x)) => fn(value);
 
-order(List seq, {Comparator by, List<Comparator> byAll, on(x), List<Function> onAll}) =>
-  by != null ? 
-    (seq..sort(by)) 
-  : byAll != null ?
-    (seq..sort((a,b) => byAll
-      .firstWhere((compare) => compare(a,b) != 0, orElse:() => (x,y) => 0)(a,b)))
-  : on != null ? 
-    (seq..sort((a,b) => on(a).compareTo(on(b)))) 
-  : onAll != null ?
-    (seq..sort((a,b) =>
-      wrap(onAll.firstWhere((_on) => _on(a).compareTo(_on(b)) != 0, orElse:() => (x) => 0),
-        (_on) => _on(a).compareTo(_on(b)) 
-    ))) 
-  : (seq..sort()); 
-
-caseInsensitiveComparer(a,b) => 
-  a.toUpperCase().compareTo(b.toUpperCase());
 ```
 
 ### linq28: OrderBy - Simple 1
@@ -1237,8 +1225,8 @@ public void Linq28()
     sortedWords.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
+```python
+#python
 linq28(){
   var words = [ "cherry", "apple", "blueberry" ]; 
   
@@ -1268,16 +1256,15 @@ public void Linq29()
     sortedWords.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
+```python
+#python
 linq29(){
-  var words = [ "cherry", "apple", "blueberry" ]; 
-  
-  var sortedWords = order(words, on:(a) => a.length);
-  
-  print("The sorted list of words (by length):"); 
-  sortedWords.forEach(print);
-}
+    words = ["cherry", "apple", "blueberry"]
+
+    sorted_words = sorted(words, key=lambda x: len(x))
+
+    print("The sorted list of words (by length):")
+    shared.printS(sorted_words)
 ```
 #### Output
 
@@ -1298,15 +1285,14 @@ public void Linq30()
     ObjectDumper.Write(sortedProducts);
 }
 ```
-```dart
-//dart
-linq30(){
-  var products = productsList(); 
-  
-  var sortedProducts = order(products, on:(a) => a.productName);
-  
-  sortedProducts.forEach(print);
-}
+```python
+#python
+def linq30():
+    products = shared.getProductList()
+
+    sorted_products = sorted(products, key=lambda p:  p.ProductName)
+
+    shared.print_namespace(sorted_products)
 ```
 #### Output
 
@@ -1329,15 +1315,14 @@ public void Linq31()
     ObjectDumper.Write(sortedWords); 
 } 
 ```
-```dart
-//dart
-linq31(){
-  var words = [ "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" ]; 
-  
-  var sortedWords = order(words, by:caseInsensitiveComparer); 
-  
-  sortedWords.forEach(print);
-}
+```python
+#python
+def linq31():
+    words = ["aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry"]
+
+    sorted_words = sorted(words, key=lambda s: s.casefold())
+
+    shared.printS(sorted_words)
 ```
 #### Output
 
@@ -1361,16 +1346,15 @@ public void Linq32()
     sortedDoubles.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
-linq32(){
-  var doubles = [ 1.7, 2.3, 1.9, 4.1, 2.9 ]; 
-  
-  var sortedDoubles = order(doubles).reversed; 
-  
-  print("The doubles from highest to lowest:");   
-  sortedDoubles.forEach(print);
-}
+```python
+#python
+def linq32():
+    doubles = [1.7, 2.3, 1.9, 4.1, 2.9]
+
+    sorted_doubles = sorted(doubles, reverse=True)
+
+    print("The doubles from highest to lowest:")
+    shared.printN(sorted_doubles)
 ```
 #### Output
 
@@ -1393,15 +1377,14 @@ public void Linq33()
     ObjectDumper.Write(sortedProducts);
 }
 ```
-```dart
-//dart
-linq33(){
-  var products = productsList(); 
-  
-  var sortedProducts = order(products, on:(a) => a.unitsInStock).reversed; 
-  
-  sortedProducts.forEach(print);
-}
+```python
+#python
+def linq33():
+    products = shared.getProductList()
+
+    sorted_products = sorted(products, key=lambda p: p.UnitsInStock, reverse=True);
+
+    shared.print_namespace(sorted_products)
 ```
 #### Output
 
@@ -1424,15 +1407,14 @@ public void Linq34()
     ObjectDumper.Write(sortedWords);
 } 
 ```
-```dart
-//dart
-linq34(){
-  var words = [ "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" ]; 
-  
-  var sortedWords = order(words, by:caseInsensitiveComparer).reversed;
-  
-  sortedWords.forEach(print);
-}
+```python
+#python
+def linq34():
+    words = ["aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry"]
+
+    sorted_words = sorted(words, key=lambda s: s.casefold(), reverse=True);
+
+    shared.print_namespace(sorted_words)
 ```
 #### Output
 
@@ -1458,16 +1440,15 @@ public void Linq35()
     sortedDigits.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
-linq35(){
-  var digits = [ "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" ]; 
-  
-  var sortedDigits = order(digits, onAll:[(a) => a.length, (a) => a]);
-  
-  print("Sorted digits:"); 
-  sortedDigits.forEach(print);
-}
+```python
+#python
+def linq35():
+    digits = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+
+    sorted_digits = sorted(digits, key=lambda s: (len(s), s))
+    
+    print("Sorted digits:")
+    shared.printS(sorted_digits)
 ```
 #### Output
 
