@@ -1,7 +1,18 @@
+import datetime
 import json
 
 def printS(sequence):
     print ("\n".join(list(sequence)))
+
+def printN(sequence):
+    for item in sequence:
+        s = repr(item)
+        print(s)
+
+def print_namespace(sequence):
+    for item in sequence:
+        s = repr(item)
+        print(s.lstrip("namespace"))
 
 class Product(object):
     def __init__(self, ProductID=None, ProductName=None, Category=None, UnitPrice=None, UnitsInStock=None):
@@ -12,7 +23,7 @@ class Product(object):
         self.UnitsInStock = UnitsInStock
 
 class Order(object):
-    def __init__(self, OrderId=None, OrderDate=None, Total=None):
+    def __init__(self, OrderId=None, OrderDate=datetime.datetime(1970, 1, 1), Total=0):
         self.OrderID = OrderId
         self.OrderDate = OrderDate
         self.Total = Total
@@ -130,7 +141,9 @@ def getCustomerList():
 
             if "orders" in customer:
                 for order in customer["orders"]["order"]:
-                    ord = Order(order["id"], order["orderdate"], order["total"])
+                    ord = Order(int(order["id"]))
+                    ord.OrderDate = datetime.datetime.strptime( order["orderdate"], "%Y-%m-%dT%H:%M:%S" )
+                    ord.Total = float(order["total"])
                     cust.Orders.append(ord)
             result.append(cust)
     return result

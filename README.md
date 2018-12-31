@@ -1,8 +1,10 @@
 
-101 LINQ Samples in Dart
+101 LINQ Samples in Python
 ========================
 
-Port of the [C# 101 LINQ Samples](http://code.msdn.microsoft.com/101-LINQ-Samples-3fb9811b) rewritten into idiomatic Dart and utilizing its functional collection mixins.
+Port of the [C# 101 LINQ Samples](http://code.msdn.microsoft.com/101-LINQ-Samples-3fb9811b) rewritten into idiomatic Python and utilizing its functional methods where possible.
+
+Python doesn't really lend itself well to functional programming because is functional methods are really procedural.  There is support for lambda expressions, but you can't chain or compose your your functional operations very well as you will see compare to C# equivalent below.
 
 ### Why the fork?
 
@@ -47,10 +49,10 @@ The samples below mirrors the C# LINQ samples layout with the names of the top-l
 |---------|--|----|-------|
 |**Restriction**|`Where`|`filter`||
 |**Projection**|`Select`|`map`||
-||`SelectMany`|`expand`||
-|**Partitioning**|`Take`|`take`||
+||`SelectMany`||Customer select_many utility added|
+|**Partitioning**|`IEnumerable.Take(n)`|`array[:n]`||
 ||`TakeWhile`|`takeWhile`||
-||`Skip`|`skip`||
+||`IEnumerable.Skip(n)`|`array[n:]`||
 ||`SkipWhile`|`skipWhile`||
 |**Ordering**|`OrderBy`||Custom [order](#dart-utils-added) utility added| 
 ||`OrderByDescending`||Custom [order](#dart-utils-added) utility added, followed by `reversed`|
@@ -96,10 +98,10 @@ The samples below mirrors the C# LINQ samples layout with the names of the top-l
   -  [Phython](src/python/linq-restrictions.py) 
   -  [C#](src/csharp/linq-restrictions/Program.cs)
 - [Projection Operators](#linq---projection-operators)
-  - [Dart](bin/linq-projections.dart)
+  - [Phython](src/python/linq-projections.py)
   - [C#](src/csharp/linq-projections/Program.cs)
 - [Partitioning Operators](#linq---partitioning-operators)
-  - [Dart](bin/linq-partitioning.dart)
+  - [Phython]src/python/linq-partitions.py)
   - [C#](src/csharp/linq-partitioning/Program.cs)
 - [Ordering Operators](#linq---ordering-operators)
   - [Dart](bin/linq-ordering.dart)
@@ -337,6 +339,19 @@ def linq5():
 
 LINQ - Projection Operators
 ---------------------------
+
+### Python utils added
+
+```python
+def select_many(outer_list, inner_list):
+    def select(item, the_list):
+        return map(lambda b: SimpleNamespace(a=item, b=b), the_list)
+
+    result = []
+    for outer_list in outer_list:
+        result.extend(select(outer_list, inner_list))
+    return result
+```
 
 ### linq6: Select - Simple 1
 ```csharp
@@ -638,21 +653,18 @@ public void Linq14()
     pairs.ForEach(pair => Console.WriteLine("{0} is less than {1}", pair.a, pair.b));
 }
 ```
-```dart
-//dart
-linq14(){
-  var numbersA = [ 0, 2, 4, 5, 6, 8, 9 ]; 
-  var numbersB = [ 1, 3, 5, 7, 8 ]; 
-  
-  var pairs = numbersA
-    .expand((a) => numbersB
-      .where((b) => a < b)
-      .map((b) => { 'a':a, 'b':b }));
-  
-  print("Pairs where a < b:"); 
-  pairs.forEach((pair) =>
-    print("${pair['a']} is less than ${pair['b']}"));  
-}
+```python
+#python
+def linq_14():
+    numbers_a = [0, 2, 4, 5, 6, 8, 9]
+    numbers_b = [1, 3, 5, 7, 8]
+
+    pairs = filter(lambda pair: pair.a < pair.b, select_many(numbers_a, numbers_b))
+
+    print("Pairs where a < b:")
+    for p in pairs:
+        print("%d is less than %d}" % (p.a, p.b))
+
 ```
 #### Output
 
@@ -689,18 +701,16 @@ public void Linq15()
     ObjectDumper.Write(orders);
 }
 ```
-```dart
-//dart
-linq15(){
-  var customers = customersList(); 
-  
-  var orders = customers
-    .expand((c) => c.orders
-      .where((o) => o.total < 500)
-      .map((o) => { 'CustomerId': c.customerId, 'OrderId':o.orderId, 'Total':o.total }));
-  
-  orders.forEach(print);   
-}
+```python
+#python
+def linq15():
+    customers = shared.getCustomerList()
+
+    orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID, order_id=x.item_b.OrderID, total=x.item_b.Total),
+                 filter(lambda x: x.item_b.Total < 500.00,
+                        select_many(customers, "Orders")))
+
+    shared.print_namespace(orders)
 ```
 #### Output
 
@@ -725,8 +735,8 @@ public void Linq16()
     ObjectDumper.Write(orders);
 }
 ```
-```dart
-//dart
+```python
+#python
 linq16(){
   var customers = customersList(); 
   
@@ -899,15 +909,15 @@ public void Linq20()
     first3Numbers.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
-linq20(){
-  var numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]; 
-  
-  var first3Numbers = numbers.take(3); 
+```python
+#python
+def linq20():
+    numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
 
-  print("First 3 numbers:"); 
-  first3Numbers.forEach(print); 
+    first3_numbers = numbers[:3]
+
+    print("First 3 numbers:")
+    shared.printN(first3_numbers)
 }
 ```
 #### Output
@@ -934,8 +944,8 @@ public void Linq21()
     first3WAOrders.ForEach(ObjectDumper.Write);
 }
 ```
-```dart
-//dart
+```python
+#python
 linq21(){
   var customers = customersList(); 
   
@@ -1190,9 +1200,9 @@ LINQ - Ordering Operators
 StringComparer.CurrentCultureIgnoreCase
 ```
 
-### Dart utils added
+### Python utils added
 
-```dart
+```python
 wrap(value, fn(x)) => fn(value);
 
 order(List seq, {Comparator by, List<Comparator> byAll, on(x), List<Function> onAll}) =>
