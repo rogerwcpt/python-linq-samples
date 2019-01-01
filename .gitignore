@@ -11,3 +11,4 @@ obj
 .vs
 tools
 __pycache__
+.pytest_cache

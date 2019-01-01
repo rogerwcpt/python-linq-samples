@@ -50,7 +50,7 @@ The samples below mirrors the C# LINQ samples layout with the names of the top-l
 |---------|--|----|-------|
 |**Restriction**|`Where`|`filter`||
 |**Projection**|`Select`|`map`||
-||`SelectMany`||Customer select_many utility added|
+||`SelectMany`||Custom select_many utility added|
 |**Partitioning**|`IEnumerable.Take(n)`|`array[:n]`||
 ||`IEnumerable.TakeWhile(predicate)`|`itertools.takewhile(predicate, sequence)`||
 ||`IEnumerable.Skip(n)`|`array[n:]`||
@@ -62,7 +62,7 @@ The samples below mirrors the C# LINQ samples layout with the names of the top-l
 ||`ThenBy`|`sequence.sort(key=lambda (key1, key2))` *or* <br/> `sorted(sequence, key=lambda (key1, key))`|| 
 ||`ThenByDescending`|`sequence.sort(key=lambda (key1, -key2))` *or* <br/> `sorted(sequence, key=lambda (key1, -key2))` <br/> *or use a 2 pass sort, starting with least significant* <br/> `ordered =  sorted(unordered, key=lambda (key2))`  <br/> `ordered =  sorted(ordered, key=lambda (key1))` |
 ||`Reverse`|`sequence.reverse()` *or* `reversed(sequence)`||
-|**Grouping**|`GroupBy`||Custom [group](#dart-utils-added-1) utility added
+|**Grouping**|`GroupBy`||`from itertools import groupby`|Only works on sorted lists|
 |**Sets**|`Distinct`|`toSet`||
 ||`Union`|`union`||
 ||`Interect`|`intersection`||
@@ -1686,24 +1686,26 @@ public void Linq40()
 
     numberGroups.ForEach((g) => 
     {
-            Console.WriteLine("Numbers with a remainder of {0} when divided by 5:", g.Remainder);
-            g.Numbers.ForEach(Console.WriteLine);
+        Console.WriteLine("Numbers with a remainder of {0} when divided by 5:", g.Remainder);
+        g.Numbers.ForEach(Console.WriteLine);
     });
 }
 ```
-```dart
-//dart
-linq40(){
-  var numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]; 
-  
-  var numberGroups = group(numbers, by:(n) => n % 5)
-    .map((g) => {'Remainder':g.key, 'Numbers':g});
-      
-  numberGroups.forEach((g){
-    print("Numbers with a remainder of ${g['Remainder']} when divided by 5:"); 
-    g['Numbers'].forEach(print);
-  });
-}
+```python
+#python
+def linq40():
+    numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
+
+    # First create a record of numbers and their modulus of 5
+    number_remainders = map(lambda n: SimpleNamespace(Number=n, Remainder=n % 5), numbers)
+    # Group By only works on sorted lists, so sort by both fields
+    sorted_by_reminder = sorted(number_remainders, key=lambda x: (x.Remainder, x.Number))
+    remainder_groups = groupby(sorted_by_reminder, key=lambda nr: nr.Remainder)
+
+    for key, items in remainder_groups:
+        print("Numbers with a remainder of %d when divided by 5:" % key)
+        for item in items:
+            print(item.Number)
 ```
 #### Output
 
@@ -1741,31 +1743,32 @@ public void Linq41()
     });
 }
 ```
-```dart
-linq41(){
-  var words = [ "blueberry", "chimpanzee", "abacus", "banana", "apple", "cheese" ]; 
-  
-  var wordGroups = group(words, by:(w) => w[0])
-    .map((g) => { 'FirstLetter': g.key, 'Words': g }); 
-      
-  wordGroups.forEach((g){
-    print("Words that start with the letter '${g['FirstLetter']}':"); 
-    g['Words'].forEach(print);
-  });
-}
+```python
+#python
+def linq41():
+    words = ["blueberry", "chimpanzee", "abacus", "banana", "apple", "cheese"]
+
+    first_letter_words = map(lambda w: SimpleNamespace(Letter=w[0], Word=w), words)
+    # Group By only works on sorted lists, so sort by both fields
+    sorted_letter_words = sorted(first_letter_words, key=lambda x: (x.Word, x.Letter))
+    letter_groups = groupby(sorted_letter_words, key=lambda nr: nr.Letter)
+
+    for key, items in letter_groups:
+        print("Words that start with the letter '%s':" % key)
+        for item in items:
+            print(item.Word)
 ```
 #### Output
 
-    //dart
-    Words that start with the letter 'c':
-    chimpanzee
-    cheese
     Words that start with the letter 'a':
     abacus
     apple
     Words that start with the letter 'b':
-    blueberry
     banana
+    blueberry
+    Words that start with the letter 'c':
+    cheese
+    chimpanzee
 
 ### linq42: GroupBy - Simple 3
 ```csharp
@@ -1781,21 +1784,31 @@ public void Linq42()
     ObjectDumper.Write(orderGroups, 1); 
 } 
 ```
-```dart
-//dart
-linq42(){
-  var products = productsList(); 
-  
-  var orderGroups = group(products, by:(p) => p.category)
-    .map((g) => { 'Category': g.key, 'Products': g });
- 
-  orderGroups.forEach(print);
-}
+```python
+#python
+def linq42():
+    products = shared.getProductList()
+
+    # Group By only works on sorted lists, so sort by Category first, which is the grouping key
+    sorted_by_category = sorted(products, key=lambda p: p.Category)
+    order_groups = groupby(sorted_by_category, key=lambda p: p.Category)
+
+    for key, items in order_groups:
+        print("Products in the category '%s':" % key)
+        print(list(items))
 ```
 #### Output
 
-    {Category: Dairy Products, Products: {{productId: 11, productName: Queso Cabrales, category: Dairy Products, unitPrice: 21.0, unitsInStock: 22}, {productId: 12, productName: Queso Manchego La Pastora, category: Dairy Products, unitPrice: 38.0, unitsInStock: 86}, {productId: 31, productName: Gorgonzola Telino, category: Dairy Products, unitPrice: 12.5, unitsInStock: 0}, {productId: 32, productName: Mascarpone Fabioli, category: Dairy Products, unitPrice: 32.0, unitsInStock: 9}, {productId: 33, productName: Geitost, category: Dairy Products, unitPrice: 2.5, unitsInStock: 112}, {productId: 59, productName: Raclette Courdavault, category: Dairy Products, unitPrice: 55.0, unitsInStock: 79}, {productId: 60, productName: Camembert Pierrot, category: Dairy Products, unitPrice: 34.0, unitsInStock: 19}, {productId: 69, productName: Gudbrandsdalsost, category: Dairy Products, unitPrice: 36.0, unitsInStock: 26}, {productId: 71, productName: Flotemysost, category: Dairy Products, unitPrice: 21.5, unitsInStock: 26}, {productId: 72, productName: Mozzarella di Giovanni, category: Dairy Products, unitPrice: 34.8, unitsInStock: 14}}}
-    {Category: Grains/Cereals, Products: {{productId: 22, productName: Gustaf's Kn�ckebr�d, category: Grains/Cereals, unitPrice: 21.0, unitsInStock: 104}, {productId: 23, productName: Tunnbr�d, category: Grains/Cereals, unitPrice: 9.0, unitsInStock: 61}, {productId: 42, productName: Singaporean Hokkien Fried Mee, category: Grains/Cereals, unitPrice: 14.0, unitsInStock: 26}, {productId: 52, productName: Filo Mix, category: Grains/Cereals, unitPrice: 7.0, unitsInStock: 38}, {productId: 56, productName: Gnocchi di nonna Alice, category: Grains/Cereals, unitPrice: 38.0, unitsInStock: 21}, {productId: 57, productName: Ravioli Angelo, category: Grains/Cereals, unitPrice: 19.5, unitsInStock: 36}, {productId: 64, productName: Wimmers gute Semmelkn�del, category: Grains/Cereals, unitPrice: 33.25, unitsInStock: 22}}}
+/home/roger/PycharmProjects/untitled/venv/bin/python /home/roger/Projects/GitHub.Personal/python-linq-samples/src/python/linq-grouping.py
+Products in the category 'Beverages':
+[{productId: 1, productName: Chai, category: Beverages, unitPrice: 18.00, unitsInStock: 39}, {productId: 2, productName: Products in the category 'Condiments':
+[{productId: 3, productName: Aniseed Syrup, category: Condiments, unitPrice: 10.00, unitsInStock: 13}, {productId: 4, Products in the category 'Confections':
+[{productId: 16, productName: Pavlova, category: Confections, unitPrice: 17.45, unitsInStock: 29}, {productId: 19, Products in the category 'Dairy Products':
+[{productId: 11, productName: Queso Cabrales, category: Dairy Products, unitPrice: 21.00, unitsInStock: 22}, {productId: Products in the category 'Grains/Cereals':
+[{productId: 22, productName: Gustaf's Knäckebröd, category: Grains/Cereals, unitPrice: 21.00, unitsInStock: 104}, Products in the category 'Meat/Poultry':
+[{productId: 9, productName: Mishi Kobe Niku, category: Meat/Poultry, unitPrice: 97.00, unitsInStock: 29}, {productId: 17,Products in the category 'Produce':
+[{productId: 7, productName: Uncle Bob's Organic Dried Pears, category: Produce, unitPrice: 30.00, unitsInStock: 15}, Products in the category 'Seafood':
+[{productId: 10, productName: Ikura, category: Seafood, unitPrice: 31.00, unitsInStock: 31}, {productId: 13, productName: 
 
 ### linq43: GroupBy - Nested
 ```csharp
@@ -1832,24 +1845,11 @@ public void Linq43()
     ObjectDumper.Write(customerOrderGroups, 3); 
 } 
 ```
-```dart
-//dart
-linq43(){
-  var customers = customersList(); 
-  
-  var customerOrderGroups = customers
-      .map((c) => {
-        'CompanyName': c.companyName, 
-        'YearGroups': group(c.orders, by:(o) => o.orderDate.year)
-          .map((yg) => {
-            'Year': yg.key, 
-            'MonthGroups': group(yg, by:(o) => o.orderDate.month)
-              .map((mg) => { 'Month': mg.key, 'Orders': mg }) 
-          })
-      });
+```python
+#python
+def linq43():
+    pass
 
-  customerOrderGroups.forEach(print);
-}
 ```
 #### Output
 
@@ -1868,15 +1868,10 @@ public void Linq44()
     ObjectDumper.Write(orderGroups, 1); 
 } 
 ```
-```dart
-//dart
-linq44(){
-  var anagrams = [ "from   ", " salt", " earn ", "  last   ", " near ", " form  " ]; 
-  
-  var orderGroups = group(anagrams, by:(w) => w.trim(), matchWith:anagramEqualityComparer); 
-  
-  orderGroups.forEach((x) => print(x.values)); 
-}
+```python
+#python
+def linq44():
+    pass
 ```
 #### Output
 
@@ -1900,18 +1895,10 @@ public void Linq45()
     ObjectDumper.Write(orderGroups, 1); 
 } 
 ```
-```dart
-//dart
-linq45(){
-  var anagrams = [ "from   ", " salt", " earn ", "  last   ", " near ", " form  " ]; 
-  
-  var orderGroups = group(anagrams, 
-    by: (w) => w.trim(), 
-    matchWith: anagramEqualityComparer, 
-    valuesAs: (w) => w.toUpperCase()); 
-  
-  orderGroups.forEach((x) => print(x.values)); 
-}
+```python
+#python
+def linq45():
+    pass
 ```
 #### Output
 
