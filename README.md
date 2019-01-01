@@ -62,15 +62,15 @@ The samples below mirrors the C# LINQ samples layout with the names of the top-l
 ||`ThenBy`|`sequence.sort(key=lambda (key1, key2))` *or* <br/> `sorted(sequence, key=lambda (key1, key))`|| 
 ||`ThenByDescending`|`sequence.sort(key=lambda (key1, -key2))` *or* <br/> `sorted(sequence, key=lambda (key1, -key2))` <br/> *or use a 2 pass sort, starting with least significant* <br/> `ordered =  sorted(unordered, key=lambda (key2))`  <br/> `ordered =  sorted(ordered, key=lambda (key1))` |
 ||`Reverse`|`sequence.reverse()` *or* `reversed(sequence)`||
-|**Grouping**|`GroupBy`||`from itertools import groupby`|Only works on sorted lists|
-|**Sets**|`Distinct`|`toSet`||
+|**Grouping**|`GroupBy`|`groupby`|`from itertools import groupby` <br/>Grouping  works on sorted sequences
+|**Sets**|`Distinct`|`set`||
 ||`Union`|`union`||
 ||`Interect`|`intersection`||
 ||`Except`|`difference`||
 |**Conversion**|`ToArray`|`toList`||
 ||`ToList`|`toList`||
-||`ToDictionary`||Custom [toMap](#dart-utils-added-2) utility added|
-||`OfType`||Custom [ofType](#dart-utils-added-2) utility added|
+||`ToDictionary`|`dict`|Often used in conjuction with `zip`|
+||`OfType`|`'ilter` using `isinstance` as predicate|
 |**Element**|`First`|`first`||
 ||`First(lambda)`|`firstWhere(lambda)`||
 ||`FirstOrDefault`|`firstWhere(lambda, default)`|
@@ -1923,16 +1923,14 @@ public void Linq46()
     uniqueFactors.ForEach(Console.WriteLine); 
 }
 ```
-```dart
-//dart
-linq46(){
-  var factorsOf300 = [ 2, 2, 3, 5, 5 ]; 
-  
-  var uniqueFactors = factorsOf300.toSet(); 
+```python
+#python
+def linq46():
+    factors_of300 = [2, 2, 3, 5, 5]
 
-  print("Prime factors of 300:");
-  uniqueFactors.forEach(print);
-}
+    unique_factors = set(factors_of300)
+
+    shared.printN(unique_factors)
 ```
 #### Output
 
@@ -1956,18 +1954,15 @@ public void Linq47()
     categoryNames.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
-linq47(){
-  var products = productsList(); 
-  
-  var categoryNames = products 
-    .map((p) => p.category)
-    .toSet(); 
-  
-  print("Category names:"); 
-  categoryNames.forEach(print);
-}
+```python
+#python
+def linq47():
+    products = shared.getProductList()
+
+    category_names = set(map(lambda p: p.Category, products))
+
+    print("Category names:")
+    shared.printS(category_names)
 ```
 #### Output
 
@@ -1995,17 +1990,16 @@ public void Linq48()
     uniqueNumbers.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
-linq48(){
-  var numbersA = [ 0, 2, 4, 5, 6, 8, 9 ]; 
-  var numbersB = [ 1, 3, 5, 7, 8 ]; 
-  
-  var uniqueNumbers = numbersA.toSet().union(numbersB.toSet()); 
-  
-  print("Unique numbers from both arrays:"); 
-  uniqueNumbers.forEach(print);
-}
+```python
+#python
+def linq48():
+    numbers_a = [0, 2, 4, 5, 6, 8, 9]
+    numbers_b = [1, 3, 5, 7, 8]
+
+    unique_numbers = set(numbers_a + numbers_b)
+
+    print("Unique numbers from both arrays:")
+    shared.printN(unique_numbers)
 ```
 #### Output
 
@@ -2040,22 +2034,19 @@ public void Linq49()
     uniqueFirstChars.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
-linq49(){
-  var products = productsList(); 
-  var customers = customersList(); 
-  
-  var productFirstChars = products 
-    .map((p) => p.productName[0]); 
-  var customerFirstChars = customers
-    .map((c) => c.companyName[0]); 
-  
-  var uniqueFirstChars = productFirstChars.toSet().union(customerFirstChars.toSet()); 
-  
-  print("Unique first letters from Product names and Customer names:"); 
-  uniqueFirstChars.forEach(print);
-}
+```python
+#python
+def linq49():
+    products = shared.getProductList()
+    customers = shared.getCustomerList()
+
+    product_first_chars = map(lambda p: p.ProductName[0], products)
+    customer_first_chars = map(lambda c: c.CompanyName[0], customers)
+
+    unique_first_chars = set(product_first_chars).union(set(customer_first_chars))
+
+    print("Unique first letters from Product names and Customer names:")
+    shared.printS(unique_first_chars)
 ```
 #### Output
 
@@ -2099,17 +2090,16 @@ public void Linq50()
     commonNumbers.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
-linq50(){
-  var numbersA = [ 0, 2, 4, 5, 6, 8, 9 ]; 
-  var numbersB = [ 1, 3, 5, 7, 8 ]; 
-  
-  var commonNumbers = numbersA.toSet().intersection(numbersB.toSet()); 
-  
-  print("Common numbers shared by both arrays:"); 
-  commonNumbers.forEach(print);
-}
+```python
+#python
+def linq50():
+    numbers_a = [0, 2, 4, 5, 6, 8, 9]
+    numbers_b = [1, 3, 5, 7, 8]
+
+    common_numbers = set(numbers_a).intersection((set(numbers_b)))
+
+    print("Common numbers shared by both arrays:")
+    shared.printN(common_numbers)
 ```
 #### Output
 
@@ -2130,28 +2120,25 @@ public void Linq51()
     var customerFirstChars = customers
         .Select(c => c.CompanyName[0]);
 
-    var commonFirstChars = productFirstChars.Intersect(customerFirstChars);
+    var commonFirstChars = productFirstChars.Intersect(customerFirstChars)
 
     Console.WriteLine("Common first letters from Product names and Customer names:");
     commonFirstChars.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
-linq51(){
-  var products = productsList(); 
-  var customers = customersList(); 
-  
-  var productFirstChars = products 
-    .map((p) => p.productName[0]); 
-  var customerFirstChars = customers
-    .map((c) => c.companyName[0]); 
-  
-  var commonFirstChars = productFirstChars.toSet().intersection(customerFirstChars.toSet()); 
-  
-  print("Common first letters from Product names and Customer names:"); 
-  commonFirstChars.forEach(print);
-}
+```python
+#python
+def linq51():
+    products = shared.getProductList()
+    customers = shared.getCustomerList()
+
+    product_first_chars = map(lambda p: p.ProductName[0], products)
+    customer_first_chars = map(lambda c: c.CompanyName[0], customers)
+
+    unique_first_chars = set(product_first_chars).intersection(set(customer_first_chars))
+
+    print("Common first letters from Product names and Customer names:")
+    shared.printS(unique_first_chars)
 ```
 #### Output
 
@@ -2190,17 +2177,16 @@ public void Linq52()
     aOnlyNumbers.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
-linq52(){
-  var numbersA = [ 0, 2, 4, 5, 6, 8, 9 ]; 
-  var numbersB = [ 1, 3, 5, 7, 8 ]; 
-  
-  var aOnlyNumbers = numbersA.toSet().difference(numbersB.toSet()); 
-  
-  print("Numbers in first array but not second array:"); 
-  aOnlyNumbers.forEach(print);
-}
+```python
+#python
+def linq52():
+    numbers_a = [0, 2, 4, 5, 6, 8, 9]
+    numbers_b = [1, 3, 5, 7, 8]
+
+    a_only_numbers = set(numbers_a).difference((set(numbers_b)))
+
+    print("Numbers in first array but not second array:")
+    shared.printN(a_only_numbers)
 ```
 #### Output
 
@@ -2230,22 +2216,19 @@ public void Linq53()
     productOnlyFirstChars.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
-linq53(){
-  var products = productsList(); 
-  var customers = customersList(); 
-  
-  var productFirstChars = products 
-    .map((p) => p.productName[0]); 
-  var customerFirstChars = customers
-    .map((c) => c.companyName[0]); 
-  
-  var productOnlyFirstChars = productFirstChars.toSet().difference(customerFirstChars.toSet()); 
-  
-  print("First letters from Product names, but not from Customer names:"); 
-  productOnlyFirstChars.forEach(print);
-}
+```python
+#python
+def linq53():
+    products = shared.getProductList()
+    customers = shared.getCustomerList()
+
+    product_first_chars = map(lambda p: p.ProductName[0], products)
+    customer_first_chars = map(lambda c: c.CompanyName[0], customers)
+
+    unique_first_chars = set(product_first_chars).difference(set(customer_first_chars))
+
+    print("First letters from Product names, but not from Customer names:")
+    shared.printS(unique_first_chars)
 ```
 #### Output
 
@@ -2289,20 +2272,21 @@ public void Linq54()
     }
 }
 ```
-```dart
-//dart
-linq54(){
-  var doubles = [ 1.7, 2.3, 1.9, 4.1, 2.9 ]; 
+```python
+#python
+def linq54():
+    doubles = [ 1.7, 2.3, 1.9, 4.1, 2.9 ]
   
-  var sortedDoubles = order(doubles).reversed;
+    sorted_doubles = sorted(doubles, reverse=True)
 
-  var doublesArray = sortedDoubles.toList(growable:false); 
+    soubles_array = list(sorted_doubles)
   
-  print("Every other double from highest to lowest:"); 
-  for (int d = 0; d < doublesArray.length; d += 2){ 
-    print(doublesArray[d]); 
-  } 
-}
+    print("Every other double from highest to lowest:")
+    # shared.printN(soublesArray)
+    d = 0
+    while d < len(soubles_array):
+        print(soubles_array[d])
+        d += 2
 ```
 #### Output
 
@@ -2326,18 +2310,17 @@ public void Linq55()
     wordList.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
-linq55(){
-  var words = [ "cherry", "apple", "blueberry" ]; 
-  
-  var sortedWords = orderBy(words);
-  
-  var wordList = sortedWords.toList(); 
-  
-  print("The sorted word list:"); 
-  wordList.forEach(print);
-}
+```python
+#python
+def  linq55():
+    words = ["cherry", "apple", "blueberry"]
+
+    sorted_words = sorted(words)
+
+    word_list = list(sorted_words)
+
+    print("The sorted word list:")
+    shared.printN(word_list)
 ```
 #### Output
 
@@ -2363,17 +2346,18 @@ public void Linq56()
     Console.WriteLine("Bob's score: {0}", scoreRecordsDict["Bob"]);
 }
 ```
-```dart
-//dart
-linq56(){
-  var scoreRecords = [{ 'Name': "Alice", 'Score': 50}, 
-                      { 'Name': "Bob"  , 'Score': 40}, 
-                      { 'Name': "Cathy", 'Score': 45}];
-  
-  var scoreRecordsDict = toMap(scoreRecords, (sr) => sr['Name']); 
-  
-  print("Bob's score: ${scoreRecordsDict['Bob']}"); 
-}
+```python
+#python
+def linq56():
+    score_records = [{'Name': "Alice", 'Score': 50},
+                    {'Name': "Bob", 'Score': 40},
+                    {'Name': "Cathy", 'Score': 45}]
+
+    index = map(lambda s: s["Name"], score_records)
+
+    score_records_dict = dict(zip(index, score_records))
+
+    print("Bob's score: %s" % score_records_dict["Bob"])
 ```
 #### Output
 
@@ -2392,16 +2376,15 @@ public void Linq57()
     doubles.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
-linq57(){
-  var numbers = [ null, 1.0, "two", 3, "four", 5, "six", 7.0 ]; 
-  
-  var doubles = ofType(numbers, double); 
-  
-  print("Numbers stored as doubles:"); 
-  doubles.forEach(print);
-}
+```python
+#python
+def linq57():
+    numbers = [None, 1.0, "two", 3, "four", 5, "six", 7.0]
+
+    floats = filter(lambda n: isinstance(n, float), numbers)
+
+    print("Numbers stored as floats:")
+    shared.printN(floats)
 ```
 #### Output
 
