@@ -13,13 +13,13 @@ namespace linq_ordering
             // Linq29();
             // Linq30();
             // Linq31();
-            Linq32();
+            // Linq32();
             // Linq33();
             // Linq34();
             // Linq35();
             // Linq36();
             // Linq37();
-            // Linq38();
+             Linq38();
             // Linq39();
         }
 

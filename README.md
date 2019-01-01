@@ -55,13 +55,13 @@ The samples below mirrors the C# LINQ samples layout with the names of the top-l
 ||`IEnumerable.TakeWhile(predicate)`|`itertools.takewhile(predicate, sequence)`||
 ||`IEnumerable.Skip(n)`|`array[n:]`||
 ||`SkipWhile`|`itertools.dropwhile(predicate, sequence)`||
-|**Ordering**|`OrderBy`|`sequence.sort` or</br> `sorted(sequence)`|| 
-||`OrderBy(lambda)`|`sequence.sort(key=lambda)` or </br> `sorted(sequence, key=lambda)`|| 
-||`OrderByDescending`|`sequence.sort(reverseTrue)` or </br>  `sorted(sequence, reverse=true)`|| 
-||`OrderByDescending(lambda)`|`sequence.sort(key=lambda, reverseTrue)` or </br> `sorted(sequence, key=lambda, reverse=true)`|| 
-||`ThenBy`||`sequence.sort(key=lambda (key1, key2))` or </br> `sorted(sequence, key=lambda (key1, key))`|| 
-||`ThenByDescending`||Custom [order](#dart-utils-added) utility added, followed by `reversed`|
-||`Reverse`|`reverse`||
+|**Ordering**|`OrderBy`|`sequence.sort()` *or* <br/> `sorted(sequence)`|| 
+||`OrderBy(lambda)`|`sequence.sort(key=lambda)` *or* <br/> `sorted(sequence, key=lambda)`|| 
+||`OrderByDescending`|`sequence.sort(reverse=True)` *or* <br/>  `sorted(sequence, reverse=True)`|| 
+||`OrderByDescending(lambda)`|`sequence.sort(key=lambda, reverse=True)` *or* <br/> `sorted(sequence, key=lambda, reverse=True)`|| 
+||`ThenBy`|`sequence.sort(key=lambda (key1, key2))` *or* <br/> `sorted(sequence, key=lambda (key1, key))`|| 
+||`ThenByDescending`|`sequence.sort(key=lambda (key1, -key2))` *or* <br/> `sorted(sequence, key=lambda (key1, -key2))` <br/> *or use a 2 pass sort, starting with least significant* <br/> `ordered =  sorted(unordered, key=lambda (key2))`  <br/> `ordered =  sorted(ordered, key=lambda (key1))` |
+||`Reverse`|`sequence.reverse()` *or* `reversed(sequence)`||
 |**Grouping**|`GroupBy`||Custom [group](#dart-utils-added-1) utility added
 |**Sets**|`Distinct`|`toSet`||
 ||`Union`|`union`||
@@ -1445,8 +1445,8 @@ public void Linq35()
 def linq35():
     digits = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
 
-    sorted_digits = sorted(digits, key=lambda s: (len(s), s))
-    
+    sorted_digits = sorted(digits, key=lambda digit: (len(digit), digit))
+
     print("Sorted digits:")
     shared.printS(sorted_digits)
 ```
@@ -1478,15 +1478,14 @@ public void Linq36()
     ObjectDumper.Write(sortedWords);
 } 
 ```
-```dart
-//dart
-linq36(){
-  var words = [ "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" ]; 
-  
-  var sortedWords = order(words, byAll:[(a,b) => a.length.compareTo(b.length), caseInsensitiveComparer]);
-  
-  sortedWords.forEach(print);
-}
+```python
+#python
+def linq36():
+    words = ["aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry"]
+
+    sorted_words = sorted(words, key=lambda word: (len(word), word.casefold()))
+
+    shared.print_namespace(sorted_words)
 ```
 #### Output
 
@@ -1511,15 +1510,16 @@ public void Linq37()
     ObjectDumper.Write(sortedProducts); 
 }
 ```
-```dart
-//dart
-linq37(){
-  var products = productsList(); 
+```python
+#python
+def linq37():
+    products = shared.getProductList()
 
-  var sortedProducts = order(products, onAll:[(a) => a.category, (a) => a.unitPrice * -1]);
-  
-  sortedProducts.forEach(print);
-}
+    # negate secondary sort because its a number for reverse order
+    sorted_products = sorted(products, key=lambda product: (product.Category, -product.UnitPrice))
+
+    shared.print_namespace(sorted_products)
+
 ```
 #### Output
 
@@ -1548,15 +1548,17 @@ public void Linq38()
     ObjectDumper.Write(sortedWords);
 } 
 ```
-```dart
-//dart
-linq38(){
-  var words = [ "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" ]; 
-  
-  var sortedWords = order(words, 
-    byAll:[(a,b) => a.length.compareTo(b.length), (a,b) => caseInsensitiveComparer(b,a)]); 
+```python
+#python
+def linq38():
+    words = ["aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry"]
 
-  sortedWords.forEach(print);
+    # two pass sort, sort by least significant first
+    sorted_words = sorted(words, key=lambda word: word.casefold(), reverse=True)
+    sorted_words = sorted(sorted_words, key=lambda word: len(word))
+
+
+    shared.printS(sorted_words)
 }
 ```
 #### Output
@@ -1583,8 +1585,8 @@ public void Linq39()
     reversedIDigits.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
+```python
+#python
 linq39(){
   var digits = [ "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" ]; 
   
