@@ -2691,20 +2691,6 @@ def linq72():
 LINQ - Aggregate Operators
 --------------------------
 
-### Dart utils added
-
-```dart
-sum(Iterable seq, [fn(x)]) =>
-  seq.fold(0, (prev, element) => prev + (fn != null ? fn(element) : element));
-
-min(Iterable seq) =>
-  seq.fold(double.MAX_FINITE, (prev, element) => prev.compareTo(element) > 0 ? element : prev);
-
-max(Iterable seq) =>
-  seq.fold(double.MIN_POSITIVE, (prev, element) => prev.compareTo(element) > 0 ? prev : element);
-
-avg(Iterable seq) => sum(seq) / seq.length;
-```
 
 ### linq73: Count - Simple
 ```csharp
@@ -2953,15 +2939,14 @@ public void Linq82()
     Console.WriteLine($"The shortest word is {shortestWord} characters long.");
 }
 ```
-```dart
-//dart
-linq82(){
-  var words = [ "cherry", "apple", "blueberry" ]; 
-  
-  var shortestWord = min(words.map((x) => x.length));
-  
-  print("The shortest word is $shortestWord characters long."); 
-}
+```python
+#python
+def linq82():
+    words = ["cherry", "apple", "blueberry"]
+
+    shortest_word = min(len(w) for w in words)
+
+    print("The shortest word is %s characters long." % shortest_word)
 ```
 #### Output
 
@@ -2981,16 +2966,17 @@ public void Linq83()
     ObjectDumper.Write(categories);
 }
 ```
-```dart
-//dart
-linq83(){
-  var products = productsList(); 
-  
-  var categories = group(products, by:(p) => p.category)
-    .map((g) => { 'Category': g.key, 'CheapestPrice': min(g.values.map((p) => p.unitPrice)) });
+```python
+#python
+def linq83():
+    products = shared.getProductList()
 
-  categories.forEach(print);
-}
+    sorted_by_category = sorted(products, key=lambda p: p.Category)
+    grouped_by_category = groupby(sorted_by_category, key=lambda p: p.Category)
+
+    category_cheapest_price = map(lambda g: SimpleNamespace(Category=g[0], CheapestPrice=min(p.UnitPrice for p in g[1])), grouped_by_category)
+
+    shared.print_namespace(category_cheapest_price)
 ```
 #### Output
 
@@ -3021,8 +3007,8 @@ public void Linq84()
     ObjectDumper.Write(categories, 1);
 }
 ```
-```dart
-//dart
+```python
+#python
 linq84(){
   var products = productsList(); 
   

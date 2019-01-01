@@ -79,6 +79,30 @@ def linq82():
 
     print("The shortest word is %s characters long." % shortest_word)
 
+
+def linq83():
+    products = shared.getProductList()
+
+    sorted_by_category = sorted(products, key=lambda p: p.Category)
+    grouped_by_category = groupby(sorted_by_category, key=lambda p: p.Category)
+
+    category_cheapest_price = map(lambda g: SimpleNamespace(Category=g[0], CheapestPrice=min(p.UnitPrice for p in g[1])), grouped_by_category)
+
+    shared.print_namespace(category_cheapest_price)
+
+    
+def linq84():
+    products = shared.getProductList()
+
+    sorted_by_category = sorted(products, key=lambda p: p.Category)
+    grouped_by_category = groupby(sorted_by_category, key=lambda p: p.Category)
+    
+    categories_min_unitprice = map(lambda pg: SimpleNamespace(ProdGroup=pg, MinPrice=min(p.UnitPrice for p in pg[1])), grouped_by_category)
+
+    for item in categories_min_unitprice:
+        print("%s %d" % (item.ProdGroup, item.MinPrice))
+
+
 # linq73()
 # linq74()
 # linq75()
@@ -87,4 +111,6 @@ def linq82():
 # linq79()
 # linq80()
 # linq81()
-linq82()
+# linq82()
+# linq83()
+linq84()
