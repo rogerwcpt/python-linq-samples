@@ -85,10 +85,10 @@ The samples below mirrors the C# LINQ samples layout with the names of the top-l
 ||`Min`|min||
 ||`Max`|max||
 ||`Avg`|||
-||`Sum(lambda)`||Custom [sum](#dart-utils-added-4) utility  added|
-||`Min(lambda)`||Custom [min](#dart-utils-added-4) utility  added|
-||`Max(lambda)`||Custom [max](#dart-utils-added-4) utility  added|
-||`Avg(lambda)`||Custom [avg](#dart-utils-added-4) utility  added|
+||`Sum(lambda)`|`sum(iterator)`||
+||`Min(lambda)`|`min(iterator)`||
+||`Max(lambda)`|`max(iterator)`||
+||`Avg(lambda)`|`avg(iterator)`||
 ||`Aggregate`|reduce||
 ||`Aggregate(seed)`|fold||
 |**Miscellaneous**|`Concat`||Custom [concat](#dart-utils-added-5) utility  added|
