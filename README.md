@@ -79,12 +79,12 @@ The samples below mirrors the C# LINQ samples layout with the names of the top-l
 ||`Enumerable.Repeat`|`[x] * n` *or* <br /> `itertools.repeat(x, n)`||
 |**Quantifiers**|`Any`|`any`||
 ||`All`|`all`||
-|**Aggregate**|`Count`|`length`||
-||`Count(lamda)`|`where(lambda).length`||
-||`Sum`||Custom [sum](#dart-utils-added-4) utility  added|
-||`Min`||Custom [min](#dart-utils-added-4) utility  added|
-||`Max`||Custom [max](#dart-utils-added-4) utility  added|
-||`Avg`||Custom [avg](#dart-utils-added-4) utility  added|
+|**Aggregate**|`Count`|`length` *or* <br /> `sum(iterator)`||
+||`Count(lamda)`|`sum(iterator)`||
+||`Sum`|sum||
+||`Min`|min||
+||`Max`|max||
+||`Avg`|||
 ||`Sum(lambda)`||Custom [sum](#dart-utils-added-4) utility  added|
 ||`Min(lambda)`||Custom [min](#dart-utils-added-4) utility  added|
 ||`Max(lambda)`||Custom [max](#dart-utils-added-4) utility  added|
@@ -2718,15 +2718,15 @@ public void Linq73()
     Console.WriteLine($"There are {uniqueFactors} unique prime factors of 300.");
 }
 ```
-```dart
-//dart
-linq73(){
-  var factorsOf300 = [ 2, 2, 3, 5, 5 ]; 
-  
-  int uniqueFactors = factorsOf300.toSet().length; 
-  
-  print("There are $uniqueFactors unique factors of 300."); 
-}
+```python
+#python
+def linq73():
+    factors_of_300 = [2, 2, 3, 5, 5]
+
+    unique_factors = len(set(factors_of_300))
+
+    print("There are %d unique factors of 300." % unique_factors)
+
 ```
 #### Output
 
@@ -2744,15 +2744,14 @@ public void Linq74()
     Console.WriteLine($"There are {oddNumbers} odd numbers in the list.");
 }
 ```
-```dart
-//dart
-linq74(){
-  var numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]; 
-  
-  int oddNumbers = numbers.where((n) => n % 2 == 1).length; 
-  
-  print("There are $oddNumbers odd numbers in the list."); 
-}
+```python
+#python
+def linq74():
+    numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
+
+    odd_numbers = sum(n % 2 == 1 for n in numbers)
+
+    print("There are %d odd numbers in the list." % odd_numbers)
 ```
 #### Output
 
@@ -2771,16 +2770,14 @@ public void Linq76()
     ObjectDumper.Write(orderCounts);
 }
 ```
-```dart
-//dart
-linq76(){
-  var customers = customersList(); 
-  
-  var orderCounts = customers
-    .map((c) => { 'CustomerId': c.customerId, 'OrderCount': c.orders.length }); 
+```python
+#python
+def linq75():
+    customers = shared.getCustomerList()
 
-  orderCounts.forEach(print);
-}
+    order_counts = map(lambda cust: SimpleNamespace(CustomerID=cust.CustomerID, OrderCount=len(cust.Orders)), customers)
+
+    shared.print_namespace(order_counts)
 ```
 #### Output
 
@@ -2807,15 +2804,18 @@ public void Linq77()
     ObjectDumper.Write(categoryCounts);
 }
 ```
-```dart
-//dart
+```python
+#python
 linq77(){
-  var products = productsList(); 
-  
-  var categoryCounts = group(products, by:(p) => p.category)
-    .map((g) => { 'Category': g.key, 'ProductCount': g.length });      
+def linq77():
+    products = shared.getProductList()
 
-  categoryCounts.forEach(print);
+    sorted_by_category = sorted(products, key=lambda p: p.Category)
+    grouped_by_category = groupby(sorted_by_category, key=lambda p: p.Category)
+
+    category_counts = map(lambda g: SimpleNamespace(Category=g[0], ProductCount=len(list(g[1]))), grouped_by_category)
+
+    shared.print_namespace(category_counts)
 }
 ```
 #### Output
@@ -2841,15 +2841,14 @@ public void Linq78()
     Console.WriteLine($"The sum of the numbers is {numSum}.");
 }
 ```
-```dart
-//dart
-linq78(){
-  var numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]; 
-  
-  var numSum = sum(numbers); 
-  
-  print("The sum of the numbers is $numSum."); 
-}
+```python
+#python
+def linq78():
+    numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
+
+    num_sum = sum(numbers)
+
+    print("The sum of the numbers is %d." % num_sum)
 ```
 #### Output
 
@@ -2867,15 +2866,14 @@ public void Linq79()
     Console.WriteLine($"There are a total of {totalChars} characters in these words.");
 }
 ```
-```dart
-//dart
-linq79(){
-  var words = [ "cherry", "apple", "blueberry" ]; 
-  
-  var totalChars = sum(words, (w) => w.length); 
-  
-  print("There are a total of $totalChars characters in these words.");
-}
+```python
+#python
+def linq79():
+    words = ["cherry", "apple", "blueberry"]
+
+    total_chars = sum(len(w) for w in words)
+
+    print("There are a total of %d characters in these words." % total_chars)
 ```
 #### Output
 
@@ -2895,16 +2893,17 @@ public void Linq80()
     ObjectDumper.Write(categories);
 }
 ```
-```dart
-//dart
-linq80(){
-  var products = productsList(); 
-  
-  var categories = group(products, by:(p) => p.category)
-    .map((g) => { 'Category': g.key, 'TotalUnitsInStock': sum(g.values, (p) => p.unitsInStock) }); 
-      
-  categories.forEach(print);
-}
+```python
+#python
+def linq80():
+    products = shared.getProductList()
+
+    sorted_by_category = sorted(products, key=lambda p: p.Category)
+    grouped_by_category = groupby(sorted_by_category, key=lambda p: p.Category)
+
+    category_counts = map(lambda g: SimpleNamespace(Category=g[0], TotalUnitsInStock=sum(p.UnitsInStock for p in g[1])), grouped_by_category)
+
+    shared.print_namespace(category_counts)
 ```
 #### Output
 
@@ -2929,15 +2928,14 @@ public void Linq81()
     Console.WriteLine($"The minimum number is {minNum}.");
 }
 ```
-```dart
-//dart
-linq81(){
-  var numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]; 
-  
-  int minNum = min(numbers); 
-  
-  print("The minimum number is $minNum.");
-}
+```python
+#python
+def linq81():
+    numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
+
+    min_num = min(numbers)
+
+    print("The minimum number is %d" % min_num);
 ```
 #### Output
 

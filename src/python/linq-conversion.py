@@ -1,5 +1,5 @@
 import shared
-
+from types import SimpleNamespace
 
 def linq54():
     doubles = [ 1.7, 2.3, 1.9, 4.1, 2.9 ]

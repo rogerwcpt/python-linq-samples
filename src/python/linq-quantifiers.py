@@ -1,6 +1,3 @@
-import shared
-
-
 def linq67():
     words = ["believe", "relief", "receipt", "field"]
 
