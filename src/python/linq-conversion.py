@@ -6,13 +6,12 @@ def linq54():
   
     sorted_doubles = sorted(doubles, reverse=True)
 
-    soubles_array = list(sorted_doubles)
+    doubles_array = list(sorted_doubles)
   
     print("Every other double from highest to lowest:")
-    # shared.printN(soublesArray)
     d = 0
-    while d < len(soubles_array):
-        print(soubles_array[d])
+    while d < len(doubles_array):
+        print(doubles_array[d])
         d += 2
 
 

@@ -70,15 +70,15 @@ The samples below mirrors the C# LINQ samples layout with the names of the top-l
 |**Conversion**|`ToArray`|`toList`||
 ||`ToList`|`toList`||
 ||`ToDictionary`|`dict`|Often used in conjuction with `zip`|
-||`OfType`|`'ilter` using `isinstance` as predicate|
-|**Element**|`First`|`first`||
-||`First(lambda)`|`firstWhere(lambda)`||
-||`FirstOrDefault`|`firstWhere(lambda, default)`|
-||`ElementAt`|`elementAt`||
-|**Generation**|`Enumerable.Range`||Custom [range](#dart-utils-added-3) utility added|
-||`Enumerable.Repeat`|`List.filled`||
+||`OfType`|`'filter` using `isinstance` as predicate|
+|**Element**|`First`|`next`||
+||`First(lambda)`|`next(filter(lambda)`||
+||`FirstOrDefault`|`next(filter(lambda), default)`|
+||`ElementAt`|`list[0]`||
+|**Generation**|`Enumerable.Range`|range|
+||`Enumerable.Repeat`|`[x] * n` *or* <br /> `itertools.repeat(x, n)`||
 |**Quantifiers**|`Any`|`any`||
-||`All`|`every`||
+||`All`|`all`||
 |**Aggregate**|`Count`|`length`||
 ||`Count(lamda)`|`where(lambda).length`||
 ||`Sum`||Custom [sum](#dart-utils-added-4) utility  added|
@@ -2241,19 +2241,6 @@ def linq53():
 LINQ - Conversion Operators
 ---------------------------
 
-### Dart utils added
-
-```dart
-toMap(List seq, f(x)){
-  var map = {};
-  seq.forEach((x) => map[f(x)] = x);
-  return map;
-}
-
-ofType(List seq, type) =>
-  seq.where((x) => reflect(x).type.qualifiedName == reflectClass(type).qualifiedName);
-```
-
 ### linq54: ToArray
 ```csharp
 //c#
@@ -2279,13 +2266,12 @@ def linq54():
   
     sorted_doubles = sorted(doubles, reverse=True)
 
-    soubles_array = list(sorted_doubles)
+    doubles_array = list(sorted_doubles)
   
     print("Every other double from highest to lowest:")
-    # shared.printN(soublesArray)
     d = 0
-    while d < len(soubles_array):
-        print(soubles_array[d])
+    while d < len(doubles_array):
+        print(doubles_array[d])
         d += 2
 ```
 #### Output
@@ -2410,17 +2396,14 @@ public void Linq58()
     ObjectDumper.Write(product12);
 }
 ```
-```dart
-//dart
-linq58(){
-  var products = productsList(); 
-  
-  var product12 = products 
-    .where((p) => p.productId == 12)
-    .first; 
-  
-  print(product12); 
-}
+```python
+#python
+def linq58():
+    products = shared.getProductList()
+
+    product_12 = next(filter(lambda p: p.ProductID == 12, products))
+
+    print(product_12)
 ```
 #### Output
 
@@ -2438,15 +2421,14 @@ public void Linq59()
     Console.WriteLine("A string starting with 'o': {0}", startsWithO);
 }
 ```
-```dart
-//dart
-linq59(){
-  var strings = [ "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" ]; 
-  
-  var startsWithO = strings.firstWhere((s) => s[0] == 'o'); 
-  
-  print("A string starting with 'o': $startsWithO"); 
-}
+```python
+#python
+def linq59():
+    strings = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+
+    starts_with_o = next(filter(lambda s: s[0] == 'o', strings))
+
+    print("A string starting with 'o': %s" % starts_with_o)
 ```
 #### Output
 
@@ -2464,15 +2446,14 @@ public void Linq61()
     Console.WriteLine(firstNumOrDefault);
 }
 ```
-```dart
-//dart
-linq61(){
-  var numbers = []; 
-  
-  int firstNumOrDefault = numbers.firstWhere((x) => true, orElse:() => 0); 
-  
-  print(firstNumOrDefault); 
-}
+```python
+#python
+def linq61():
+    numbers = []
+
+    first_num_or_default = next(filter(lambda x: true, numbers), 0)
+
+    print(first_num_or_default)
 ```
 #### Output
 
@@ -2490,15 +2471,14 @@ public void Linq62()
     Console.WriteLine("Product 789 exists: {0}", product789 != null);
 }
 ```
-```dart
-//dart
-linq62(){
-  var products = productsList(); 
-  
-  var product789 = products.firstWhere((p) => p.productId == 789, orElse:() => null); 
-  
-  print("Product 789 exists: ${product789 != null}"); 
-}
+```python
+#python
+def linq62():
+    products = shared.getProductList()
+
+    product789 = next(filter(lambda p: p.ProductID == 789, products), None)
+
+    print("Product 789 exists: %s" % (product789 is not None))
 ```
 #### Output
 
@@ -2518,17 +2498,14 @@ public void Linq64()
     Console.WriteLine("Second number > 5: {0}", fourthLowNum);
 }
 ```
-```dart
-//dart
-linq64(){
-  var numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]; 
-  
-  int fourthLowNum = numbers 
-    .where((n) => n > 5)
-    .elementAt(1); 
-  
-  print("Second number > 5: $fourthLowNum"); 
-}
+```python
+#python
+def linq64():
+    numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
+
+    fourth_low_num = list(filter(lambda n: n > 5, numbers))[1]
+
+    print("Second number > 5: %d" % fourth_low_num)
 ```
 #### Output
 
@@ -2537,14 +2514,6 @@ linq64(){
 
 LINQ - Generation Operators
 ---------------------------
-### Dart utils added
-
-```dart
-List range(int from, [int to]) =>
-  to != null 
-    ? new List.generate(to, (x) => x + from)
-    : new List.generate(from, (x) => x);
-```
 
 ### linq65: Range
 ```csharp
@@ -2558,15 +2527,15 @@ public void Linq65()
 
 }
 ```
-```dart
-//dart
-linq65(){
-  var numbers = range(100, 50)
-    .map((n) => { 'Number': n, 'OddEven': n % 2 == 1 ? "odd" : "even" }); 
-      
-  numbers.forEach((n) =>
-    print("The number ${n['Number']} is ${n['OddEven']}.")); 
-}
+```python
+#python
+def linq65():
+    numbers = range(100, 150)
+
+    odd_even = map(lambda n: {'Number': n, 'OddEven': ("odd" if (n % 2 == 1) else "even")}, numbers)
+
+    for item in odd_even:
+        print("The number %s is %s" % (item['Number'], item['OddEven']))
 ```
 #### Output
 
@@ -2593,13 +2562,12 @@ public void Linq66()
     numbers.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
-linq66(){
-  var numbers = new List.filled(10, 7); 
+```python
+#python
+def linq66():
+    numbers = itertools.repeat(7, 10)
 
-  numbers.forEach(print);
-}
+    shared.printN(numbers)
 ```
 #### Output
 
@@ -2630,15 +2598,14 @@ public void Linq67()
     Console.WriteLine($"There is a word in the list that contains 'ei': {iAfterE}");
 }
 ```
-```dart
-//dart
-linq67(){
-  var words = [ "believe", "relief", "receipt", "field" ]; 
-  
-  bool iAfterE = words.any((w) => w.contains("ei")); 
-  
-  print("There is a word that contains in the list that contains 'ei': $iAfterE"); 
-}
+```python
+#python
+def linq67():
+    words = ["believe", "relief", "receipt", "field"]
+
+    i_after_e = any("ei" in w for w in words)
+
+    print("There is a word that contains in the list that contains 'ei': %s" % i_after_e)
 ```
 #### Output
 
@@ -2659,16 +2626,11 @@ public void Linq69()
     ObjectDumper.Write(productGroups, 1);
 }
 ```
-```dart
-//dart
-linq69(){
-  var products = productsList(); 
-  var productGroups = group(products, by:(p) => p.category)
-    .where((g) => g.values.any((p) => p.unitsInStock == 0))
-    .map((g) => { 'Category': g.key, 'Products': g });
+```python
+#python
+def linq69():
+    pass
 
-   productGroups.forEach(print);
-}
 ```
 #### Output
 
@@ -2687,15 +2649,14 @@ public void Linq70()
     Console.WriteLine($"The list contains only odd numbers: {onlyOdd}");
 }
 ```
-```dart
-//dart
-linq70(){
-  var numbers = [ 1, 11, 3, 19, 41, 65, 19 ]; 
-  
-  bool onlyOdd = numbers.every((n) => n % 2 == 1); 
-  
-  print("The list contains only odd numbers: $onlyOdd"); 
-}
+```python
+#python
+def linq70():
+    numbers = [1, 11, 3, 19, 41, 65, 19]
+
+    only_odd = all(n % 2 == 1 for n in numbers)
+
+    print("The list contains only odd numbers: %s" % only_odd)
 ```
 #### Output
 
@@ -2716,17 +2677,10 @@ public void Linq72()
     ObjectDumper.Write(productGroups, 1);
 }
 ```
-```dart
-//dart
-linq72(){
-  var products = productsList(); 
-  
-  var productGroups = group(products, by:(p) => p.category)
-    .where((g) => g.values.every((p) => p.unitsInStock > 0))
-    .map((g) => { 'Category': g.key, 'Products': g });
-      
-  productGroups.forEach(print);
-}
+```python
+#python
+def linq72():
+    pass
 ```
 #### Output
 
