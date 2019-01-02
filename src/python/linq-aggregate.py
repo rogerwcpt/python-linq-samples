@@ -1,6 +1,8 @@
 import shared
 from types import SimpleNamespace
 from itertools import groupby
+from functools import reduce
+import operator
 
 def linq73():
     factors_of_300 = [2, 2, 3, 5, 5]
@@ -77,7 +79,7 @@ def linq82():
 
     shortest_word = min(len(w) for w in words)
 
-    print("The shortest word is %s characters long." % shortest_word)
+    print("The shortest word is %d characters long." % shortest_word)
 
 
 def linq83():
@@ -92,16 +94,82 @@ def linq83():
 
     
 def linq84():
+    pass
+
+
+def linq85():
+    numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
+
+    max_num = max(numbers)
+
+    print("The maximum number is %d." % max_num)
+
+
+def linq86():
+    words = ["cherry", "apple", "blueberry"]
+
+    longest_word = max(len(w) for w in words)
+
+    print("The longest word is %d characters long." % longest_word)
+
+
+def linq87():
     products = shared.getProductList()
 
     sorted_by_category = sorted(products, key=lambda p: p.Category)
     grouped_by_category = groupby(sorted_by_category, key=lambda p: p.Category)
-    
-    categories_min_unitprice = map(lambda pg: SimpleNamespace(ProdGroup=pg, MinPrice=min(p.UnitPrice for p in pg[1])), grouped_by_category)
 
-    for item in categories_min_unitprice:
-        print("%s %d" % (item.ProdGroup, item.MinPrice))
+    category_expensive_price = map(
+        lambda g: SimpleNamespace(Category=g[0], MostExpensive=max(p.UnitPrice for p in g[1])), grouped_by_category)
 
+    shared.print_namespace(category_expensive_price)
+
+
+def linq88():
+    pass
+
+
+def linq89():
+    numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
+
+    average_num = sum(numbers) / float(len(numbers))
+
+    print("The average number is %f." % average_num)
+
+
+def linq90():
+    words = ["cherry", "apple", "blueberry"]
+    average_length = sum(len(w) for w in words) / float(len(words))
+
+    print("The average word length is %f characters." % average_length)
+
+
+def linq91():
+    pass
+
+
+def linq92():
+    doubles = [1.7, 2.3, 1.9, 4.1, 2.9]
+
+    product = reduce(operator.mul, doubles)
+
+    #or
+    #product = reduce(lambda running_product, next_factor: running_product * next_factor, doubles)
+
+    print("Total product of all numbers: %f" % product);
+
+
+def linq93():
+    start_balance = 100.0
+
+    attempted_withdrawals = [20, 10, 40, 50, 10, 70, 30]
+
+    endBalance = reduce(
+        lambda runningBalance, nextWithDrawal: runningBalance - nextWithDrawal if nextWithDrawal <= runningBalance else runningBalance,
+        attempted_withdrawals,
+        start_balance)
+
+    print("Ending balance: %f" % endBalance)
 
 # linq73()
 # linq74()
@@ -113,4 +181,13 @@ def linq84():
 # linq81()
 # linq82()
 # linq83()
-linq84()
+# linq84()
+# linq85()
+# linq86()
+# linq87()
+# linq88()
+# linq89()
+# linq90()
+# linq91()
+# linq92()
+linq93()

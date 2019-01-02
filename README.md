@@ -51,9 +51,9 @@ The samples below mirrors the C# LINQ samples layout with the names of the top-l
 |**Restriction**|`Where`|`filter`||
 |**Projection**|`Select`|`map`||
 ||`SelectMany`||Custom select_many utility added|
-|**Partitioning**|`IEnumerable.Take(n)`|`array[:n]`||
-||`IEnumerable.TakeWhile(predicate)`|`itertools.takewhile(predicate, sequence)`||
-||`IEnumerable.Skip(n)`|`array[n:]`||
+|**Partitioning**|`Take(n)`|`array[:n]`||
+||`TakeWhile(predicate)`|`itertools.takewhile(predicate, sequence)`||
+||`Skip(n)`|`array[n:]`||
 ||`SkipWhile`|`itertools.dropwhile(predicate, sequence)`||
 |**Ordering**|`OrderBy`|`sequence.sort()` *or* <br/> `sorted(sequence)`|| 
 ||`OrderBy(lambda)`|`sequence.sort(key=lambda)` *or* <br/> `sorted(sequence, key=lambda)`|| 
@@ -62,7 +62,7 @@ The samples below mirrors the C# LINQ samples layout with the names of the top-l
 ||`ThenBy`|`sequence.sort(key=lambda (key1, key2))` *or* <br/> `sorted(sequence, key=lambda (key1, key))`|| 
 ||`ThenByDescending`|`sequence.sort(key=lambda (key1, -key2))` *or* <br/> `sorted(sequence, key=lambda (key1, -key2))` <br/> *or use a 2 pass sort, starting with least significant* <br/> `ordered =  sorted(unordered, key=lambda (key2))`  <br/> `ordered =  sorted(ordered, key=lambda (key1))` |
 ||`Reverse`|`sequence.reverse()` *or* `reversed(sequence)`||
-|**Grouping**|`GroupBy`|`groupby`|`from itertools import groupby` <br/>Grouping  works on sorted sequences
+|**Grouping**|`GroupBy`|`itertools.groupby`| <br/>Grouping  works on sorted sequences <br> Once you've iterated over the grouping, you can't access it again, its empty
 |**Sets**|`Distinct`|`set`||
 ||`Union`|`union`||
 ||`Interect`|`intersection`||
@@ -79,66 +79,63 @@ The samples below mirrors the C# LINQ samples layout with the names of the top-l
 ||`Enumerable.Repeat`|`[x] * n` *or* <br /> `itertools.repeat(x, n)`||
 |**Quantifiers**|`Any`|`any`||
 ||`All`|`all`||
-|**Aggregate**|`Count`|`length` *or* <br /> `sum(iterator)`||
-||`Count(lamda)`|`sum(iterator)`||
-||`Sum`|sum||
-||`Min`|min||
-||`Max`|max||
-||`Avg`|||
+|**Aggregate**|`Count`|`len` ||
+||`Count(lamda)`|`sum(1, iterator)`||
+||`Sum`|`sum`||
+||`Min`|`min`||
+||`Max`|`max`||
+||`Avg`||Custom calculation using `sum` / `len`|
 ||`Sum(lambda)`|`sum(iterator)`||
 ||`Min(lambda)`|`min(iterator)`||
 ||`Max(lambda)`|`max(iterator)`||
-||`Avg(lambda)`|`avg(iterator)`||
-||`Aggregate`|reduce||
-||`Aggregate(seed)`|fold||
-|**Miscellaneous**|`Concat`||Custom [concat](#dart-utils-added-5) utility  added|
-||`SequenceEqual`|SequenceEqual|||Custom [seqEq](#dart-utils-added-5) utility  added|
+||`Avg(lambda)`||Custom calculation using <br /> `sum(iterator)` / `len`|
+||`Aggregate`|`functools.reduce(lambda, sequence)`||
+||`Aggregate(seed, lamda)`|`functools.reduce(lambsa,seed,sequence)`||
+|**Miscellaneous**|`Concat(IEnumerable)`|`list1 + list2`||
+||`SequenceEqual(IEnumerable)`|`list1==list2`||
 |**Join**|Join||Custom [join](#dart-utils-added-6) utility  added|
 ||GroupJoin||Custom [joinGroup](#dart-utils-added-6) utility  added|
 
 #### Source
 - [Restriction Operators](#linq1-where---simple-1)
-  -  [Phython](src/python/linq-restrictions.py) 
-  -  [C#](src/csharp/linq-restrictions/Program.cs)
+  -  [Python: linq-restrictions.py](src/python/linq-restrictions.py) 
+  -  [C#: linq-restrictions/Program.cs](src/csharp/linq-restrictions/Program.cs)
 - [Projection Operators](#linq---projection-operators)
-  - [Phython](src/python/linq-projections.py)
-  - [C#](src/csharp/linq-projections/Program.cs)
+  - [Python: linq-projections.py](src/python/linq-projections.py)
+  - [C#: linq-projections/Program.cs](src/csharp/linq-projections/Program.cs)
 - [Partitioning Operators](#linq---partitioning-operators)
-  - [Phython]src/python/linq-partitions.py)
+  - [Python: linq-partitions.py](src/python/linq-partitions.py)
   - [C#](src/csharp/linq-partitioning/Program.cs)
 - [Ordering Operators](#linq---ordering-operators)
-  - [Phython]src/python/linq-ordering.py)
+  - [Python]src/python/linq-ordering.py)
   - [C#](src/csharp/linq-ordering/Program.cs)
 - [Grouping Operators](#linq---grouping-operators)
-  - [Dart](bin/linq-grouping.dart)
+  - [Python](src/python/linq-grouping.dart)
   - [C#](src/csharp/linq-grouping/Program.cs)
 - [Set Operators](#linq---set-operators)
-  - [Dart](bin/linq-setoperations.dart)
+  - [Python](src/python/linq-setoperations.py)
   - [C#](src/csharp/linq-sets/Program.cs)
 - [Conversion Operators](#linq---conversion-operators)
-  - [Dart](bin/linq-conversionoperations.dart)
+  - [Python](src/python/linq-conversion.py)
   - [C#](src/csharp/linq-conversion/Program.cs)
 - [Element Operators](#linq---element-operators)
-  - [Dart](bin/linq-elementoperations.dart)
+  - [Python](bin/linq-elementoperations.dart)
   - [C#](src/csharp/linq-element/Program.cs)
-- [Generation Operators](#linq---generation-operators)
+- [Python Operators](#linq---generation-operators)
   - [Dart](bin/linq-generationoperations.dart)
   - [C#](src/csharp/linq-generation/Program.cs)
 - [Quantifiers](#linq---quantifiers)
-  - [Dart](bin/linq-quantifiers.dart)
+  - [Python](bin/linq-quantifiers.dart)
   - [C#](src/csharp/linq-quantifiers/Program.cs)
 - [Aggregate Operators](#linq---aggregate-operators)
-  - [Dart](bin/linq-aggregateoperations.dart)
+  - [Python](bin/linq-aggregateoperations.dart)
   - [C#](src/csharp/linq-aggregate/Program.cs)
 - [Miscellaneous Operators](#linq---miscellaneous-operators)
-  - [Dart](bin/linq-miscellaneousoperations.dart)
+  - [Python](bin/linq-miscellaneousoperations.dart)
   - [C#](src/csharp/linq-miscellaneous/Program.cs)
 - [Query Execution](#linq---query-execution)
-  - [Dart](bin/linq-queryexecution.dart)
+  - [Python](bin/linq-queryexecution.dart)
   - [C#](src/csharp/linq-query/Program.cs)
-- [Join Operators](#linq---join-operators)
-  - [Dart](bin/linq-joinoperators.dart)
-  - [C#](src/csharp/linq-join/Program.cs)
 
 ##  Side-by-side - C# LINQ vs Dart functional collections
 
@@ -3009,17 +3006,8 @@ public void Linq84()
 ```
 ```python
 #python
-linq84(){
-  var products = productsList(); 
-  
-  var categories = group(products, by:(p) => p.category)
-    .map((g){
-      var minPrice = min(g.values.map((p) => p.unitPrice));
-      return { 'Category': g.key, 'CheapestProducts': g.values.where((p) => p.unitPrice == minPrice) };
-    });
-
-  categories.forEach(print);
-}
+def linq84():
+    pass
 ```
 #### Output
 
@@ -3044,15 +3032,14 @@ public void Linq85()
     Console.WriteLine($"The maximum number is {maxNum}.");
 }
 ```
-```dart
-//dart
-linq85(){
-  var numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]; 
-  
-  var maxNum = max(numbers); 
-  
-  print("The maximum number is $maxNum."); 
-}
+```python
+#python
+def linq85():
+    numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
+
+    max_num = max(numbers)
+
+    print("The maximum number is %d." % max_num)
 ```
 #### Output
 
@@ -3069,15 +3056,14 @@ public void Linq86()
 
     Console.WriteLine($"The longest word is {longestLength} characters long.");}
 ```
-```dart
-//dart
-linq86(){
-  var words = [ "cherry", "apple", "blueberry" ]; 
-  
-  int longestLength = max(words.map((w) => w.length)); 
-  
-  print("The longest word is $longestLength characters long."); 
-}
+```python
+#python
+def linq86():
+    words = ["cherry", "apple", "blueberry"]
+
+    longest_word = max(len(w) for w in words)
+
+    print("The longest word is %d characters long." % longest_word)
 ```
 #### Output
 
@@ -3097,8 +3083,8 @@ public void Linq87()
     ObjectDumper.Write(categories);
 }
 ```
-```dart
-//dart
+```python
+#python
 linq87(){
   var products = productsList(); 
   
@@ -3137,8 +3123,8 @@ public void Linq88()
     ObjectDumper.Write(categories, 1);
 }
 ```
-```dart
-//dart
+```python
+#python
 linq88(){
   var products = productsList(); 
   
@@ -3174,15 +3160,14 @@ public void Linq89()
     Console.WriteLine($"The average number is {averageNum}.");
 }
 ```
-```dart
-//dart
-linq89(){
-  var numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]; 
-  
-  var averageNum = avg(numbers); 
-  
-  print("The average number is $averageNum.");
-}
+```python
+#python
+def linq89():
+    numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
+
+    average_num = sum(numbers) / float(len(numbers))
+
+    print("The average number is %f." % average_num)
 ```
 #### Output
 
@@ -3200,15 +3185,13 @@ public void Linq90()
     Console.WriteLine($"The average word length is {averageLength} characters.");
 }
 ```
-```dart
-//dart
-linq90(){
-  var words = [ "cherry", "apple", "blueberry" ]; 
-  
-  var averageLength = avg(words.map((w) => w.length)); 
-  
-  print("The average word length is $averageLength characters."); 
-}
+```python
+#python
+def linq90():
+    words = ["cherry", "apple", "blueberry"]
+    average_length = sum(len(w) for w in words) / float(len(words))
+
+    print("The average word length is %f characters." % average_length)
 ```
 #### Output
 
@@ -3228,16 +3211,10 @@ public void Linq91()
     ObjectDumper.Write(categories);
 }
 ```
-```dart
-//dart
-linq91(){
-  var products = productsList(); 
-  
-  var categories = group(products, by:(p) => p.category)
-    .map((g) => { 'Category': g.key, 'AveragePrice': avg(g.values.map((p) => p.unitPrice)) });
-
-  categories.forEach(print);
-}
+```python
+#python
+def linq91():
+    pass
 ```
 #### Output
 
@@ -3262,15 +3239,17 @@ public void Linq92()
     Console.WriteLine($"Total product of all numbers: {product}");
 }
 ```
-```dart
-//dart
-linq92(){
-  var doubles = [ 1.7, 2.3, 1.9, 4.1, 2.9 ]; 
-  
-  var product = doubles.reduce((runningProduct, nextFactor) => runningProduct * nextFactor); 
-  
-  print("Total product of all numbers: $product");
-}
+```python
+#python
+def linq92():
+    doubles = [1.7, 2.3, 1.9, 4.1, 2.9]
+
+    product = reduce(operator.mul, doubles)
+
+    #or
+    #product = reduce(lambda running_product, next_factor: running_product * next_factor, doubles)
+
+    print("Total product of all numbers: %f" % product);
 ```
 #### Output
 
@@ -3293,19 +3272,19 @@ public void Linq93()
     Console.WriteLine($"Ending balance: {endBalance}");
 }
 ```
-```dart
-//dart
-linq93(){
-  var startBalance = 100.0; 
-  
-  var attemptedWithdrawals = [ 20, 10, 40, 50, 10, 70, 30 ]; 
-  
-  var endBalance = attemptedWithdrawals.fold(startBalance, 
-    (balance, nextWithdrawal) => 
-      ((nextWithdrawal <= balance) ? (balance - nextWithdrawal) : balance)); 
-  
-  print("Ending balance: $endBalance"); 
-}
+```python
+#python
+def linq93():
+    start_balance = 100.0
+
+    attempted_withdrawals = [20, 10, 40, 50, 10, 70, 30]
+
+    endBalance = reduce(
+        lambda runningBalance, nextWithDrawal: runningBalance - nextWithDrawal if nextWithDrawal <= runningBalance else runningBalance,
+        attempted_withdrawals,
+        start_balance)
+
+    print("Ending balance: %f" % endBalance)
 ```
 #### Output
 
@@ -3340,17 +3319,16 @@ public void Linq94()
     allNumbers.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
-linq94(){
-  var numbersA = [ 0, 2, 4, 5, 6, 8, 9 ]; 
-  var numbersB = [ 1, 3, 5, 7, 8 ]; 
-  
-  var allNumbers = concat(numbersA, numbersB); 
-  
-  print("All numbers from both arrays:");
-  allNumbers.forEach(print);
-}
+```python
+#python
+def linq94():
+    numbers_a = [0, 2, 4, 5, 6, 8, 9]
+    numbers_b = [1, 3, 5, 7, 8]
+
+    all_numbers = numbers_a + numbers_b
+
+    print("All numbers from both arrays:")
+    shared.printN(all_numbers)
 ```
 #### Output
 
@@ -3387,22 +3365,19 @@ public void Linq95()
     allNames.ForEach(Console.WriteLine);
 }
 ```
-```dart
-//dart
-linq95(){
-  var customers = customersList(); 
-  var products = productsList(); 
-  
-  var customerNames = customers
-    .map((c) => c.companyName);
-  var productNames = products
-    .map((p) => p.productName);
-  
-  var allNames = concat(customerNames, productNames); 
-  
-  print("Customer and product names:");
-  allNames.forEach(print);
-}
+```python
+#python
+def linq95():
+    products = shared.getProductList()
+    customers = shared.getCustomerList()
+
+    customer_names = map(lambda c: c.CompanyName, customers)
+    product_names = map(lambda p: p.ProductName, products)
+
+    all_names = list(customer_names) + list(product_names)
+
+    print("Customer and product names:")
+    shared.printS(all_names)
 ```
 #### Output
 
@@ -3428,16 +3403,15 @@ public void Linq96()
     Console.WriteLine($"The sequences match: {match}");
 }
 ```
-```dart
-//dart
-linq96(){
-  var wordsA = [ "cherry", "apple", "blueberry" ]; 
-  var wordsB = [ "cherry", "apple", "blueberry" ]; 
-  
-  bool match = seqEq(wordsA, wordsB); 
-  
-  print("The sequences match: $match");
-}
+```python
+#python
+def linq96():
+    words_a = ["cherry", "apple", "blueberry"]
+    words_b = ["cherry", "apple", "blueberry"]
+
+    match = words_a == words_b
+
+    print("The sequences match: %s" % match)
 ```
 #### Output
 
@@ -3456,16 +3430,15 @@ public void Linq97()
     Console.WriteLine($"The sequences match: {match}");
 }
 ```
-```dart
-//dart
-linq97(){
-  var wordsA = [ "cherry", "apple", "blueberry" ]; 
-  var wordsB = [ "apple", "blueberry", "cherry" ]; 
-  
-  bool match = seqEq(wordsA, wordsB); 
-  
-  print("The sequences match: $match");
-}
+```python
+#python
+def linq97():
+    words_a = ["cherry", "apple", "blueberry"]
+    words_b = ["apple", "blueberry", "cherry"]
+
+    match = words_a == words_b
+
+    print("The sequences match: %s" % match)
 ```
 #### Output
 
@@ -3492,17 +3465,23 @@ public void Linq99()
     simpleQuery.ForEach(item => Console.WriteLine($"v = {item}, i = {i}")); // now i is incremented  
 }
 ```
-```dart
-//dart
-linq99(){
-  var numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]; 
-  
-  var i = 0; 
-  var q = numbers.map((n) => ++i);
-  
-  q.forEach((v) => 
-    print("v = $v, i = $i"));
-}
+```python
+#python
+def linq99():
+    numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
+
+    i = 0
+
+    def add_to_i(n):
+        nonlocal i
+        i = i + 1
+        return n
+
+    q = map(lambda n: add_to_i(n), numbers)
+
+    for v in q:
+        print("v = %d, i = %d" % (v, i))
+
 ```
 #### Output
 
@@ -3535,17 +3514,22 @@ public void Linq100()
     immediateQuery.ForEach(item => Console.WriteLine($"v = {item}, i = {i}"));
 } 
 ```
-```dart
-//dart
-linq100(){
-  var numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]; 
-  
-  var i = 0; 
-  var q = numbers.map((n) => ++i).toList();
-  
-  q.forEach((v) => 
-    print("v = $v, i = $i"));
-}
+```python
+#python
+def linq100():
+    numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
+
+    i = 0
+
+    def add_to_i(n):
+        nonlocal i
+        i = i + 1
+        return n
+
+    q = list(map(lambda n: add_to_i(n), numbers))
+
+    for v in q:
+        print("v = %d, i = %d" % (v, i))
 ```
 #### Output
 
@@ -3586,23 +3570,10 @@ public void Linq101()
     lowNumbers.ForEach(Console.WriteLine);
 } 
 ```
-```dart
-//dart
-linq101(){
-  var numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]; 
-  var lowNumbers = numbers
-    .where((n) => n <= 3); 
-  
-  print("First run numbers <= 3:");
-  lowNumbers.forEach(print);
-  
-  for (int i = 0; i < 10; i++){ 
-    numbers[i] = -numbers[i]; 
-  } 
-  
-  print("Second run numbers <= 3:"); 
-  lowNumbers.forEach(print);
-}
+```python
+#python
+def linq101():
+    pass
 ```
 #### Output
 
@@ -3622,245 +3593,4 @@ linq101(){
     -7
     -2
     0
-
-
-LINQ - Join Operators
----------------------
-
-### Dart utils added
-
-```dart
-join(Iterable seq, Iterable withSeq, bool match(x,y)) =>
-  seq.expand((x) => withSeq
-    .where((y) => match(x,y))
-    .map((y) => [x,y]));
-
-joinGroup(Iterable seq, Iterable withSeq, bool match(x,y)) =>
-  group(join(seq, withSeq, match), by:(j) => j[0]);  
-```
-
-### linq102: Cross Join
-```csharp
-//c#
-public void Linq102() 
-{ 
-    var categories = new [] {"Beverages","Condiments","Vegetables","Dairy Products","Seafood" };
-
-    var products = GetProductList();
-
-    var q = categories
-        .Join(products, c => c, p => p.Category, 
-            (c, p) => new {Category = c, p.ProductName});
-
-    q.ForEach(v => Console.WriteLine($"Category: {v.Category}: Product {v.ProductName}"));
-}
-```
-```dart
-//dart
-linq102(){
-  var categories = [ "Beverages", "Condiments", "Vegetables", "Dairy Products", "Seafood" ];  
-  
-  var products = productsList(); 
-  
-  var q = join(categories, products, (c,p) => c == p.category)
-    .map((j) => { 'Category': j[0], 'ProductName': j[1].productName });
-
-  q.forEach(print);
-}
-```
-#### Output
-
-    {Category: Beverages, ProductName: Chai}
-    {Category: Beverages, ProductName: Chang}
-    {Category: Beverages, ProductName: Guaran� Fant�stica}
-    {Category: Beverages, ProductName: Sasquatch Ale}
-    {Category: Beverages, ProductName: Steeleye Stout}
-    {Category: Beverages, ProductName: C�te de Blaye}
-    {Category: Beverages, ProductName: Chartreuse verte}
-    {Category: Beverages, ProductName: Ipoh Coffee}
-    ...
-
-### linq103: Group Join
-```csharp
-//c#
-public void Linq103() 
-{ 
-    var categories = new [] {"Beverages","Condiments","Vegetables","Dairy Products","Seafood" };  
-
-    var products = GetProductList(); 
-
-    var q = categories
-        .GroupJoin(products, c => c, p => p.Category,
-            (c, ps) => new {Category = c, Products = ps}); 
-
-    q.ForEach((v) => 
-    {
-        Console.WriteLine(v.Category + ":"); 
-        v.Products.ForEach(p => Console.WriteLine($"\t{p.ProductName}"));
-    });
-}
-```
-```dart
-//dart
-linq103(){
-  var categories = [ "Beverages", "Condiments", "Vegetables", "Dairy Products", "Seafood" ];  
-  
-  var products = productsList(); 
-  
-  var q = joinGroup(categories, products, (c,p) => c == p.category)
-    .map((j) => { 'Category': j.key, 'Products': j.values.map((g) => g[1]) });
-
-  q.forEach((v){
-    print("${v['Category']}:");
-    v['Products'].forEach((p) => print("   ${p.productName}"));
-  });
-}
-```
-#### Output
-
-    Dairy Products:
-       Queso Cabrales
-       Queso Manchego La Pastora
-       Gorgonzola Telino
-       Mascarpone Fabioli
-       Geitost
-       Raclette Courdavault
-       Camembert Pierrot
-       Gudbrandsdalsost
-       Flotemysost
-       Mozzarella di Giovanni
-    Condiments:
-       Aniseed Syrup
-       Chef Anton's Cajun Seasoning
-       Chef Anton's Gumbo Mix
-       Grandma's Boysenberry Spread
-       Northwoods Cranberry Sauce
-       Genen Shouyu
-       Gula Malacca
-       Sirop d'�rable
-       Vegie-spread
-       Louisiana Fiery Hot Pepper Sauce
-       Louisiana Hot Spiced Okra
-       Original Frankfurter gr�ne So�e
-    ...
-
-### linq104: Cross Join with Group Join
-```csharp
-//c#
-public void Linq104() 
-{ 
-    var categories = new [] {"Beverages","Condiments","Vegetables","Dairy Products","Seafood" };  
-
-    var products = GetProductList();
-
-    var prodByCategory = categories
-        .GroupJoin(products, cat => cat, prod => prod.Category, 
-            (category, prods) => new {category, prods})
-        .SelectMany(x => x.prods, (x, plist) => new {Category = x.category, plist.ProductName});
-
-    prodByCategory.ForEach(item => Console.WriteLine($"{item.ProductName }: {item.Category}"));
-}
-```
-```dart
-//dart
-linq104(){
-  var categories = [ "Beverages", "Condiments", "Vegetables", "Dairy Products", "Seafood" ];  
-  
-  var products = productsList(); 
-  
-  var q = joinGroup(categories, products, (c,p) => c == p.category)
-    .expand((j) => j.values.map((g) => g[1])
-      .map((p) => { 'Category': j.key, 'ProductName': p.productName }));
-
-  q.forEach((v) => 
-    print("${v['ProductName']}: ${v['Category']}"));
-}
-```
-#### Output
-
-    Queso Cabrales: Dairy Products
-    Queso Manchego La Pastora: Dairy Products
-    Gorgonzola Telino: Dairy Products
-    Mascarpone Fabioli: Dairy Products
-    Geitost: Dairy Products
-    Raclette Courdavault: Dairy Products
-    Camembert Pierrot: Dairy Products
-    Gudbrandsdalsost: Dairy Products
-    Flotemysost: Dairy Products
-    Mozzarella di Giovanni: Dairy Products
-    Aniseed Syrup: Condiments
-    Chef Anton's Cajun Seasoning: Condiments
-    Chef Anton's Gumbo Mix: Condiments
-    ...
-
-### linq105: Left Outer Join
-```csharp
-//c#
-public void Linq105()  
-{ 
-    var categories = new [] {"Beverages","Condiments","Vegetables","Dairy Products","Seafood" };  
-
-    var products = GetProductList(); 
-
-    var q = categories
-        .GroupJoin(products, cat => cat, prod => prod.Category, 
-            (category, prods) => new {category, prods})
-        .SelectMany(x => x.prods.DefaultIfEmpty(),
-            (x, p) => new {Category = x.category, ProductName = p == null ? "(No products)" : p.ProductName}); 
-
-    q.ForEach(item => Console.WriteLine($"{item.ProductName }: {item.Category}"));
-}
-```
-```dart
-//dart
-linq105(){
-  var categories = [ "Beverages", "Condiments", "Vegetables", "Dairy Products", "Seafood" ];  
-  
-  var products = productsList(); 
-  
-  var q = categories
-    .expand((c){
-      var catProducts = products.where((p) => c == p.category);
-      return catProducts.isEmpty 
-        ? [{ 'Category': c, 'ProductName': "(No products)" }]
-        : catProducts.map((p) => { 'Category': c, 'ProductName': p.productName });
-    });
-
-  q.forEach((v) => 
-    print("${v['ProductName']}: ${v['Category']}"));
-}
-```
-#### Output
-
-    Chai: Beverages
-    Chang: Beverages
-    Guaran� Fant�stica: Beverages
-    Sasquatch Ale: Beverages
-    Steeleye Stout: Beverages
-    C�te de Blaye: Beverages
-    Chartreuse verte: Beverages
-    Ipoh Coffee: Beverages
-    Laughing Lumberjack Lager: Beverages
-    Outback Lager: Beverages
-    Rh�nbr�u Klosterbier: Beverages
-    Lakkalik��ri: Beverages
-    Aniseed Syrup: Condiments
-    Chef Anton's Cajun Seasoning: Condiments
-    Chef Anton's Gumbo Mix: Condiments
-    Grandma's Boysenberry Spread: Condiments
-    Northwoods Cranberry Sauce: Condiments
-    Genen Shouyu: Condiments
-    Gula Malacca: Condiments
-    Sirop d'�rable: Condiments
-    Vegie-spread: Condiments
-    Louisiana Fiery Hot Pepper Sauce: Condiments
-    Louisiana Hot Spiced Okra: Condiments
-    Original Frankfurter gr�ne So�e: Condiments
-    (No products): Vegetables
-    ...
-
-
-### Contributors
-
-  - [mythz](https://github.com/mythz) (Demis Bellot)
 
