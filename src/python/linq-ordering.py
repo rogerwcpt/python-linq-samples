@@ -47,7 +47,7 @@ def linq32():
 def linq33():
     products = shared.getProductList()
 
-    sorted_products = sorted(products, key=lambda p: p.UnitsInStock, reverse=True);
+    sorted_products = sorted(products, key=lambda p: p.UnitsInStock, reverse=True)
 
     shared.print_namespace(sorted_products)
 
@@ -55,7 +55,7 @@ def linq33():
 def linq34():
     words = ["aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry"]
 
-    sorted_words = sorted(words, key=lambda s: s.casefold(), reverse=True);
+    sorted_words = sorted(words, key=lambda s: s.casefold(), reverse=True)
 
     shared.print_namespace(sorted_words)
 
@@ -93,7 +93,6 @@ def linq38():
     sorted_words = sorted(words, key=lambda word: word.casefold(), reverse=True)
     sorted_words = sorted(sorted_words, key=lambda word: len(word))
 
-
     shared.printS(sorted_words)
 
 
@@ -102,10 +101,11 @@ def linq39():
 
     reversed_i_digits = reversed(list(filter(lambda digit: digit[1] == "i", digits)))
 
-    print("A backwards list of the digits with a second character of 'i':");
+    print("A backwards list of the digits with a second character of 'i':")
     shared.printS(reversed_i_digits)
 
-# linq28()
+
+linq28()
 # linq29()
 # linq30()
 # linq31()

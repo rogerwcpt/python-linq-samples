@@ -10,9 +10,9 @@ namespace linq_query
     {
         static void Main(string[] args)
         {
-            // Linq99();
-            //Linq100();
-            Linq101();
+            Linq99();
+//            Linq100();
+//            Linq101();
         }
 
         [Category("Query Execution")]
@@ -20,7 +20,7 @@ namespace linq_query
         static void Linq99()
         {
             // Queries are not executed until you enumerate over them.
-            int[] numbers = new int[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+            var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
             int i = 0;
             var simpleQuery = numbers
@@ -37,9 +37,9 @@ namespace linq_query
         static void Linq100()
         {
             // Methods like ToList(), Max(), and Count() cause the query to be executed immediately.            
-            int[] numbers = new int[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+            var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
-            int i = 0;
+            var i = 0;
             var immediateQuery = numbers
                 .Select(x =>  ++i)
                 .ToList();
@@ -50,12 +50,11 @@ namespace linq_query
         }
 
         [Category("Query Execution")]
-        [Description("The following sample shows how, because of deferred execution, queries can be used " +
-                        "again after data changes and will then operate on the new data.")]
+        [Description("The following sample shows how, because of deferred execution, queries can be used again after data changes and will then operate on the new data.")]
         static void Linq101()
         {
             // Deferred execution lets us define a query once and then reuse it later in various ways.
-            int[] numbers = new int[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+            var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
             var lowNumbers = numbers
                 .Where(num => num <= 3);
 
@@ -63,7 +62,7 @@ namespace linq_query
             lowNumbers.ForEach(Console.WriteLine);
 
             // Modify the source data.
-            for (int i = 0; i < 10; i++)
+            for (var i = 0; i < 10; i++)
             {
                 numbers[i] = -numbers[i];
             }

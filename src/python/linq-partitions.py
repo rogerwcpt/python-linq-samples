@@ -1,7 +1,11 @@
 import shared
 import functions
+
 from types import SimpleNamespace
-import itertools
+
+from itertools import takewhile
+from itertools import dropwhile
+
 
 def linq20():
     numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
@@ -25,20 +29,23 @@ def linq23():
 
     wa_customers = filter(lambda c: c.Region == "WA", customers)
     wa_customer_orders = functions.select_many(wa_customers, "Orders")
-    customer_orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID, order_id=x.item_b.OrderID, order_date=x.item_b.OrderDate), wa_customer_orders)
+    customer_orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID,
+                                                    order_id=x.item_b.OrderID,
+                                                    order_date=x.item_b.OrderDate),
+                          wa_customer_orders)
 
     all_but_first2 = list(customer_orders)[2:]
 
-    print("All but first 2 orders in WA:");
+    print("All but first 2 orders in WA:")
     shared.print_namespace(all_but_first2)
 
 
 def linq24():
     numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
 
-    first_numbers_less_than6 = itertools.takewhile(lambda x: x < 6, numbers);
+    first_numbers_less_than6 = takewhile(lambda x: x < 6, numbers)
 
-    print("First numbers less than 6:");
+    print("First numbers less than 6:")
     shared.printN(first_numbers_less_than6)
 
 
@@ -53,7 +60,7 @@ def linq25():
         index += 1
         return result
 
-    first_small_numbers = itertools.takewhile(lambda x: digit_greater_equal_to_index(x), numbers)
+    first_small_numbers = takewhile(lambda x: digit_greater_equal_to_index(x), numbers)
 
     print("First numbers not less than their position:")
     shared.printN(first_small_numbers)
@@ -62,7 +69,7 @@ def linq25():
 def linq26():
     numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
 
-    all_but_first3_numbers = itertools.dropwhile(lambda n:  n % 3 != 0, numbers)
+    all_but_first3_numbers = dropwhile(lambda n:  n % 3 != 0, numbers)
 
     print("All elements starting from first element divisible by 3:")
     shared.printN(all_but_first3_numbers)
@@ -79,16 +86,16 @@ def linq27():
         index += 1
         return result
 
-    later_numbers = itertools.dropwhile(lambda x: digit_greater_equal_to_index(x), numbers)
+    later_numbers = dropwhile(lambda x: digit_greater_equal_to_index(x), numbers)
 
     print("All elements starting from first element less than its position:")
     shared.printN(later_numbers)
 
 
-# linq20()
+linq20()
 # linq22()
 # linq23()
 # linq24()
 # linq25()
 # linq26()
-linq27()
+# linq27()

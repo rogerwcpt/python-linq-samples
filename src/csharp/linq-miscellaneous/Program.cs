@@ -9,12 +9,11 @@ namespace linq_miscellaneous
     {
         static void Main(string[] args)
         {
-            // Linq94();
-            // Linq95();
-            //Linq96();
-            Linq97();
+            Linq94();
+//             Linq95();
+//            Linq96();
+//            Linq97();
         }
-
 
         [Category("Miscellaneous Operators")]
         [Description(@"This sample uses Concat to create one sequence that contains each array's values, one after the other.")]
@@ -36,10 +35,8 @@ namespace linq_miscellaneous
             var customers = GetCustomerList();
             var products = GetProductList();
 
-            var customerNames = customers
-                .Select(cust => cust.CompanyName);
-            var productNames = products
-                .Select(prod => prod.ProductName);
+            var customerNames = customers.Select(cust => cust.CompanyName);
+            var productNames = products.Select(prod => prod.ProductName);
 
             var allNames = customerNames.Concat(productNames);
 
@@ -51,8 +48,8 @@ namespace linq_miscellaneous
         [Description("This sample uses SequenceEquals to see if two sequences match on all elements in the same order.")]
         static void Linq96()
         {
-            var wordsA = new string[] { "cherry", "apple", "blueberry" };
-            var wordsB = new string[] { "cherry", "apple", "blueberry" };
+            var wordsA = new[] { "cherry", "apple", "blueberry" };
+            var wordsB = new[] { "cherry", "apple", "blueberry" };
 
             var match = wordsA.SequenceEqual(wordsB);
 
@@ -63,8 +60,8 @@ namespace linq_miscellaneous
         [Description("This sample uses SequenceEqual to see if two sequences match on all elements in the same order.")]
         static void Linq97()
         {
-            var wordsA = new string[] { "cherry", "apple", "blueberry" };
-            var wordsB = new string[] { "apple", "blueberry", "cherry" };
+            var wordsA = new[] { "cherry", "apple", "blueberry" };
+            var wordsB = new[] { "apple", "blueberry", "cherry" };
 
             var match = wordsA.SequenceEqual(wordsB);
 

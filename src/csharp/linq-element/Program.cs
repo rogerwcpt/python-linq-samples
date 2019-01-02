@@ -10,21 +10,19 @@ namespace linq_element
         static void Main(string[] args)
         {
             //Linq58();
-            //Linq59();
-            //Linq61();
-            //Linq62();
-            Linq64();        }
+//            Linq59();
+//            Linq61();
+//            Linq62();
+//            Linq64();        
+        }
 
         [Category("Element Operators")]
-        [Description("This sample uses First to return the first matching element " +
-                        "as a Product, instead of as a sequence containing a Product.")]
+        [Description("This sample uses First to return the first matching element as a Product, instead of as a sequence containing a Product.")]
         static void Linq58()
         {
             var products = GetProductList();
 
-            var product12 = products
-                .Where(p => p.ProductID == 12)
-                .First();
+            var product12 = products.First(p => p.ProductID == 12);
 
             ObjectDumper.Write(product12);
         }
@@ -35,17 +33,14 @@ namespace linq_element
         {
              var strings = new []{ "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 
-            var startsWithO = strings
-                .First(s => s.StartsWith('o'));
+            var startsWithO = strings.First(s => s.StartsWith('o'));
 
             Console.WriteLine("A string starting with 'o': {0}", startsWithO);
         }
 
 
         [Category("Element Operators")]
-        [Description(@"This sample uses FirstOrDefault to try to return the first element of the sequence
-                     unless there are no elements, in which case the default value for that type
-                     is returned. FirstOrDefault is useful for creating outer joins.")]
+        [Description("This sample uses FirstOrDefault to try to return the first element of the sequence unless there are no elements, in which case the default value for that type is returned. FirstOrDefault is useful for creating outer joins.")]
         static void Linq61()
         {
             var numbers = new int[0];
@@ -56,8 +51,7 @@ namespace linq_element
         }
 
         [Category("Element Operators")]
-        [Description(@"This sample uses FirstOrDefault to return the first product whose ProductID is 789 
-                       as a single Product object, unless there is no match, in which case null is returned.")]
+        [Description("This sample uses FirstOrDefault to return the first product whose ProductID is 789 as a single Product object, unless there is no match, in which case null is returned.")]
         static void Linq62()
         {
             var products = GetProductList();
@@ -68,8 +62,7 @@ namespace linq_element
         }
 
         [Category("Element Operators")]
-        [Description(@"This sample uses ElementAt to retrieve the second number greater than 5
-                       from an array.")]
+        [Description("This sample uses ElementAt to retrieve the second number greater than 5 from an array.")]
         static void Linq64()
         {
             var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };

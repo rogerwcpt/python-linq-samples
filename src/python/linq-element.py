@@ -20,7 +20,7 @@ def linq59():
 def linq61():
     numbers = []
 
-    first_num_or_default = next(filter(lambda x: true, numbers), 0)
+    first_num_or_default = next(filter(lambda x: True, numbers), 0)
 
     print(first_num_or_default)
 
@@ -40,8 +40,9 @@ def linq64():
 
     print("Second number > 5: %d" % fourth_low_num)
 
-# linq58()
+
+linq58()
 # linq59()
 # linq61()
 # linq62()
-linq64()
+# linq64()

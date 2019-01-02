@@ -9,26 +9,26 @@ namespace linq_aggregate
     {
         static void Main(string[] args)
         {
-            //Linq73();
-            //Linq74();
-            //Linq76();
-            //Linq77();
-            //Linq78();
-            //Linq79();
-            //Linq80();
-            //Linq81();
-            //Linq82();
-            //Linq83();
-            //Linq84();
-            //Linq85();
-            //Linq86();
-            //Linq87();
-            //Linq88();
-            //Linq89();
-            //Linq90();
-            //Linq91();
-            //Linq92();
-            Linq93();
+            Linq73();
+//            Linq74();
+//            Linq76();
+//            Linq77();
+//            Linq78();
+//            Linq79();
+//            Linq80();
+//            Linq81();
+//            Linq82();
+//            Linq83();
+//            Linq84();
+//            Linq85();
+//            Linq86();
+//            Linq87();
+//            Linq88();
+//            Linq89();
+//            Linq90();
+//            Linq91();
+//            Linq92();
+//            Linq93();
 
         }
 
@@ -61,7 +61,12 @@ namespace linq_aggregate
             var customers = GetCustomerList();
 
             var orderCounts = customers
-                .Select(cust => new { cust.CustomerID, OrderCount = cust.Orders.Count() });
+                .Select(cust => 
+                    new
+                    {
+                        cust.CustomerID, 
+                        OrderCount = cust.Orders.Count()
+                    });
 
             ObjectDumper.Write(orderCounts);
         }
@@ -74,7 +79,12 @@ namespace linq_aggregate
 
             var categoryCounts = products
                 .GroupBy(prod => prod.Category)
-                .Select(prodGroup => new { Category = prodGroup.Key, ProductCount = prodGroup.Count() });
+                .Select(prodGroup => 
+                    new
+                    {
+                        Category = prodGroup.Key, 
+                        ProductCount = prodGroup.Count()
+                    });
 
             ObjectDumper.Write(categoryCounts);
         }
@@ -109,7 +119,12 @@ namespace linq_aggregate
 
             var categories = products
                 .GroupBy(prod => prod.Category)
-                .Select(prodGroup => new { Category = prodGroup.Key, TotalUnitsInStock = prodGroup.Sum(p => p.UnitsInStock) });
+                .Select(prodGroup => 
+                    new
+                    {
+                        Category = prodGroup.Key, 
+                        TotalUnitsInStock = prodGroup.Sum(p => p.UnitsInStock)
+                    });
 
             ObjectDumper.Write(categories);
         }
@@ -144,7 +159,12 @@ namespace linq_aggregate
 
             var categories = products
                 .GroupBy(prod => prod.Category)
-                .Select(prodGroup => new { Category = prodGroup.Key, CheapestPrice = prodGroup.Min(p => p.UnitPrice) });
+                .Select(prodGroup => 
+                    new
+                    {
+                        Category = prodGroup.Key, 
+                        CheapestPrice = prodGroup.Min(p => p.UnitPrice)
+                    });
 
             ObjectDumper.Write(categories);
         }
@@ -157,11 +177,12 @@ namespace linq_aggregate
 
             var categories = products.GroupBy(prod => prod.Category)
                 .Select(prodGroup => new {prodGroup, minPrice = prodGroup.Min(p => p.UnitPrice)})
-                .Select(x => new
-                {
-                    Category = x.prodGroup.Key,
-                    CheapestProducts = x.prodGroup.Where(p => p.UnitPrice == x.minPrice)
-                });
+                .Select(x => 
+                    new
+                    {
+                        Category = x.prodGroup.Key,
+                        CheapestProducts = x.prodGroup.Where(p => p.UnitPrice == x.minPrice)
+                    });
 
             ObjectDumper.Write(categories, 1);
         }
@@ -196,7 +217,12 @@ namespace linq_aggregate
 
             var categories = products
                 .GroupBy(prod => prod.Category)
-                .Select(prodGroup => new { Category = prodGroup.Key, MostExpensivePrice = prodGroup.Max(p => p.UnitPrice) });
+                .Select(prodGroup => 
+                    new
+                    {
+                        Category = prodGroup.Key, 
+                        MostExpensivePrice = prodGroup.Max(p => p.UnitPrice)
+                    });
 
             ObjectDumper.Write(categories);
         }
@@ -209,11 +235,12 @@ namespace linq_aggregate
 
             var categories = products.GroupBy(prod => prod.Category)
                 .Select(prodGroup => new {prodGroup, maxPrice = prodGroup.Max(p => p.UnitPrice)})
-                .Select(x => new
-                {
-                    Category = x.prodGroup.Key,
-                    MostExpensiveProducts = x.prodGroup.Where(p => p.UnitPrice == x.maxPrice)
-                });
+                .Select(x => 
+                    new
+                    {
+                        Category = x.prodGroup.Key,
+                        MostExpensiveProducts = x.prodGroup.Where(p => p.UnitPrice == x.maxPrice)
+                    });
 
             ObjectDumper.Write(categories, 1);
         }
@@ -249,7 +276,12 @@ namespace linq_aggregate
 
             var categories = products
                 .GroupBy(prod => prod.Category)
-                .Select(prodGroup => new { Category = prodGroup.Key, AveragePrice = prodGroup.Average(p => p.UnitPrice) });
+                .Select(prodGroup => 
+                    new
+                    {
+                        Category = prodGroup.Key, 
+                        AveragePrice = prodGroup.Average(p => p.UnitPrice)
+                    });
 
             ObjectDumper.Write(categories);
         }

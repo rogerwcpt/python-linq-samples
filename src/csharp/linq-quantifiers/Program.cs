@@ -10,15 +10,14 @@ namespace linq_quantifiers
     {
         static void Main(string[] args)
         {
-            //Linq67();
-            //Linq69();
-            //Linq70();
-            Linq72();
+            Linq67();
+//            Linq69();
+//            Linq70();
+//            Linq72();
         }
 
         [Category("Quantifiers")]
-        [Description(@"This sample uses Any to determine if any of the words in the array
-                       contain the substring 'ei'.")]
+        [Description("This sample uses Any to determine if any of the words in the array contain the substring 'ei'.")]
         static void Linq67()
         {
             var words = new []{ "believe", "relief", "receipt", "field" };
@@ -29,8 +28,7 @@ namespace linq_quantifiers
         }
 
         [Category("Quantifiers")]
-        [Description(@"This sample uses Any to return a grouped a list of products only for categories
-                       that have at least one product that is out of stock.")]
+        [Description("This sample uses Any to return a grouped a list of products only for categories that have at least one product that is out of stock.")]
         static void Linq69()
         {
             var products = GetProductList();
@@ -38,7 +36,12 @@ namespace linq_quantifiers
             var productGroups = products
                 .GroupBy(prod => prod.Category)
                 .Where(prodGroup => prodGroup.Any(p => p.UnitsInStock == 0))
-                .Select(prodGroup => new { Category = prodGroup.Key, Products = prodGroup });
+                .Select(prodGroup => 
+                    new
+                    {
+                        Category = prodGroup.Key, 
+                        Products = prodGroup
+                    });
 
             ObjectDumper.Write(productGroups, 1);
         }
@@ -63,7 +66,12 @@ namespace linq_quantifiers
             var productGroups = products
                 .GroupBy(prod => prod.Category)
                 .Where(prodGroup => prodGroup.All(p => p.UnitsInStock > 0))
-                .Select(prodGroup => new { Category = prodGroup.Key, Products = prodGroup });
+                .Select(prodGroup => 
+                    new
+                    {
+                        Category = prodGroup.Key, 
+                        Products = prodGroup
+                    });
 
             ObjectDumper.Write(productGroups, 1);
         }

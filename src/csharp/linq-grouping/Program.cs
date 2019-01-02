@@ -10,29 +10,29 @@ namespace linq_grouping
     {
         static void Main(string[] args)
         {
-            //Linq40();
-            //Linq41();
-            //Linq42();
-            //Linq43();
-            // Linq44();
-            Linq45();
+            Linq40();
+//            Linq41();
+//            Linq42();
+//            Linq43();
+//            Linq44();
+//            Linq45();
         }
 
         private class AnagramEqualityComparer : IEqualityComparer<string> 
         { 
             public bool Equals(string x, string y) 
             { 
-                return getCanonicalString(x) == getCanonicalString(y); 
+                return GetCanonicalString(x) == GetCanonicalString(y); 
             } 
         
             public int GetHashCode(string obj) 
             { 
-                return getCanonicalString(obj).GetHashCode(); 
+                return GetCanonicalString(obj).GetHashCode(); 
             } 
         
-            private string getCanonicalString(string word) 
+            private string GetCanonicalString(string word) 
             { 
-                char[] wordChars = word.ToCharArray(); 
+                var wordChars = word.ToCharArray(); 
                 Array.Sort<char>(wordChars); 
                 return new string(wordChars); 
             } 
@@ -46,7 +46,12 @@ namespace linq_grouping
 
             var numberGroups = numbers
                 .GroupBy(n => n % 5)
-                .Select(x => new {Remainder = x.Key, Numbers = x});
+                .Select(x => 
+                    new
+                    {
+                        Remainder = x.Key, 
+                        Numbers = x
+                    });
 
             numberGroups.ForEach((g) => 
             {
@@ -63,7 +68,12 @@ namespace linq_grouping
 
             var wordGroups = words
                 .GroupBy(w => w[0])
-                .Select(g => new { FirstLetter = g.Key, Words = g });
+                .Select(g => 
+                    new
+                    {
+                        FirstLetter = g.Key, 
+                        Words = g
+                    });
 
             wordGroups.ForEach((g) => 
             {
@@ -80,7 +90,12 @@ namespace linq_grouping
             
             var orderGroups = products
                 .GroupBy(p => p.Category)
-                .Select(g => new { Category = g.Key, Products = g }); 
+                .Select(g => 
+                    new
+                    {
+                        Category = g.Key, 
+                        Products = g
+                    }); 
         
             ObjectDumper.Write(orderGroups, 1); 
         }

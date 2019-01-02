@@ -10,11 +10,11 @@ namespace linq_restrictions
     {
         static void Main(string[] args)
         {
-            //Linq1();
-            //Linq2();
-            //Linq3();
-            //Linq4();
-            Linq5();
+            Linq1();
+//            Linq2();
+//            Linq3();
+//            Linq4();
+//            Linq5();
         }
 
         [Category("Restriction Operators")]
@@ -23,8 +23,7 @@ namespace linq_restrictions
         {
             var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
-            var lowNums = numbers
-                .Where(n => n < 5);
+            var lowNums = numbers.Where(n => n < 5);
 
             Console.WriteLine("Numbers < 5:");
             lowNums.ForEach(Console.WriteLine);
@@ -36,8 +35,7 @@ namespace linq_restrictions
         {
             var products = GetProductList();
 
-            var soldOutProducts = products
-                .Where(p => p.UnitsInStock == 0);
+            var soldOutProducts = products.Where(p => p.UnitsInStock == 0);
 
             Console.WriteLine("Sold out products:");
             soldOutProducts.ForEach(x => Console.WriteLine($"{x.ProductName} is sold out!"));
@@ -49,8 +47,7 @@ namespace linq_restrictions
         {
             var products = GetProductList();
 
-            var expensiveInStockProducts = products
-                .Where(p => p.UnitsInStock > 0 && p.UnitPrice > 3.00M);
+            var expensiveInStockProducts = products.Where(p => p.UnitsInStock > 0 && p.UnitPrice > 3.00M);
 
             Console.WriteLine("In-stock products that cost more than 3.00:");
             expensiveInStockProducts.ForEach(product => Console.WriteLine($"{product.ProductName} is in stock and costs more than 3.00."));

@@ -22,7 +22,7 @@ def linq72():
     pass
 
 
-# linq67()
+linq67()
 # linq69()
 # linq70()
 # linq72()

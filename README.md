@@ -2,59 +2,31 @@
 101 LINQ Samples in Python
 ========================
 
-Port of the [C# 101 LINQ Samples](http://code.msdn.microsoft.com/101-LINQ-Samples-3fb9811b) rewritten into idiomatic Python and utilizing its functional methods where possible.
+Port of the [C# 101 LINQ Samples](http://code.msdn.microsoft.com/101-LINQ-Samples-3fb9811b) rewritten into modern C# syntax and then also using Python, using built in methods where possible.
 
 Python doesn't really lend itself well to functional programming because is functional methods are really procedural.  There is support for lambda expressions, but you can't chain or compose your your functional operations very well as you will see compare to C# equivalent below.
 
+Source for both C# and Python are included in the [src](src) folder in this repository
 
-### Why the fork?
+- To run the respective C# projects (*.csproj*), open the containing folder in [Visual Studio Code](https://code.visualstudio.com/) use the Debug command 
+- To run the respective Python files (*.py*), open the file in [Visual Studio Code](https://code.visualstudio.com/) use the *Run Python File in Terminal* right click menu command (requirses the Python extension)
 
-- The original MSDN C# examples use the SQL Query / DSL Linq syntax instead for the more generally accepted Extension method/lambda syntax.
-  -  which is very similar to Dart
-  -  has all the methods such as Distinct, Take, Union First etc so that you don't have to mix the styles (see mixed syntax example below)
- - This fork uses more up to date C# syntax, including the `var` keyword wherever possible and string interpolatation
- - This fork has included the modified C# source locally so that you don't have to visit the outdated MSDN site.
- - This fork has included a [Operation Comparison Matrix](#operation-comparison-matrix)
-
-##### Mixed syntax (bad)
-```csharp
-var categoryNames = ( 
-    from p in products 
-    select p.Category) 
-    .Distinct(); 
+Where I haven't been able to figure out the Python implemention, I've created an empty function like this:
+```python
+def f:
+    pass
 ```
-- The SQL / DSL Linq syntax is more long winded.
-
-
-##### Lonq winded Linq syntax
-```csharp
-var sortedWords =
-    from w in words
-    orderby w
-    select w;
-```
-
-##### More succinct extension method Linq syntax
-```csharp
-var sortedWords = words
-    .OrderBy(x => x);
-```
-
-
-### Contents
-
-The samples below mirrors the C# LINQ samples layout with the names of the top-level Dart methods matching their corresponding C# examples.
 
 ### Operation Comparison Matrix
-|Operation|C#|Dart|Comment|
+|Operation|C#|python|Comment|
 |---------|--|----|-------|
 |**Restriction**|`Where`|`filter`||
 |**Projection**|`Select`|`map`||
-||`SelectMany`||Custom select_many utility added|
+||`SelectMany`||Custom [select_many](#python-utils-added) utility added|
 |**Partitioning**|`Take(n)`|`array[:n]`||
-||`TakeWhile(predicate)`|`itertools.takewhile(predicate, sequence)`||
+||`TakeWhile(predicate)`|`takewhile(predicate)`|`from itertools import takewhile`|
 ||`Skip(n)`|`array[n:]`||
-||`SkipWhile`|`itertools.dropwhile(predicate, sequence)`||
+||`SkipWhile(predicate)`|`dropwhile(predicate, sequence)`|`from itertools import dropwhile`|
 |**Ordering**|`OrderBy`|`sequence.sort()` *or* <br/> `sorted(sequence)`|| 
 ||`OrderBy(lambda)`|`sequence.sort(key=lambda)` *or* <br/> `sorted(sequence, key=lambda)`|| 
 ||`OrderByDescending`|`sequence.sort(reverse=True)` *or* <br/>  `sorted(sequence, reverse=True)`|| 
@@ -93,8 +65,6 @@ The samples below mirrors the C# LINQ samples layout with the names of the top-l
 ||`Aggregate(seed, lamda)`|`functools.reduce(lambsa,seed,sequence)`||
 |**Miscellaneous**|`Concat(IEnumerable)`|`list1 + list2`||
 ||`SequenceEqual(IEnumerable)`|`list1==list2`||
-|**Join**|Join||Custom [join](#dart-utils-added-6) utility  added|
-||GroupJoin||Custom [joinGroup](#dart-utils-added-6) utility  added|
 
 #### Source
 - [Restriction Operators](#linq1-where---simple-1)
@@ -110,7 +80,7 @@ The samples below mirrors the C# LINQ samples layout with the names of the top-l
   - [Python]src/python/linq-ordering.py)
   - [C#](src/csharp/linq-ordering/Program.cs)
 - [Grouping Operators](#linq---grouping-operators)
-  - [Python](src/python/linq-grouping.dart)
+  - [Python](src/python/linq-grouping.python)
   - [C#](src/csharp/linq-grouping/Program.cs)
 - [Set Operators](#linq---set-operators)
   - [Python](src/python/linq-setoperations.py)
@@ -119,37 +89,38 @@ The samples below mirrors the C# LINQ samples layout with the names of the top-l
   - [Python](src/python/linq-conversion.py)
   - [C#](src/csharp/linq-conversion/Program.cs)
 - [Element Operators](#linq---element-operators)
-  - [Python](bin/linq-elementoperations.dart)
+  - [Python](bin/linq-elementoperations.python)
   - [C#](src/csharp/linq-element/Program.cs)
 - [Python Operators](#linq---generation-operators)
-  - [Dart](bin/linq-generationoperations.dart)
+  - [python](bin/linq-generationoperations.python)
   - [C#](src/csharp/linq-generation/Program.cs)
 - [Quantifiers](#linq---quantifiers)
-  - [Python](bin/linq-quantifiers.dart)
+  - [Python](bin/linq-quantifiers.python)
   - [C#](src/csharp/linq-quantifiers/Program.cs)
 - [Aggregate Operators](#linq---aggregate-operators)
-  - [Python](bin/linq-aggregateoperations.dart)
+  - [Python](bin/linq-aggregateoperations.python)
   - [C#](src/csharp/linq-aggregate/Program.cs)
 - [Miscellaneous Operators](#linq---miscellaneous-operators)
-  - [Python](bin/linq-miscellaneousoperations.dart)
+  - [Python](bin/linq-miscellaneousoperations.python)
   - [C#](src/csharp/linq-miscellaneous/Program.cs)
 - [Query Execution](#linq---query-execution)
-  - [Python](bin/linq-queryexecution.dart)
+  - [Python](bin/linq-queryexecution.python)
   - [C#](src/csharp/linq-query/Program.cs)
 
-##  Side-by-side - C# LINQ vs Dart functional collections
+##  Side-by-side - C# LINQ vs python functional collections
 
-For a side-by-side comparison, the original **C#** source code is displayed above the equivalent **Dart** translation. 
+For a side-by-side comparison, the original **C#** source code is displayed above the equivalent **python** translation. 
 
-  - The **Output** shows the console output of running the **Dart** sample. 
+  - The **Output** shows the console output of running the **python** sample. 
   - Outputs ending with `...` illustrates only a partial response is displayed. 
-  - The source-code for C# and Dart utils used are included once under the first section they're used in.
+  - The source-code for C# and python utils used are included once under the first section they're used in.
   - The C# ObjectDumper util used is downloadable from MSDN - [ObjectDumper.zip](http://code.msdn.microsoft.com/Visual-Studio-2008-C-d295cdba/file/46086/1/ObjectDumper.zip)
 
 LINQ - Restriction Operators
 ----------------------------
 
 ### linq1: Where - Simple 1
+> This sample uses the where/filter to find all elements of an array with a value less than 5.
 
 ```csharp
 //c#
@@ -157,8 +128,7 @@ public void Linq1()
 { 
     var numbers = new int[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
-    var lowNums = numbers
-        .Where(n => n < 5);
+    var lowNums = numbers.Where(n => n < 5);
 
     Console.WriteLine("Numbers < 5:");
     lowNums.ForEach((x) => Console.WriteLine(x));
@@ -167,11 +137,12 @@ public void Linq1()
 ```python
 #python
 def linq1():
-    numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]
-    lowNums = filter(lambda x: x < 5, numbers)
+    numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
+
+    low_nums = filter(lambda x: x < 5, numbers)
     
     print("Numbers < 5:")
-    printS(lowNums)
+    shared.printN(low_nums)
 ```
 #### Output
 
@@ -183,14 +154,14 @@ def linq1():
     0
   
 ### linq2: Where - Simple 2
+>This sample uses the Where/filter to find all products that are out of stock.
 ```csharp
 //c#
 public void Linq2() 
 { 
     var products = GetProductList();
 
-    var soldOutProducts = products
-        .Where(p => p.UnitsInStock == 0);
+    var soldOutProducts = products.Where(p => p.UnitsInStock == 0);
 
     Console.WriteLine("Sold out products:");
     soldOutProducts.ForEach(x => Console.WriteLine($"{x.ProductName} is sold out!"));
@@ -200,11 +171,13 @@ public void Linq2()
 #python
 def linq2():
     products = shared.getProductList()
-    soldOutProducts = filter(lambda x: x.UnitsInStock == 0, products)
+
+    sold_out_products = filter(lambda x: x.UnitsInStock == 0, products)
 
     print("Sold out products:")
-    for item in soldOutProducts:
-        print("%s is sold out!" % (item.ProductName))
+    for item in sold_out_products:
+        print("%s is sold out!" % item.ProductName)
+
 ```
 #### Output
 
@@ -216,14 +189,14 @@ def linq2():
     Perth Pasties is sold out!
 
 ### linq3: Where - Simple 3
+> This sample uses the Where/filter to find all products that are in stock and cost more than 3.00 per unit.
 ```csharp
 //c#
 public void Linq3() 
 { 
     var products = GetProductList();
 
-    var expensiveInStockProducts = products
-        .Where(p => p.UnitsInStock > 0 && p.UnitPrice > 3.00M);
+    var expensiveInStockProducts = products.Where(p => p.UnitsInStock > 0 && p.UnitPrice > 3.00M);
 
     Console.WriteLine("In-stock products that cost more than 3.00:");
     expensiveInStockProducts.ForEach((product) => Console.WriteLine($"{product.ProductName} is in stock and costs more than 3.00."));
@@ -234,12 +207,12 @@ public void Linq3()
 #python
 def linq3():
     products = shared.getProductList()
-    expensiveInStockProducts = filter(lambda x: x.UnitsInStock > 0 and x.UnitPrice > 3.0000, products) 
+
+    expensive_in_stock_products = filter(lambda x: x.UnitsInStock > 0 and x.UnitPrice > 3.0000, products)
 
     print("In-stock products that cost more than 3.00:")
-    for item in expensiveInStockProducts:
-        print("%s is in stock and costs more than 3.00." % (item.ProductName))
-
+    for item in expensive_in_stock_products:
+        print("%s is in stock and costs more than 3.00." % item.ProductName)
 ```
 #### Output
 
@@ -250,6 +223,7 @@ def linq3():
     ...
 
 ### linq4: Where - Drilldown
+> This sample uses the Where/filter to find all customers in Washington and then it uses a foreach loop to iterate over the orders collection that belongs to each customer.
 ```csharp
 //c#
 public void Linq4() 
@@ -257,8 +231,7 @@ public void Linq4()
     var customers = GetCustomerList();
 
     Console.WriteLine("Customers from Washington and their orders:");
-    var waCustomers = customers
-        .Where(c => c.Region == "WA");
+    var waCustomers = customers.Where(c => c.Region == "WA");
     
     waCustomers.ForEach((customer) =>
     {
@@ -274,13 +247,15 @@ public void Linq4()
 #python
 def linq4():
     customers = shared.getCustomerList()
-    waCustomers = filter(lambda x: x.Region == "WA", customers)
+
+    wa_customers = filter(lambda x: x.Region == "WA", customers)
 
     print("Customers from Washington and their orders:")
-    for customer in waCustomers:
+    for customer in wa_customers:
             print("Customer %s : %s" % (customer.CustomerID, customer.CompanyName))
             for order in customer.Orders:
                     print("     Order %s: %s" % (order.OrderID, order.OrderDate))
+
 ```
 #### Output
 
@@ -295,6 +270,7 @@ def linq4():
     ...
 
 ### linq5: Where - Indexed
+>This sample demonstrates an indexed Where/filter that returns digits whose name is shorter than their value.
 ```csharp
 //c#
 public void Linq5() 
@@ -312,20 +288,20 @@ public void Linq5()
 def linq5():
         digits = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
   
-        index=0
+        index = 0
 
-        # Lambdas cant have multiple lines, so create a fitler function
-        def FilterFunc(digit):
+        # Lambdas cant have multiple lines, so create a filter function
+        def filter_func(digit):
                 nonlocal index
                 result = len(digit) < index
                 index += 1
                 return result
 
-        shortDigits = filter(lambda digit: FilterFunc(digit), digits)
+        short_digits = filter(lambda digit: filter_func(digit), digits)
   
         print("Short digits:"); 
-        for d in shortDigits:
-                print("The word %s is shorter than its value." % (d))
+        for d in short_digits:
+                print("The word %s is shorter than its value." % d)
 ```
 #### Output
 
@@ -343,25 +319,40 @@ LINQ - Projection Operators
 ### Python utils added
 
 ```python
-def select_many(outer_list, inner_list):
-    def select(item, the_list):
-        return map(lambda b: SimpleNamespace(a=item, b=b), the_list)
+from types import SimpleNamespace
+
+def select(item, the_list):
+    return map(lambda b: SimpleNamespace(item_a=item, item_b=b), the_list)
+
+
+def left_outer_join(outer_list, inner_list):
 
     result = []
-    for outer_list in outer_list:
-        result.extend(select(outer_list, inner_list))
+    for outer_item in outer_list:
+        result.extend(select(outer_item, inner_list))
+    return result
+
+
+def select_many(outer_list, inner_item_list_key, filter_lambda):
+    result = []
+    for outer_item in outer_list:
+        result.extend(select(outer_item, getattr(outer_item, inner_item_list_key)))
+
+    if filter_lambda:
+        return filter(filter_lambda, result)
+
     return result
 ```
 
 ### linq6: Select - Simple 1
+>This sample uses Select/map to produce a sequence of ints one higher than those in an existing array of integers.
 ```csharp
 //c#
 public void Linq6() 
 { 
     var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
-    var numsPlusOne = numbers
-        .Select(n => n + 1);
+    var numsPlusOne = numbers.Select(n => n + 1);
 
     Console.WriteLine("Numbers + 1:");
     numsPlusOne.ForEach(Console.WriteLine);
@@ -370,11 +361,12 @@ public void Linq6()
 ```python
 #python
 def linq6():
-    numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]
-    numsPlusOne = map(lambda n: n + 1, numbers)
+    numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
+    
+    nums_plus_one = map(lambda n: n + 1, numbers)
 
     print("Numbers + 1:")
-    print(list(numsPlusOne))
+    print(list(nums_plus_one))
 ```
 #### Output
 
@@ -382,14 +374,14 @@ Numbers + 1:
 [6, 5, 2, 4, 10, 9, 7, 8, 3, 1]
 
 ### linq7: Select - Simple 2
+>This sample uses Select/map to return a sequence of just the names of a list of products.
 ```csharp
 //c#
 public void Linq7() 
 { 
     var products = GetProductList();
 
-    var productNames = products
-        .Select(p => p.ProductName);
+    var productNames = products.Select(p => p.ProductName);
 
     Console.WriteLine("Product Names:");
     productNames.ForEach(Console.WriteLine);
@@ -416,6 +408,7 @@ def linq7():
     ...
 
 ### linq8: Select - Transformation
+>This sample uses Select/map to produce a sequence of strings representing the text version of a sequence of integers.
 ```csharp
 //c#
 public void Linq8() 
@@ -423,8 +416,7 @@ public void Linq8()
     var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
     var strings = new [] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 
-    var textNums = numbers
-        .Select(n => strings[n]);
+    var textNums = numbers.Select(n => strings[n]);
 
     Console.WriteLine("Number strings:");
     textNums.ForEach(Console.WriteLine);
@@ -456,14 +448,14 @@ def linq8():
     zero
 
 ### linq9: Select - Anonymous Types 1
+>This sample uses Select/map to produce a sequence of the uppercase and lowercase versions of each word in the original array.
 ```csharp
 //c#
 public void Linq9() 
 { 
     var words = new[] { "aPPLE", "BlUeBeRrY", "cHeRry" };
 
-    var upperLowerWords = words
-        .Select(w => new { Upper = w.ToUpper(), Lower = w.ToLower() });
+    var upperLowerWords = words.Select(w => new { Upper = w.ToUpper(), Lower = w.ToLower() });
 
     upperLowerWords.ForEach(ul => Console.WriteLine($"Uppercase: {ul.Upper}, Lowercase: {ul.Lower}"));
 }
@@ -484,6 +476,7 @@ def linq9():
     Uppercase: CHERRY, Lowercase: cherry
 
 ### linq10: Select - Anonymous Types 2
+>This sample uses Select/map to produce a sequence containing text representations of digits and whether their length is even or odd.
 ```csharp
 //c#
 public void Linq10() 
@@ -491,8 +484,7 @@ public void Linq10()
     var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
     var strings = new[] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 
-    var digitOddEvens = numbers
-        .Select(n => new { Digit = strings[n], Even = (n % 2 == 0) });
+    var digitOddEvens = numbers.Select(n => new { Digit = strings[n], Even = (n % 2 == 0) });
     
     digitOddEvens.ForEach(d => Console.WriteLine($"The digit {d.Digit} is {(d.Even ? "even" : "odd")}."));
 }
@@ -500,12 +492,12 @@ public void Linq10()
 ```python
 #python
 def linq10():
-    numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]; 
-    strings = [ "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" ]
-  
-    digitOddEvens = map(lambda n : SimpleNamespace(Digit=strings[n], Even=(n % 2 == 0) ), numbers)
-      
-    for d in digitOddEvens:
+    numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
+    strings = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+
+    digit_odd_evens = map(lambda n: SimpleNamespace(Digit=strings[n], Even=(n % 2 == 0)), numbers)
+
+    for d in digit_odd_evens:
         print("The digit %s is %s" % (d.Digit, 'even' if d.Even else 'odd'))
 ```
 #### Output
@@ -522,14 +514,14 @@ def linq10():
     The digit zero is even.
 
 ### linq11: Select - Anonymous Types 3
+>This sample uses Select/map to produce a sequence containing some properties of Products, including UnitPrice which is renamed to Price in the resulting type.
 ```csharp
 //c#
 public void Linq11() 
 { 
     var products = GetProductList();
 
-    var productInfos = products
-        .Select(p => new { p.ProductName, p.Category, Price = p.UnitPrice });
+    var productInfos = products.Select(p => new { p.ProductName, p.Category, Price = p.UnitPrice });
 
     Console.WriteLine("Product Info:");
     productInfos.ForEach(productInfo => Console.WriteLine($"{productInfo.ProductName} is in the category {productInfo.Category} and costs {productInfo.Price} per unit."));
@@ -539,12 +531,12 @@ public void Linq11()
 #python
 def linq11():
     products = shared.getProductList()
-  
-    productInfos = map(lambda p: SimpleNamespace(ProductName=p.ProductName, Category=p.Category, Price=p.UnitPrice), products) 
-      
+
+    product_info = map(lambda p: SimpleNamespace(ProductName=p.ProductName, Category=p.Category, Price=p.UnitPrice), products)
+
     print("Product Info:")
-    for p in productInfos:
-        print("%s is in the category %s and costs %.2f per unit." % (p.ProductName, p.Category, p.Price))
+    for product in product_info:
+        print("%s is in the category %s and costs %.2f per unit." % (product.ProductName, product.Category, product.Price))
 ```
 #### Output
 
@@ -555,14 +547,14 @@ def linq11():
     ...
 
 ### linq12: Select - Indexed
+>This sample uses an indexed Select/map to determine if the value of ints in an array match their position in the array.
 ```csharp
 //c#
 public void Linq12() 
 { 
     var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
-    var numsInPlace = numbers
-        .Select((num, index) => new { Num = num, InPlace = (num == index) });
+    var numsInPlace = numbers.Select((num, index) => new { Num = num, InPlace = (num == index) });
 
     Console.WriteLine("Number: In-place?");
     numsInPlace.ForEach(n => Console.WriteLine($"{n.Num}: {n.InPlace}"));
@@ -583,7 +575,7 @@ def linq12():
 
     numsInPlace = map(lambda num: SimpleNamespace(Num=num, InPlace=CheckInPlace(num)), numbers)
   
-    print("Number: In-place?"); 
+    print("Number: In-place?")
     for n in numsInPlace:
         print("%d: %s" % (n.Num, n.InPlace))
 ```
@@ -706,9 +698,8 @@ public void Linq15()
 def linq15():
     customers = shared.getCustomerList()
 
-    orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID, order_id=x.item_b.OrderID, total=x.item_b.Total),
-                 filter(lambda x: x.item_b.Total < 500.00,
-                        select_many(customers, "Orders")))
+    customer_orders = filter(lambda x: x.item_b.Total < 500.00, functions.select_many(customers, "Orders")
+    orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID, order_id=x.item_b.OrderID, total=x.item_b.Total), customer_orders))
 
     shared.print_namespace(orders)
 ```
@@ -737,16 +728,15 @@ public void Linq16()
 ```
 ```python
 #python
-linq16(){
-  var customers = customersList(); 
-  
-  var orders = customers
-    .expand((c) => c.orders
-      .where((o) => o.orderDate.isAfter(new DateTime(1998, 1, 1)))
-      .map((o) => { 'CustomerId': c.customerId, 'OrderId':o.orderId, 'OrderDate':o.orderDate }));
-  
-  orders.forEach(print);   
-}
+def linq16():
+    customers = shared.getCustomerList()
+
+    the_date = datetime.datetime(1998, 1, 1)
+    
+    order_greater_than_date = functions.select_many(customers, "Orders", lambda x: x.item_b.OrderDate > the_date)
+    orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID, order_id=x.item_b.OrderID, orderDate=x.item_b.OrderDate), order_greater_than_date)
+
+    shared.print_namespace(orders)
 ```
 #### Output
 
@@ -772,18 +762,15 @@ public void Linq17()
     ObjectDumper.Write(orders);
 }
 ```
-```dart
-//dart
-linq17(){
-  var customers = customersList(); 
-  
-  var orders = customers
-    .expand((c) => c.orders
-      .where((o) => o.total >= 2000)
-      .map((o) => { 'CustomerId': c.customerId, 'OrderId':o.orderId, 'Total':o.total }));
-  
-  orders.forEach(print);   
-}
+```python
+#python
+def linq17():
+    customers = shared.getCustomerList()
+
+    orders_greater_than_2000 = functions.select_many(customers, "Orders", lambda x: x.item_b.Total > 2000)
+    orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID, order_id=x.item_b.OrderID, total=x.item_b.Total), orders_greater_than_2000)
+
+    shared.print_namespace(orders)
 ```
 #### Output
 
@@ -812,8 +799,8 @@ public void Linq18()
     ObjectDumper.Write(orders);
 }
 ```
-```dart
-//dart
+```python
+#python
 linq18(){
   var customers = customersList(); 
 
@@ -863,8 +850,8 @@ public void Linq19()
     ObjectDumper.Write(customerOrders);
 }
 ```
-```dart
-//dart
+```python
+#python
 linq19(){
   var customers = customersList(); 
 
@@ -1632,9 +1619,9 @@ public class AnagramEqualityComparer : IEqualityComparer<string>
 } 
 ```
 
-### Dart utils added
+### python utils added
 
-```dart
+```python
 anagramEqualityComparer(a, b) => 
   new String.fromCharCodes(orderBy(a.codeUnits.toList()))
   .compareTo(new String.fromCharCodes(orderBy(b.codeUnits.toList())));
@@ -3294,9 +3281,9 @@ def linq93():
 LINQ - Miscellaneous Operators
 ------------------------------
 
-### Dart utils added
+### python utils added
 
-```dart
+```python
 concat(Iterable seq, Iterable withSeq) =>
   seq.toList()..addAll(withSeq);
 

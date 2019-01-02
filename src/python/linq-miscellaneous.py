@@ -41,7 +41,8 @@ def linq97():
 
     print("The sequences match: %s" % match)
 
-# linq94()
+
+linq94()
 # linq95()
 # linq96()
-linq97()
+# linq97()

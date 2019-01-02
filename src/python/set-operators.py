@@ -87,11 +87,11 @@ def linq53():
     shared.printS(unique_first_chars)
 
 
-# linq46()
+linq46()
 # linq47()
 # linq48()
 # linq49()
 # linq50()
 # linq51()
 # linq52()
-linq53()
+# linq53()

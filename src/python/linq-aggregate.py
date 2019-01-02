@@ -4,6 +4,7 @@ from itertools import groupby
 from functools import reduce
 import operator
 
+
 def linq73():
     factors_of_300 = [2, 2, 3, 5, 5]
 
@@ -23,7 +24,9 @@ def linq74():
 def linq75():
     customers = shared.getCustomerList()
 
-    order_counts = map(lambda cust: SimpleNamespace(CustomerID=cust.CustomerID, OrderCount=len(cust.Orders)), customers)
+    order_counts = map(lambda cust: SimpleNamespace(CustomerID=cust.CustomerID,
+                                                    OrderCount=len(cust.Orders)),
+                       customers)
 
     shared.print_namespace(order_counts)
 
@@ -34,7 +37,9 @@ def linq77():
     sorted_by_category = sorted(products, key=lambda p: p.Category)
     grouped_by_category = groupby(sorted_by_category, key=lambda p: p.Category)
 
-    category_counts = map(lambda g: SimpleNamespace(Category=g[0], ProductCount=len(list(g[1]))), grouped_by_category)
+    category_counts = map(lambda g: SimpleNamespace(Category=g[0],
+                                                    ProductCount=len(list(g[1]))),
+                          grouped_by_category)
 
     shared.print_namespace(category_counts)
 
@@ -61,7 +66,9 @@ def linq80():
     sorted_by_category = sorted(products, key=lambda p: p.Category)
     grouped_by_category = groupby(sorted_by_category, key=lambda p: p.Category)
 
-    category_counts = map(lambda g: SimpleNamespace(Category=g[0], TotalUnitsInStock=sum(p.UnitsInStock for p in g[1])), grouped_by_category)
+    category_counts = map(lambda g: SimpleNamespace(Category=g[0],
+                                                    TotalUnitsInStock=sum(p.UnitsInStock for p in g[1])),
+                          grouped_by_category)
 
     shared.print_namespace(category_counts)
 
@@ -88,7 +95,9 @@ def linq83():
     sorted_by_category = sorted(products, key=lambda p: p.Category)
     grouped_by_category = groupby(sorted_by_category, key=lambda p: p.Category)
 
-    category_cheapest_price = map(lambda g: SimpleNamespace(Category=g[0], CheapestPrice=min(p.UnitPrice for p in g[1])), grouped_by_category)
+    category_cheapest_price = map(lambda g: SimpleNamespace(Category=g[0],
+                                                            CheapestPrice=min(p.UnitPrice for p in g[1])),
+                                  grouped_by_category)
 
     shared.print_namespace(category_cheapest_price)
 
@@ -120,7 +129,9 @@ def linq87():
     grouped_by_category = groupby(sorted_by_category, key=lambda p: p.Category)
 
     category_expensive_price = map(
-        lambda g: SimpleNamespace(Category=g[0], MostExpensive=max(p.UnitPrice for p in g[1])), grouped_by_category)
+        lambda g: SimpleNamespace(Category=g[0],
+                                  MostExpensive=max(p.UnitPrice for p in g[1])),
+        grouped_by_category)
 
     shared.print_namespace(category_expensive_price)
 
@@ -164,14 +175,15 @@ def linq93():
 
     attempted_withdrawals = [20, 10, 40, 50, 10, 70, 30]
 
-    endBalance = reduce(
+    end_balance = reduce(
         lambda runningBalance, nextWithDrawal: runningBalance - nextWithDrawal if nextWithDrawal <= runningBalance else runningBalance,
         attempted_withdrawals,
         start_balance)
 
-    print("Ending balance: %f" % endBalance)
+    print("Ending balance: %f" % end_balance)
 
-# linq73()
+
+linq73()
 # linq74()
 # linq75()
 # linq77()
@@ -190,4 +202,4 @@ def linq93():
 # linq90()
 # linq91()
 # linq92()
-linq93()
+# linq93()

@@ -9,14 +9,14 @@ namespace linq_partitioning
     {
         static void Main(string[] args)
         {
-            //Linq20();
-            Linq21();
-            //Linq22();
-            //Linq23();
-            //Linq24();
-            //Linq25();
-            //Linq26();
-            //Linq27();
+            Linq20();
+//            Linq21();
+//            Linq22();
+//            Linq23();
+//            Linq24();
+//            Linq25();
+//            Linq26();
+//            Linq27();
         }
 
         [Category("Partitioning Operators")]
@@ -40,7 +40,13 @@ namespace linq_partitioning
             var first3WAOrders = customers
                 .Where(c => c.Region == "WA")
                 .SelectMany(customer => customer.Orders, (customer, order) => new { customer, order })
-                .Select(x => new { x.customer.CustomerID, x.order.OrderID, x.order.OrderDate })
+                .Select(x => 
+                    new
+                    {
+                        x.customer.CustomerID, 
+                        x.order.OrderID, 
+                        x.order.OrderDate
+                    })
                 .Take(3);
 
             Console.WriteLine("First 3 orders in WA:");
@@ -68,7 +74,13 @@ namespace linq_partitioning
             var waOrders = customers
                 .Where(c => c.Region == "WA")
                 .SelectMany(customer => customer.Orders, (customer, order) => new { customer, order })
-                .Select(x => new { x.customer.CustomerID, x.order.OrderID, x.order.OrderDate });
+                .Select(x => 
+                    new
+                    {
+                        x.customer.CustomerID, 
+                        x.order.OrderID, 
+                        x.order.OrderDate
+                    });
 
             var allButFirst2Orders = waOrders.Skip(2);
 

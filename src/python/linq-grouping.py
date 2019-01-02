@@ -7,7 +7,10 @@ def linq40():
     numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
 
     # First create a record of numbers and their modulus of 5
-    number_remainders = map(lambda n: SimpleNamespace(Number=n, Remainder=n % 5), numbers)
+    number_remainders = map(lambda n: SimpleNamespace(Number=n,
+                                                      Remainder=n % 5),
+                            numbers)
+
     # Group By only works on sorted lists, so sort by both fields
     sorted_by_reminder = sorted(number_remainders, key=lambda x: (x.Remainder, x.Number))
     remainder_groups = groupby(sorted_by_reminder, key=lambda nr: nr.Remainder)
@@ -21,7 +24,10 @@ def linq40():
 def linq41():
     words = ["blueberry", "chimpanzee", "abacus", "banana", "apple", "cheese"]
 
-    first_letter_words = map(lambda w: SimpleNamespace(Letter=w[0], Word=w), words)
+    first_letter_words = map(lambda w: SimpleNamespace(Letter=w[0],
+                                                       Word=w),
+                             words)
+
     # Group By only works on sorted lists, so sort by both fields
     sorted_letter_words = sorted(first_letter_words, key=lambda x: (x.Word, x.Letter))
     letter_groups = groupby(sorted_letter_words, key=lambda nr: nr.Letter)
@@ -50,12 +56,13 @@ def linq43():
 def linq44():
     pass
 
+
 def linq45():
     pass
 
 
-# linq40()
+linq40()
 # linq41()
 # linq42()
-linq43()
-linq44()
+# linq43()
+# linq44()

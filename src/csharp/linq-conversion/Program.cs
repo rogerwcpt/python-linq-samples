@@ -9,10 +9,10 @@ namespace linq_conversion
     {
         static void Main(string[] args)
         {
-            //Linq54();
-            //Linq55();
-            //Linq56();
-            Linq57();
+            Linq54();
+//            Linq55();
+//            Linq56();
+//            Linq57();
         }
 
         [Category("Conversion Operators")]
@@ -21,13 +21,12 @@ namespace linq_conversion
         {
             double[] doubles = { 1.7, 2.3, 1.9, 4.1, 2.9 };
 
-            var sortedDoubles = doubles
-                .OrderByDescending(d => d);
+            var sortedDoubles = doubles.OrderByDescending(d => d);
                 
             var doublesArray = sortedDoubles.ToArray();
 
             Console.WriteLine("Every other double from highest to lowest:");
-            for (int d = 0; d < doublesArray.Length; d += 2)
+            for (var d = 0; d < doublesArray.Length; d += 2)
             {
                 Console.WriteLine(doublesArray[d]);
             }
@@ -40,8 +39,7 @@ namespace linq_conversion
         {
             string[] words = { "cherry", "apple", "blueberry" };
 
-            var sortedWords = words
-                .OrderBy(x => x);
+            var sortedWords = words.OrderBy(x => x);
 
             var wordList = sortedWords.ToList();
 
@@ -53,12 +51,13 @@ namespace linq_conversion
         [Description("This sample uses ToDictionary to immediately evaluate a sequence and a related key expression into a dictionary.")]
         static void Linq56()
         {
-            var scoreRecords = new[] 
-            { 
-                new {Name = "Alice", Score = 50},
-                new {Name = "Bob"  , Score = 40},
-                new {Name = "Cathy", Score = 45}
-            };
+            var scoreRecords = 
+                new[] 
+                { 
+                    new {Name = "Alice", Score = 50},
+                    new {Name = "Bob"  , Score = 40},
+                    new {Name = "Cathy", Score = 45}
+                };
 
             var scoreRecordsDict = scoreRecords.ToDictionary(sr => sr.Name);
 

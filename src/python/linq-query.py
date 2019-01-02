@@ -1,6 +1,3 @@
-import shared
-
-
 def linq99():
     numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
 
@@ -37,6 +34,6 @@ def linq101():
     pass
 
 
-# linq99()
+linq99()
 # linq100()
-linq101()
+# linq101()

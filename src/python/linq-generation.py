@@ -1,6 +1,7 @@
 import shared
 import itertools
 
+
 def linq65():
     numbers = range(100, 150)
 
@@ -16,5 +17,5 @@ def linq66():
     shared.printN(numbers)
 
 
-# linq65()
-linq66()
+linq65()
+# linq66()

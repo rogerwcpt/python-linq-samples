@@ -1,8 +1,8 @@
 import shared
-from types import SimpleNamespace
+
 
 def linq54():
-    doubles = [ 1.7, 2.3, 1.9, 4.1, 2.9 ]
+    doubles = [1.7, 2.3, 1.9, 4.1, 2.9]
   
     sorted_doubles = sorted(doubles, reverse=True)
 
@@ -28,8 +28,8 @@ def linq55():
 
 def linq56():
     score_records = [{'Name': "Alice", 'Score': 50},
-                    {'Name': "Bob", 'Score': 40},
-                    {'Name': "Cathy", 'Score': 45}]
+                     {'Name': "Bob", 'Score': 40},
+                     {'Name': "Cathy", 'Score': 45}]
 
     index = map(lambda s: s["Name"], score_records)
 
@@ -47,7 +47,7 @@ def linq57():
     shared.printN(floats)
 
 
-# linq54()
+linq54()
 # linq55()
 # linq56()
-linq57()
+# linq57()

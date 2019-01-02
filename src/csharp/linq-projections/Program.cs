@@ -10,20 +10,20 @@ namespace linq_projections
     {
         static void Main(string[] args)
         {
-            // Linq6();
-            // Linq7();
-            // Linq8();
-            // Linq9();
-            // Linq10();
-            // Linq11();
+            Linq6();
+            Linq7();
+            Linq8();
+            Linq9();
+            Linq10();
+            Linq11();
             Linq12();
-            //Linq13();
-            //Linq14();
-            //Linq15();
-            //Linq16();
-            //Linq17();
-            //Linq18();
-            // Linq19();
+            Linq13();
+            Linq14();
+            Linq15();
+            Linq16();
+            Linq17();
+            Linq18();
+            Linq19();
         }
 
         [Category("Projection Operators")]
@@ -32,8 +32,7 @@ namespace linq_projections
         {
             var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
-            var numsPlusOne = numbers
-                .Select(n => n + 1);
+            var numsPlusOne = numbers.Select(n => n + 1);
 
             Console.WriteLine("Numbers + 1:");
             numsPlusOne.ForEach(Console.WriteLine);
@@ -45,8 +44,7 @@ namespace linq_projections
         {
             var products = GetProductList();
 
-            var productNames = products
-                .Select(p => p.ProductName);
+            var productNames = products.Select(p => p.ProductName);
 
             Console.WriteLine("Product Names:");
             productNames.ForEach(Console.WriteLine);
@@ -59,8 +57,7 @@ namespace linq_projections
             var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
             var strings = new [] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 
-            var textNums = numbers
-                .Select(n => strings[n]);
+            var textNums = numbers.Select(n => strings[n]);
 
             Console.WriteLine("Number strings:");
             textNums.ForEach(Console.WriteLine);
@@ -72,8 +69,12 @@ namespace linq_projections
         {
             var words = new[] { "aPPLE", "BlUeBeRrY", "cHeRry" };
 
-            var upperLowerWords = words
-                .Select(w => new { Upper = w.ToUpper(), Lower = w.ToLower() });
+            var upperLowerWords = words.Select(w => 
+                new
+                {
+                    Upper = w.ToUpper(), 
+                    Lower = w.ToLower()
+                });
 
             upperLowerWords.ForEach(ul => Console.WriteLine($"Uppercase: {ul.Upper}, Lowercase: {ul.Lower}"));
         }
@@ -85,8 +86,12 @@ namespace linq_projections
             var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
             var strings = new[] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 
-            var digitOddEvens = numbers
-                .Select(n => new { Digit = strings[n], Even = (n % 2 == 0) });
+            var digitOddEvens = numbers.Select(n => 
+                new
+                {
+                    Digit = strings[n], 
+                    Even = (n % 2 == 0)
+                });
             
             digitOddEvens.ForEach(d => Console.WriteLine($"The digit {d.Digit} is {(d.Even ? "even" : "odd")}."));
         }
@@ -97,8 +102,13 @@ namespace linq_projections
         {
             var products = GetProductList();
 
-            var productInfos = products
-                .Select(p => new { p.ProductName, p.Category, Price = p.UnitPrice });
+            var productInfos = products.Select(p => 
+                new
+                {
+                    p.ProductName, 
+                    p.Category, 
+                    Price = p.UnitPrice
+                });
 
             Console.WriteLine("Product Info:");
             productInfos.ForEach(productInfo => Console.WriteLine($"{productInfo.ProductName} is in the category {productInfo.Category} and costs {productInfo.Price} per unit."));
@@ -111,8 +121,12 @@ namespace linq_projections
         {
             var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
-            var numsInPlace = numbers
-                .Select((num, index) => new { Num = num, InPlace = (num == index) });
+            var numsInPlace = numbers.Select((num, index) => 
+                new
+                {
+                    Num = num, 
+                    InPlace = (num == index)
+                });
 
             Console.WriteLine("Number: In-place?");
             numsInPlace.ForEach(n => Console.WriteLine($"{n.Num}: {n.InPlace}"));
@@ -135,7 +149,7 @@ namespace linq_projections
 
         [Category("Projection Operators")]
         [Description("This sample uses a compound from clause to make a query that returns all pairs of numbers from both arrays such that the number from numbersA is less than the number from numbersB.")]
-        public static void Linq14()
+        static void Linq14()
         {
             var numbersA = new [] { 0, 2, 4, 5, 6, 8, 9 };
             var numbersB = new []{ 1, 3, 5, 7, 8 };
@@ -150,14 +164,20 @@ namespace linq_projections
 
         [Category("Projection Operators")]
         [Description("This sample uses a compound from clause to select all orders where the order total is less than 500.00.")]
-        public static void Linq15()
+        static void Linq15()
         {
             var customers = GetCustomerList();
 
             var orders = customers
                 .SelectMany(customer => customer.Orders, (customer, order) => new { customer, order })
                 .Where(x => x.order.Total < 500.00M)
-                .Select(x => new { x.customer.CustomerID, x.order.OrderID, x.order.Total });
+                .Select(x => 
+                    new
+                    {
+                        x.customer.CustomerID, 
+                        x.order.OrderID, 
+                        x.order.Total
+                    });
 
             ObjectDumper.Write(orders);
         }
@@ -171,7 +191,13 @@ namespace linq_projections
             var orders = customers
                 .SelectMany(customer => customer.Orders, (customer, order) => new { customer, order })
                 .Where(x => x.order.OrderDate >= new DateTime(1998, 1, 1))
-                .Select(x => new { x.customer.CustomerID, x.order.OrderID, x.order.OrderDate });
+                .Select(x => 
+                    new
+                    {
+                        x.customer.CustomerID, 
+                        x.order.OrderID, 
+                        x.order.OrderDate
+                    });
 
             ObjectDumper.Write(orders);
         }
@@ -185,7 +211,13 @@ namespace linq_projections
             var orders = customers
                 .SelectMany(customer => customer.Orders, (customer, order) => new { customer, order })
                 .Where(x => x.order.Total >= 2000.00M)
-                .Select(x => new { x.customer.CustomerID, x.order.OrderID, x.order.Total });
+                .Select(x => 
+                    new
+                    {
+                        x.customer.CustomerID,
+                        x.order.OrderID, 
+                        x.order.Total
+                    });
 
             ObjectDumper.Write(orders);
         }
@@ -202,7 +234,13 @@ namespace linq_projections
                 .Where(c => c.Region == "WA")
                 .SelectMany(customer => customer.Orders, (customer, order) => new { customer, order })
                 .Where(x => x.order.OrderDate >= cutoffDate)
-                .Select(x => new { x.customer.CustomerID, x.customer.Region, x.order.OrderID });
+                .Select(x => 
+                    new
+                    {
+                        x.customer.CustomerID, 
+                        x.customer.Region, 
+                        x.order.OrderID
+                    });
 
             ObjectDumper.Write(orders);
         }
