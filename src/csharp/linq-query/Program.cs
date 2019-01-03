@@ -33,7 +33,7 @@ namespace linq_query
         }
 
         [Category("Query Execution")]
-        [Description("The following sample shows how queries can be executed immediately, and their results stored in memory, with methods such as ToList.")]
+        [Description("The following sample shows how queries can be executed immediately, and their results stored in memory, with methods such as ToList/list.")]
         static void Linq100()
         {
             // Methods like ToList(), Max(), and Count() cause the query to be executed immediately.            

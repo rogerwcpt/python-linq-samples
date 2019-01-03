@@ -29,7 +29,7 @@ Source for both C# and Python are included in the [src](src) folder in this repo
 ||`ThenBy`|`sequence.sort(key=lambda (key1, key2))` *or* <br/> `sorted(sequence, key=lambda (key1, key))`|| 
 ||`ThenByDescending`|`sequence.sort(key=lambda (key1, -key2))` *or* <br/> `sorted(sequence, key=lambda (key1, -key2))` <br/> *or use a 2 pass sort, starting with least significant* <br/> `ordered =  sorted(unordered, key=lambda (key2))`  <br/> `ordered =  sorted(ordered, key=lambda (key1))` |
 ||`Reverse`|`sequence.reverse()` *or* `reversed(sequence)`||
-|**Grouping**|`GroupBy`|`itertools.groupby`| <br/>Grouping  works on sorted sequences <br> Once you've iterated over the grouping, you can't access it again, its empty
+|**Grouping**|`GroupBy`|`groupby`|`from itertools. import groupby`<br/>Grouping  works on sorted sequences <br> Once you've iterated over the grouping, you can't access it again, its empty
 |**Sets**|`Distinct`|`set`||
 ||`Union`|`union`||
 ||`Interect`|`intersection`||
@@ -43,7 +43,7 @@ Source for both C# and Python are included in the [src](src) folder in this repo
 ||`FirstOrDefault`|`next(filter(lambda), default)`|
 ||`ElementAt`|`list[0]`||
 |**Generation**|`Enumerable.Range`|range|
-||`Enumerable.Repeat`|`[x] * n` *or* <br /> `itertools.repeat(x, n)`||
+||`Enumerable.Repeat`|`[x] * n` *or* <br /> `repeat(x, n)`|`from itertools import repeat`|
 |**Quantifiers**|`Any`|`any`||
 ||`All`|`all`||
 |**Aggregate**|`Count`|`len` ||
@@ -56,8 +56,8 @@ Source for both C# and Python are included in the [src](src) folder in this repo
 ||`Min(lambda)`|`min(iterator)`||
 ||`Max(lambda)`|`max(iterator)`||
 ||`Avg(lambda)`||Custom calculation using <br /> `sum(iterator)` / `len`|
-||`Aggregate`|`functools.reduce(lambda, sequence)`||
-||`Aggregate(seed, lamda)`|`functools.reduce(lambsa,seed,sequence)`||
+||`Aggregate`|`reduce(lambda, sequence)`|`from functools import reduce`|
+||`Aggregate(seed, lamda)`|`reduce(lambsa,seed,sequence)`|`from functools import reduce`|
 |**Miscellaneous**|`Concat(IEnumerable)`|`list1 + list2`||
 ||`SequenceEqual(IEnumerable)`|`list1==list2`||
 
