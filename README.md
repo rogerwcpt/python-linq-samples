@@ -22,13 +22,13 @@ Source for both C# and Python are included in the [src](src) folder in this repo
 ||`TakeWhile(predicate)`|`takewhile(predicate)`|`from itertools import takewhile`|
 ||`Skip(n)`|`array[n:]`||
 ||`SkipWhile(predicate)`|`dropwhile(predicate, sequence)`|`from itertools import dropwhile`|
-|**Ordering**|`OrderBy`|`sequence.sort()` *or* <br/> `sorted(sequence)`|| 
-||`OrderBy(lambda)`|`sequence.sort(key=lambda)` *or* <br/> `sorted(sequence, key=lambda)`|| 
-||`OrderByDescending`|`sequence.sort(reverse=True)` *or* <br/>  `sorted(sequence, reverse=True)`|| 
-||`OrderByDescending(lambda)`|`sequence.sort(key=lambda, reverse=True)` *or* <br/> `sorted(sequence, key=lambda, reverse=True)`|| 
-||`ThenBy`|`sequence.sort(key=lambda (key1, key2))` *or* <br/> `sorted(sequence, key=lambda (key1, key))`|| 
-||`ThenByDescending`|`sequence.sort(key=lambda (key1, -key2))` *or* <br/> `sorted(sequence, key=lambda (key1, -key2))` <br/> *or use a 2 pass sort, starting with least significant* <br/> `ordered =  sorted(unordered, key=lambda (key2))`  <br/> `ordered =  sorted(ordered, key=lambda (key1))` |
-||`Reverse`|`sequence.reverse()` *or* `reversed(sequence)`||
+|**Ordering**|`OrderBy`|`sequence.sort()` <br/> *or* <br/> `sorted(sequence)`|| 
+||`OrderBy(lambda)`|`sequence.sort(key=lambda)` <br/>*or* <br/> `sorted(sequence, key=lambda)`|| 
+||`OrderByDescending`|`sequence.sort(reverse=True)` <br/>*or* <br/>  `sorted(sequence, reverse=True)`|| 
+||`OrderByDescending(lambda)`|`sequence.sort(key=lambda, reverse=True)` <br/>*or* <br/> `sorted(sequence, key=lambda, reverse=True)`|| 
+||`ThenBy`|`sequence.sort(key=lambda (key1, key2))` <br/>*or* <br/> `sorted(sequence, key=lambda (key1, key))`|| 
+||`ThenByDescending`|`sequence.sort(key=lambda (key1, -key2))` <br/>*or* <br/> `sorted(sequence, key=lambda (key1, -key2))` <br/> *or use a 2 pass sort, starting with least significant* <br/> `ordered =  sorted(unordered, key=lambda (key2))`  <br/> `ordered =  sorted(ordered, key=lambda (key1))` |
+||`Reverse`|`sequence.reverse()` <br/> *or* <br/> `reversed(sequence)`||
 |**Grouping**|`GroupBy`|`groupby`|`from itertools. import groupby`<br/>Grouping  works on sorted sequences <br> Once you've iterated over the grouping, you can't access it again, its empty
 |**Sets**|`Distinct`|`set`||
 ||`Union`|`union`||
@@ -43,7 +43,7 @@ Source for both C# and Python are included in the [src](src) folder in this repo
 ||`FirstOrDefault`|`next(filter(lambda), default)`|
 ||`ElementAt`|`list[0]`||
 |**Generation**|`Enumerable.Range`|range|
-||`Enumerable.Repeat`|`[x] * n` *or* <br /> `repeat(x, n)`|`from itertools import repeat`|
+||`Enumerable.Repeat`|`[x] * n` <br/> *or* <br /> `repeat(x, n)`|`from itertools import repeat`|
 |**Quantifiers**|`Any`|`any`||
 ||`All`|`all`||
 |**Aggregate**|`Count`|`len` ||
