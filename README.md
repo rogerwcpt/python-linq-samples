@@ -65,18 +65,18 @@ Source for both C# and Python are included in the [src](src) folder in this repo
 |Operation/Section|Python Source|C# Source|
 |-----------------|-------------|---------|
 |[Filter](#linq1-where---simple-1)|[linq-restrictions.py](src/python/linq-restrictions.py)|[linq-restrictions/Program.cs](src/csharp/linq-restrictions/Program.cs)|
-|[Projection](#linq---projection-opnerators)|[linq-projections.py](src/python/linq-projections.py)|[linq-projections/Program.cs](src/csharp/linq-projections/Program.cs)|
+|[Projection](#linq---projection-operators)|[linq-projections.py](src/python/linq-projections.py)|[linq-projections/Program.cs](src/csharp/linq-projections/Program.cs)|
 |[Partitioning](#linq---partitioning-operators)|[linq-partitions.py](src/python/linq-partitions.py)|[linq-partitioning/Program.cs](src/csharp/linq-partitioning/Program.cs)|
 |[Ordering](#linq---ordering-operators)|[linq-ordering.py](src/python/linq-ordering.py)|[linq-ordering/Program.cs](src/csharp/linq-ordering/Program.cs)|
 |[Grouping](#linq---grouping-operators)|[linq-grouping.py](src/python/linq-grouping.py)|[linq-grouping/Program.cs](src/csharp/linq-grouping/Program.cs)|
-|[Set](#linq---set-operators)|[linq-setoperations.py](src/python/linq-setoperations.py)|[linq-sets/Program.cs](src/csharp/linq-sets/Program.cs)|
+|[Set](#linq---set-operators)|[linq-setoperators.py](src/python/set-operators.py)|[linq-sets/Program.cs](src/csharp/linq-sets/Program.cs)|
 |[Conversion](#linq---conversion-operators)|[linq-conversion.py](src/python/linq-conversion.py)|[linq-conversion/Program.cs](src/csharp/linq-conversion/Program.cs)|
 |[Element](#linq---element-operators)|[linq-element.py](src/python/linq-element.py)|[linq-element/Program.cs](src/csharp/linq-element/Program.cs)|
 |[Generation](#linq---generation-operators)|[generationon.py](src/python/linq-generation.py)|[linq-generation/Program.cs](src/csharp/linq-generation/Program.cs)|
 |[Quantifiers](#linq---quantifiers)|[linq-quantifiers.py](src/python/linq-quantifiers.py)|[linq-quantifiers/Program.cs](src/csharp/linq-quantifiers/Program.cs)|
 |[Aggregate](#linq---aggregate-operators)|[linq-aggregate.py](src/python/linq-aggregate.py)|[linq-aggregate/Program.cs](src/csharp/linq-aggregate/Program.cs)|
 |[Miscellaneous](#linq---miscellaneous-operators)|[linq-miscellaneous.py](src/python/linq-miscellaneous.py)|[linq-miscellaneous/Program.cs](src/csharp/linq-miscellaneous/Program.cs)|
-|[Query](#linq---query-execution)|[linq-queryexecution.py](src/python/linq-queryexecution.py)|[linq-query/Program.cs](src/csharp/linq-query/Program.cs)|
+|[Query](#linq---query-execution)|[linq-queryexecution.py](src/python/linq-query.py)|[linq-query/Program.cs](src/csharp/linq-query/Program.cs)|
 
 ##  Side-by-side - C# LINQ vs python functional collections
 
@@ -286,7 +286,7 @@ def linq5():
     The word nine is shorter than its value.
 
 
-LINQ - Projection Operators (Select/map)
+LINQ - Projection Operators
 ---------------------------
 
 ### Python utils added
