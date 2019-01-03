@@ -21,7 +21,7 @@ def linq74():
     print("There are %d odd numbers in the list." % odd_numbers)
 
 
-def linq75():
+def linq76():
     customers = shared.getCustomerList()
 
     order_counts = map(lambda cust: SimpleNamespace(CustomerID=cust.CustomerID,
@@ -167,7 +167,7 @@ def linq92():
     #or
     #product = reduce(lambda running_product, next_factor: running_product * next_factor, doubles)
 
-    print("Total product of all numbers: %f" % product);
+    print("Total product of all numbers: %f" % product)
 
 
 def linq93():
@@ -185,7 +185,7 @@ def linq93():
 
 linq73()
 # linq74()
-# linq75()
+# linq76()
 # linq77()
 # linq78()
 # linq79()

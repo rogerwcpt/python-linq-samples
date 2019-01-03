@@ -11,8 +11,8 @@ namespace linq_query
         static void Main(string[] args)
         {
             Linq99();
-//            Linq100();
-//            Linq101();
+        //    Linq100();
+        //    Linq101();
         }
 
         [Category("Query Execution")]

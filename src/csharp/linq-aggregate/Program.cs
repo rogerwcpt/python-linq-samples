@@ -55,7 +55,7 @@ namespace linq_aggregate
         }
 
         [Category("Aggregate Operators")]
-        [Description("This sample uses Count to return a list of customers and how many orders each has.")]
+        [Description("This sample uses returns a list of customers and how many orders each has.")]
         static void Linq76()
         {
             var customers = GetCustomerList();
@@ -72,7 +72,7 @@ namespace linq_aggregate
         }
 
         [Category("Aggregate Operators")]
-        [Description("This sample uses Count to return a list of categories and how many products each has.")]
+        [Description("This sample uses returns a list of categories and how many products each has.")]
         static void Linq77()
         {
             var products = GetProductList();
@@ -90,7 +90,7 @@ namespace linq_aggregate
         }
 
         [Category("Aggregate Operators")]
-        [Description("This sample uses Sum to add all the numbers in an array.")]
+        [Description("This sample uses adds all the numbers in an array.")]
         static void Linq78()
         {
             var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
@@ -101,7 +101,7 @@ namespace linq_aggregate
         }
 
         [Category("Aggregate Operators")]
-        [Description("This sample uses Sum to get the total number of characters of all words in the array.")]
+        [Description("This sample  gets the total number of characters of all words in the array.")]
         static void Linq79()
         {
             var  words = new [] { "cherry", "apple", "blueberry" };
@@ -112,7 +112,7 @@ namespace linq_aggregate
         }
 
         [Category("Aggregate Operators")]
-        [Description("This sample uses Sum to get the total units in stock for each product category.")]
+        [Description("This sample gets the total units in stock for each product category.")]
         static void Linq80()
         {
             var products = GetProductList();
@@ -130,7 +130,7 @@ namespace linq_aggregate
         }
 
         [Category("Aggregate Operators")]
-        [Description("This sample uses Min to get the lowest number in an array.")]
+        [Description("This sample uses gets the lowest number in an array.")]
         static void Linq81()
         {
             var numbers = new []{ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
@@ -141,7 +141,7 @@ namespace linq_aggregate
         } 
 
         [Category("Aggregate Operators")]
-        [Description("This sample uses Min to get the length of the shortest word in an array.")]
+        [Description("This sample uses gets the length of the shortest word in an array.")]
         static void Linq82()
         {
             var words = new [] { "cherry", "apple", "blueberry" };
@@ -152,7 +152,7 @@ namespace linq_aggregate
         }
 
         [Category("Aggregate Operators")]
-        [Description("This sample uses Min to get the cheapest price among each category's products.")]
+        [Description("This sample uses gets the cheapest price among each category's products.")]
         static void Linq83()
         {
             var products = GetProductList();
@@ -170,7 +170,7 @@ namespace linq_aggregate
         }
 
         [Category("Aggregate Operators")]
-        [Description("This sample uses Min to get the products with the lowest price in each category.")]
+        [Description("This sample gets the products with the lowest price in each category.")]
         static void Linq84()
         {
             var products = GetProductList();
@@ -188,7 +188,7 @@ namespace linq_aggregate
         }
 
         [Category("Aggregate Operators")]
-        [Description("This sample uses Max to get the highest number in an array. Note that the method returns a single value.")]
+        [Description("This sample gets the highest number in an array. Note that the method returns a single value.")]
         static void Linq85()
         {
             var numbers = new []{ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
@@ -199,7 +199,7 @@ namespace linq_aggregate
         }
 
         [Category("Aggregate Operators")]
-        [Description("This sample uses Max to get the length of the longest word in an array.")]
+        [Description("This sample gets the length of the longest word in an array.")]
         static void Linq86()
         {
             var words = new [] { "cherry", "apple", "blueberry" };
@@ -210,7 +210,7 @@ namespace linq_aggregate
         }
 
         [Category("Aggregate Operators")]
-        [Description("This sample uses Max to get the most expensive price among each category's products.")]
+        [Description("This sample gets the most expensive price among each category's products.")]
         static void Linq87()
         {
             var products = GetProductList();
@@ -228,7 +228,7 @@ namespace linq_aggregate
         }
 
         [Category("Aggregate Operators")]
-        [Description("This sample uses Max to get the products with the most expensive price in each category.")]
+        [Description("This sample gets the products with the most expensive price in each category.")]
         static void Linq88()
         {
             var products = GetProductList();
@@ -246,7 +246,7 @@ namespace linq_aggregate
         }
 
         [Category("Aggregate Operators")]
-        [Description("This sample uses Average to get the average of all numbers in an array.")]
+        [Description("This sample gets the average of all numbers in an array.")]
         static void Linq89()
         {
             var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
@@ -258,7 +258,7 @@ namespace linq_aggregate
 
 
         [Category("Aggregate Operators")]
-        [Description("This sample uses Average to get the average length of the words in the array.")]
+        [Description("This sample gets the average length of the words in the array.")]
         static void Linq90()
         {
             var words = new [] { "cherry", "apple", "blueberry" };
@@ -269,7 +269,7 @@ namespace linq_aggregate
         }
 
         [Category("Aggregate Operators")]
-        [Description("This sample uses Average to get the average price of each category's products.")]
+        [Description("This sample gets the average price of each category's products.")]
         static void Linq91()
         {
             var  products = GetProductList();
@@ -287,7 +287,7 @@ namespace linq_aggregate
         }
 
         [Category("Aggregate Operators")]
-        [Description("This sample uses Aggregate to create a running product on the array that calculates the total product of all elements.")]
+        [Description("This sample uses creates a running product on the array that calculates the total product of all elements.")]
         static void Linq92()
         {
             var doubles = new [] { 1.7, 2.3, 1.9, 4.1, 2.9 };
@@ -298,9 +298,7 @@ namespace linq_aggregate
         }
 
         [Category("Aggregate Operators")]
-        [Description(@"This sample uses Aggregate to create a running account balance that
-                     subtracts each withdrawal from the initial balance of 100, as long as
-                     the balance never drops below 0.")]
+        [Description("This sample uses to creates a running account balance that subtracts each withdrawal from the initial balance of 100, as long as the balance never drops below 0.")]
         static void Linq93()
         {
             var startBalance = 100.0;

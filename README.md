@@ -71,7 +71,7 @@ Source for both C# and Python are included in the [src](src) folder in this repo
 |[Grouping](#linq---grouping-operators)|[linq-grouping.py](src/python/linq-grouping.py)|[linq-grouping/Program.cs](src/csharp/linq-grouping/Program.cs)|
 |[Set](#linq---set-operators)|[linq-setoperations.py](src/python/linq-setoperations.py)|[linq-sets/Program.cs](src/csharp/linq-sets/Program.cs)|
 |[Conversion](#linq---conversion-operators)|[linq-conversion.py](src/python/linq-conversion.py)|[linq-conversion/Program.cs](src/csharp/linq-conversion/Program.cs)|
-|[Element](#linq---element-operators)|[linq-element.py](src/python/linq-element.py)|[linq-element/Program.cs)](src/csharp/linq-element/Program.cs)|
+|[Element](#linq---element-operators)|[linq-element.py](src/python/linq-element.py)|[linq-element/Program.cs](src/csharp/linq-element/Program.cs)|
 |[Generation](#linq---generation-operators)|[generationon.py](src/python/linq-generation.py)|[linq-generation/Program.cs](src/csharp/linq-generation/Program.cs)|
 |[Quantifiers](#linq---quantifiers)|[linq-quantifiers.py](src/python/linq-quantifiers.py)|[linq-quantifiers/Program.cs](src/csharp/linq-quantifiers/Program.cs)|
 |[Aggregate](#linq---aggregate-operators)|[linq-aggregate.py](src/python/linq-aggregate.py)|[linq-aggregate/Program.cs](src/csharp/linq-aggregate/Program.cs)|
@@ -343,8 +343,8 @@ def linq6():
 ```
 #### Output
 
-Numbers + 1:
-[6, 5, 2, 4, 10, 9, 7, 8, 3, 1]
+    Numbers + 1:
+    [6, 5, 2, 4, 10, 9, 7, 8, 3, 1]
 
 ### linq7: Select - Simple 2
 >This sample projects a sequence of just the names of a list of products.
@@ -853,12 +853,12 @@ def linq18():
 ```
 #### Output
 
-(customer_id='ALFKI', orderDate=datetime.datetime(1998, 1, 15, 0, 0), order_id=10835)
-(customer_id='ALFKI', orderDate=datetime.datetime(1998, 3, 16, 0, 0), order_id=10952)
-(customer_id='ALFKI', orderDate=datetime.datetime(1998, 4, 9, 0, 0), order_id=11011)
-(customer_id='ANATR', orderDate=datetime.datetime(1998, 3, 4, 0, 0), order_id=10926)
-(customer_id='ANTON', orderDate=datetime.datetime(1998, 1, 28, 0, 0), order_id=10856)
-...
+    (customer_id='ALFKI', orderDate=datetime.datetime(1998, 1, 15, 0, 0), order_id=10835)
+    (customer_id='ALFKI', orderDate=datetime.datetime(1998, 3, 16, 0, 0), order_id=10952)
+    (customer_id='ALFKI', orderDate=datetime.datetime(1998, 4, 9, 0, 0), order_id=11011)
+    (customer_id='ANATR', orderDate=datetime.datetime(1998, 3, 4, 0, 0), order_id=10926)
+    (customer_id='ANTON', orderDate=datetime.datetime(1998, 1, 28, 0, 0), order_id=10856)
+    ...
 
 ### linq19: SelectMany - Indexed
 ```csharp
@@ -1778,15 +1778,15 @@ def linq42():
 ```
 #### Output
 
-Products in the category 'Beverages':
-[{productId: 1, productName: Chai, category: Beverages, unitPrice: 18.00, unitsInStock: 39}, {productId: 2, productName: Products in the category 'Condiments':
-[{productId: 3, productName: Aniseed Syrup, category: Condiments, unitPrice: 10.00, unitsInStock: 13}, {productId: 4, Products in the category 'Confections':
-[{productId: 16, productName: Pavlova, category: Confections, unitPrice: 17.45, unitsInStock: 29}, {productId: 19, Products in the category 'Dairy Products':
-[{productId: 11, productName: Queso Cabrales, category: Dairy Products, unitPrice: 21.00, unitsInStock: 22}, {productId: Products in the category 'Grains/Cereals':
-[{productId: 22, productName: Gustaf's Knäckebröd, category: Grains/Cereals, unitPrice: 21.00, unitsInStock: 104}, Products in the category 'Meat/Poultry':
-[{productId: 9, productName: Mishi Kobe Niku, category: Meat/Poultry, unitPrice: 97.00, unitsInStock: 29}, {productId: 17,Products in the category 'Produce':
-[{productId: 7, productName: Uncle Bob's Organic Dried Pears, category: Produce, unitPrice: 30.00, unitsInStock: 15}, Products in the category 'Seafood':
-[{productId: 10, productName: Ikura, category: Seafood, unitPrice: 31.00, unitsInStock: 31}, {productId: 13, productName: 
+    Products in the category 'Beverages':
+    [{productId: 1, productName: Chai, category: Beverages, unitPrice: 18.00, unitsInStock: 39}, {productId: 2, productName: Products in the category 'Condiments':
+    [{productId: 3, productName: Aniseed Syrup, category: Condiments, unitPrice: 10.00, unitsInStock: 13}, {productId: 4, Products in the category 'Confections':
+    [{productId: 16, productName: Pavlova, category: Confections, unitPrice: 17.45, unitsInStock: 29}, {productId: 19, Products in the category 'Dairy Products':
+    [{productId: 11, productName: Queso Cabrales, category: Dairy Products, unitPrice: 21.00, unitsInStock: 22}, {productId: Products in the category 'Grains/Cereals':
+    [{productId: 22, productName: Gustaf's Knäckebröd, category: Grains/Cereals, unitPrice: 21.00, unitsInStock: 104}, Products in the category 'Meat/Poultry':
+    [{productId: 9, productName: Mishi Kobe Niku, category: Meat/Poultry, unitPrice: 97.00, unitsInStock: 29}, {productId: 17,Products in the category 'Produce':
+    [{productId: 7, productName: Uncle Bob's Organic Dried Pears, category: Produce, unitPrice: 30.00, unitsInStock: 15}, Products in the category 'Seafood':
+    [{productId: 10, productName: Ikura, category: Seafood, unitPrice: 31.00, unitsInStock: 31}, {productId: 13, productName: 
 
 ### linq43: GroupBy - Nested
 >This sample uses nested grouping to partition a list of each customer's orders, first by year, and then by month.
@@ -2656,8 +2656,8 @@ LINQ - Aggregate Operators
 >This sample gets the number of unique prime factors of 300.
 ```csharp
 //c#
-public void Linq73() 
-{ 
+static void Linq73()
+{
     var primeFactorsOf300 = new [] { 2, 2, 3, 5, 5 };
 
     var uniqueFactors = primeFactorsOf300.Distinct().Count();
@@ -2673,17 +2673,17 @@ def linq73():
     unique_factors = len(set(factors_of_300))
 
     print("There are %d unique factors of 300." % unique_factors)
-
 ```
 #### Output
 
     There are 3 unique factors of 300.
 
 ### linq74: Count - Conditional
+>This sample gets the number of odd ints in the array.
 ```csharp
 //c#
-public void Linq74() 
-{ 
+static void Linq74()
+{
     var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
     var oddNumbers = numbers.Count(n => n % 2 == 1);
@@ -2705,24 +2705,32 @@ def linq74():
     There are 5 odd numbers in the list.
 
 ### linq76: Count - Nested
+>This sample uses returns a list of customers and how many orders each has.
 ```csharp
 //c#
-public void Linq76() 
-{ 
+static void Linq76()
+{
     var customers = GetCustomerList();
 
     var orderCounts = customers
-        .Select(cust => new { cust.CustomerID, OrderCount = cust.Orders.Count() });
+        .Select(cust => 
+            new
+            {
+                cust.CustomerID, 
+                OrderCount = cust.Orders.Count()
+            });
 
     ObjectDumper.Write(orderCounts);
 }
 ```
 ```python
 #python
-def linq75():
+def linq76():
     customers = shared.getCustomerList()
 
-    order_counts = map(lambda cust: SimpleNamespace(CustomerID=cust.CustomerID, OrderCount=len(cust.Orders)), customers)
+    order_counts = map(lambda cust: SimpleNamespace(CustomerID=cust.CustomerID,
+                                                    OrderCount=len(cust.Orders)),
+                       customers)
 
     shared.print_namespace(order_counts)
 ```
@@ -2738,32 +2746,38 @@ def linq75():
     ...
 
 ### linq77: Count - Grouped
+>This sample uses returns a list of categories and how many products each has.
 ```csharp
 //c#
-public void Linq77() 
-{ 
+static void Linq77()
+{
     var products = GetProductList();
 
     var categoryCounts = products
         .GroupBy(prod => prod.Category)
-        .Select(prodGroup => new { Category = prodGroup.Key, ProductCount = prodGroup.Count() });
+        .Select(prodGroup => 
+            new
+            {
+                Category = prodGroup.Key, 
+                ProductCount = prodGroup.Count()
+            });
 
     ObjectDumper.Write(categoryCounts);
 }
 ```
 ```python
 #python
-linq77(){
 def linq77():
     products = shared.getProductList()
 
     sorted_by_category = sorted(products, key=lambda p: p.Category)
     grouped_by_category = groupby(sorted_by_category, key=lambda p: p.Category)
 
-    category_counts = map(lambda g: SimpleNamespace(Category=g[0], ProductCount=len(list(g[1]))), grouped_by_category)
+    category_counts = map(lambda g: SimpleNamespace(Category=g[0],
+                                                    ProductCount=len(list(g[1]))),
+                          grouped_by_category)
 
     shared.print_namespace(category_counts)
-}
 ```
 #### Output
 
@@ -2777,10 +2791,11 @@ def linq77():
     {Category: Beverages, ProductCount: 12}
 
 ### linq78: Sum - Simple
+>This sample uses adds all the numbers in an array.
 ```csharp
 //c#
-public void Linq78() 
-{ 
+static void Linq78()
+{
     var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
     var numSum = numbers.Sum();
@@ -2802,10 +2817,11 @@ def linq78():
     The sum of the numbers is 45.
 
 ### linq79: Sum - Projection
+>This sample  gets the total number of characters of all words in the array.
 ```csharp
 //c#
-public void Linq79() 
-{ 
+static void Linq79()
+{
     var  words = new [] { "cherry", "apple", "blueberry" };
 
     var totalChars = words.Sum(w => w.Length);
@@ -2827,15 +2843,21 @@ def linq79():
     There are a total of 20 characters in these words.
 
 ### linq80: Sum - Grouped
+>This sample gets the total units in stock for each product category.
 ```csharp
 //c#
-public void Linq80() 
-{ 
+static void Linq80()
+{
     var products = GetProductList();
 
     var categories = products
         .GroupBy(prod => prod.Category)
-        .Select(prodGroup => new { Category = prodGroup.Key, TotalUnitsInStock = prodGroup.Sum(p => p.UnitsInStock) });
+        .Select(prodGroup => 
+            new
+            {
+                Category = prodGroup.Key, 
+                TotalUnitsInStock = prodGroup.Sum(p => p.UnitsInStock)
+            });
 
     ObjectDumper.Write(categories);
 }
@@ -2848,9 +2870,12 @@ def linq80():
     sorted_by_category = sorted(products, key=lambda p: p.Category)
     grouped_by_category = groupby(sorted_by_category, key=lambda p: p.Category)
 
-    category_counts = map(lambda g: SimpleNamespace(Category=g[0], TotalUnitsInStock=sum(p.UnitsInStock for p in g[1])), grouped_by_category)
+    category_counts = map(lambda g: SimpleNamespace(Category=g[0],
+                                                    TotalUnitsInStock=sum(p.UnitsInStock for p in g[1])),
+                          grouped_by_category)
 
     shared.print_namespace(category_counts)
+
 ```
 #### Output
 
@@ -2864,16 +2889,17 @@ def linq80():
     {Category: Beverages, TotalUnitsInStock: 559}
 
 ### linq81: Min - Simple
+>This sample uses gets the lowest number in an array.
 ```csharp
 //c#
-public void Linq81() 
-{ 
+static void Linq81()
+{
     var numbers = new []{ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
     var minNum = numbers.Min();
 
     Console.WriteLine($"The minimum number is {minNum}.");
-}
+} 
 ```
 ```python
 #python
@@ -2882,17 +2908,18 @@ def linq81():
 
     min_num = min(numbers)
 
-    print("The minimum number is %d" % min_num);
+    print("The minimum number is %d" % min_num)
 ```
 #### Output
 
     The minimum number is 0.
 
 ### linq82: Min - Projection
+>This sample uses gets the length of the shortest word in an array.>
 ```csharp
 //c#
-public void Linq82() 
-{ 
+static void Linq82()
+{
     var words = new [] { "cherry", "apple", "blueberry" };
 
     var shortestWord = words.Min(w => w.Length);
@@ -2907,22 +2934,28 @@ def linq82():
 
     shortest_word = min(len(w) for w in words)
 
-    print("The shortest word is %s characters long." % shortest_word)
+    print("The shortest word is %d characters long." % shortest_word)
 ```
 #### Output
 
     The shortest word is 5 characters long.
 
 ### linq83: Min - Grouped
+>This sample uses gets the cheapest price among each category's products.
 ```csharp
 //c#
-public void Linq83() 
-{ 
+static void Linq83()
+{
     var products = GetProductList();
 
     var categories = products
         .GroupBy(prod => prod.Category)
-        .Select(prodGroup => new { Category = prodGroup.Key, CheapestPrice = prodGroup.Min(p => p.UnitPrice) });
+        .Select(prodGroup => 
+            new
+            {
+                Category = prodGroup.Key, 
+                CheapestPrice = prodGroup.Min(p => p.UnitPrice)
+            });
 
     ObjectDumper.Write(categories);
 }
@@ -2935,7 +2968,9 @@ def linq83():
     sorted_by_category = sorted(products, key=lambda p: p.Category)
     grouped_by_category = groupby(sorted_by_category, key=lambda p: p.Category)
 
-    category_cheapest_price = map(lambda g: SimpleNamespace(Category=g[0], CheapestPrice=min(p.UnitPrice for p in g[1])), grouped_by_category)
+    category_cheapest_price = map(lambda g: SimpleNamespace(Category=g[0],
+                                                            CheapestPrice=min(p.UnitPrice for p in g[1])),
+                                  grouped_by_category)
 
     shared.print_namespace(category_cheapest_price)
 ```
@@ -2951,19 +2986,21 @@ def linq83():
     {Category: Beverages, CheapestPrice: 4.5}
 
 ### linq84: Min - Elements
+>This sample gets the products with the lowest price in each category.
 ```csharp
 //c#
-public void Linq84() 
-{ 
+static void Linq84()
+{
     var products = GetProductList();
 
     var categories = products.GroupBy(prod => prod.Category)
         .Select(prodGroup => new {prodGroup, minPrice = prodGroup.Min(p => p.UnitPrice)})
-        .Select(x => new
-        {
-            Category = x.prodGroup.Key,
-            CheapestProducts = x.prodGroup.Where(p => p.UnitPrice == x.minPrice)
-        });
+        .Select(x => 
+            new
+            {
+                Category = x.prodGroup.Key,
+                CheapestProducts = x.prodGroup.Where(p => p.UnitPrice == x.minPrice)
+            });
 
     ObjectDumper.Write(categories, 1);
 }
@@ -2985,10 +3022,11 @@ def linq84():
     {Category: Beverages, CheapestProducts: {{productId: 24, productName: Guaran� Fant�stica, category: Beverages, unitPrice: 4.5, unitsInStock: 20}}}
 
 ### linq85: Max - Simple
+>This sample gets the highest number in an array. Note that the method returns a single value.
 ```csharp
 //c#
-public void Linq85() 
-{ 
+static void Linq85()
+{
     var numbers = new []{ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
     var maxNum = numbers.Max();
@@ -3010,15 +3048,17 @@ def linq85():
     The maximum number is 9.
 
 ### linq86: Max - Projection
+>This sample gets the length of the longest word in an array.
 ```csharp
 //c#
-public void Linq86() 
-{ 
+static void Linq86()
+{
     var words = new [] { "cherry", "apple", "blueberry" };
 
     var longestLength = words.Max(w => w.Length);
 
-    Console.WriteLine($"The longest word is {longestLength} characters long.");}
+    Console.WriteLine($"The longest word is {longestLength} characters long.");
+}
 ```
 ```python
 #python
@@ -3034,29 +3074,39 @@ def linq86():
     The longest word is 9 characters long.
 
 ### linq87: Max - Grouped
+>This sample gets the most expensive price among each category's products.
 ```csharp
 //c#
-public void Linq87() 
-{ 
+static void Linq87()
+{
     var products = GetProductList();
 
     var categories = products
         .GroupBy(prod => prod.Category)
-        .Select(prodGroup => new { Category = prodGroup.Key, MostExpensivePrice = prodGroup.Max(p => p.UnitPrice) });
+        .Select(prodGroup => 
+            new
+            {
+                Category = prodGroup.Key, 
+                MostExpensivePrice = prodGroup.Max(p => p.UnitPrice)
+            });
 
     ObjectDumper.Write(categories);
 }
 ```
 ```python
 #python
-linq87(){
-  var products = productsList(); 
-  
-  var categories = group(products, by:(p) => p.category)
-    .map((g) => { 'Category': g.key, 'MostExpensivePrice': max(g.values.map((p) => p.unitPrice)) });      
+def linq87():
+    products = shared.getProductList()
 
-  categories.forEach(print);
-}
+    sorted_by_category = sorted(products, key=lambda p: p.Category)
+    grouped_by_category = groupby(sorted_by_category, key=lambda p: p.Category)
+
+    category_expensive_price = map(
+        lambda g: SimpleNamespace(Category=g[0],
+                                  MostExpensive=max(p.UnitPrice for p in g[1])),
+        grouped_by_category)
+
+    shared.print_namespace(category_expensive_price)
 ```
 #### Output
 
@@ -3070,36 +3120,29 @@ linq87(){
     {Category: Beverages, MostExpensivePrice: 263.5}
 
 ### linq88: Max - Elements
+>This sample gets the products with the most expensive price in each category.
 ```csharp
 //c#
-public void Linq88() 
-{ 
+static void Linq88()
+{
     var products = GetProductList();
 
     var categories = products.GroupBy(prod => prod.Category)
         .Select(prodGroup => new {prodGroup, maxPrice = prodGroup.Max(p => p.UnitPrice)})
-        .Select(x => new
-        {
-            Category = x.prodGroup.Key,
-            MostExpensiveProducts = x.prodGroup.Where(p => p.UnitPrice == x.maxPrice)
-        });
+        .Select(x => 
+            new
+            {
+                Category = x.prodGroup.Key,
+                MostExpensiveProducts = x.prodGroup.Where(p => p.UnitPrice == x.maxPrice)
+            });
 
     ObjectDumper.Write(categories, 1);
 }
 ```
 ```python
 #python
-linq88(){
-  var products = productsList(); 
-  
-  var categories = group(products, by:(p) => p.category)
-    .map((g){
-      var maxPrice = max(g.values.map((p) => p.unitPrice));
-      return { 'Category': g.key, 'MostExpensiveProducts': g.values.where((p) => p.unitPrice == maxPrice) };
-    });
-
-  categories.forEach(print);
-}
+def linq88():
+    pass
 ```
 #### Output
 
@@ -3113,10 +3156,11 @@ linq88(){
     {Category: Beverages, MostExpensiveProducts: {{productId: 38, productName: C�te de Blaye, category: Beverages, unitPrice: 263.5, unitsInStock: 17}}}
 
 ### linq89: Average - Simple
+>This sample gets the average of all numbers in an array.
 ```csharp
 //c#
-public void Linq89() 
-{ 
+static void Linq89()
+{
     var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
     var averageNum = numbers.Average();
@@ -3138,10 +3182,11 @@ def linq89():
     The average number is 4.5.
 
 ### linq90: Average - Projection
+>This sample gets the average length of the words in the array.
 ```csharp
 //c#
-public void Linq90() 
-{ 
+static void Linq90()
+{
     var words = new [] { "cherry", "apple", "blueberry" };
 
     var averageLength = words.Average(w => w.Length);
@@ -3162,15 +3207,21 @@ def linq90():
     The average word length is 6.666666666666667 characters.
 
 ### linq91: Average - Grouped
+>This sample gets the average price of each category's products.
 ```csharp
 //c#
-public void Linq91() 
-{ 
+static void Linq91()
+{
     var  products = GetProductList();
 
     var categories = products
         .GroupBy(prod => prod.Category)
-        .Select(prodGroup => new { Category = prodGroup.Key, AveragePrice = prodGroup.Average(p => p.UnitPrice) });
+        .Select(prodGroup => 
+            new
+            {
+                Category = prodGroup.Key, 
+                AveragePrice = prodGroup.Average(p => p.UnitPrice)
+            });
 
     ObjectDumper.Write(categories);
 }
@@ -3192,10 +3243,11 @@ def linq91():
     {Category: Beverages, AveragePrice: 37.979166666666664}
 
 ### linq92: Aggregate - Simple
+>This sample uses creates a running product on the array that calculates the total product of all elements.
 ```csharp
 //c#
-public void Linq92() 
-{ 
+static void Linq92()
+{
     var doubles = new [] { 1.7, 2.3, 1.9, 4.1, 2.9 };
 
     var product = doubles.Aggregate((runningProduct, nextFactor) => runningProduct * nextFactor);
@@ -3213,17 +3265,18 @@ def linq92():
     #or
     #product = reduce(lambda running_product, next_factor: running_product * next_factor, doubles)
 
-    print("Total product of all numbers: %f" % product);
+    print("Total product of all numbers: %f" % product)
 ```
 #### Output
 
     Total product of all numbers: 88.33080999999999
 
 ### linq93: Aggregate - Seed
+>This sample uses to creates a running account balance that subtracts each withdrawal from the initial balance of 100, as long as the balance never drops below 0.
 ```csharp
 //c#
-public void Linq93() 
-{ 
+static void Linq93()
+{
     var startBalance = 100.0;
 
     var attemptedWithdrawals = new []{ 20, 10, 40, 50, 10, 70, 30 };
@@ -3234,7 +3287,7 @@ public void Linq93()
                     ((nextWithdrawal <= balance) ? (balance - nextWithdrawal) : balance));
 
     Console.WriteLine($"Ending balance: {endBalance}");
-}
+}   
 ```
 ```python
 #python
@@ -3243,12 +3296,12 @@ def linq93():
 
     attempted_withdrawals = [20, 10, 40, 50, 10, 70, 30]
 
-    endBalance = reduce(
+    end_balance = reduce(
         lambda runningBalance, nextWithDrawal: runningBalance - nextWithDrawal if nextWithDrawal <= runningBalance else runningBalance,
         attempted_withdrawals,
         start_balance)
 
-    print("Ending balance: %f" % endBalance)
+    print("Ending balance: %f" % end_balance)
 ```
 #### Output
 
@@ -3258,22 +3311,12 @@ def linq93():
 LINQ - Miscellaneous Operators
 ------------------------------
 
-### python utils added
-
-```python
-concat(Iterable seq, Iterable withSeq) =>
-  seq.toList()..addAll(withSeq);
-
-bool seqEq(Iterable seq, Iterable withSeq) =>    
-  seq.length == withSeq.length 
-  && range(seq.length).every((i) => seq.elementAt(i) == withSeq.elementAt(i));
-```
-
 ### linq94: Concat - 1
+>This sample creates a contatenation of each array's values, one after the other.
 ```csharp
 //c#
-public void Linq94() 
-{ 
+static void Linq94()
+{
     int[] numbersA = { 0, 2, 4, 5, 6, 8, 9 };
     int[] numbersB = { 1, 3, 5, 7, 8 };
 
@@ -3311,17 +3354,16 @@ def linq94():
     8
 
 ### linq95: Concat - 2
+>This sample creates a contatenation that contains the names of all customers and products, including any duplicates.
 ```csharp
 //c#
-public void Linq95() 
-{ 
+static void Linq95()
+{
     var customers = GetCustomerList();
     var products = GetProductList();
 
-    var customerNames = customers
-        .Select(cust => cust.CompanyName);
-    var productNames = products
-        .Select(prod => prod.ProductName);
+    var customerNames = customers.Select(cust => cust.CompanyName);
+    var productNames = products.Select(prod => prod.ProductName);
 
     var allNames = customerNames.Concat(productNames);
 
@@ -3355,12 +3397,13 @@ def linq95():
     ...
 
 ### linq96: EqualAll - 1
+>This sample checks if two sequences match on all elements in the same order
 ```csharp
 //c#
-public void Linq96() 
-{ 
-    var wordsA = new string[] { "cherry", "apple", "blueberry" };
-    var wordsB = new string[] { "cherry", "apple", "blueberry" };
+static void Linq96()
+{
+    var wordsA = new[] { "cherry", "apple", "blueberry" };
+    var wordsB = new[] { "cherry", "apple", "blueberry" };
 
     var match = wordsA.SequenceEqual(wordsB);
 
@@ -3379,20 +3422,21 @@ def linq96():
 ```
 #### Output
 
-    The sequences match: true
+    The sequences match: True
 
 ### linq97: EqualAll - 2
+>This sample checks if two sequences match on all elements in the same order.
 ```csharp
 //c#
-public void Linq97() 
-{ 
-    var wordsA = new string[] { "cherry", "apple", "blueberry" };
-    var wordsB = new string[] { "apple", "blueberry", "cherry" };
+static void Linq97()
+{
+    var wordsA = new[] { "cherry", "apple", "blueberry" };
+    var wordsB = new[] { "apple", "blueberry", "cherry" };
 
     var match = wordsA.SequenceEqual(wordsB);
 
     Console.WriteLine($"The sequences match: {match}");
-}
+}   
 ```
 ```python
 #python
@@ -3406,18 +3450,19 @@ def linq97():
 ```
 #### Output
 
-    The sequences match: false
+    The sequences match: False
 
 LINQ - Query Execution
 ----------------------
 
 ### linq99: Deferred Execution
+>The following sample shows how query execution is deferred until the query is enumerated at a foreach statement.
 ```csharp
 //c#
-public void Linq99() 
-{ 
+static void Linq99()
+{
     // Queries are not executed until you enumerate over them.
-    int[] numbers = new int[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+    var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
     int i = 0;
     var simpleQuery = numbers
@@ -3426,7 +3471,7 @@ public void Linq99()
     // The local variable 'i' is not incremented until the query is executed in the foreach loop.
     Console.WriteLine($"The current value of i is {i}"); //i is still zero
 
-    simpleQuery.ForEach(item => Console.WriteLine($"v = {item}, i = {i}")); // now i is incremented  
+    simpleQuery.ForEach(item => Console.WriteLine($"v = {item}, i = {i}")); // now i is incremented          
 }
 ```
 ```python
@@ -3445,7 +3490,6 @@ def linq99():
 
     for v in q:
         print("v = %d, i = %d" % (v, i))
-
 ```
 #### Output
 
@@ -3461,14 +3505,15 @@ def linq99():
     v = 10, i = 10
 
 ### linq100: Immediate Execution
+>The following sample shows how queries can be executed immediately, and their results stored in memory, with methods such as ToList/list.
 ```csharp
 //c#
-public void Linq100() 
-{ 
+static void Linq100()
+{
     // Methods like ToList(), Max(), and Count() cause the query to be executed immediately.            
-    int[] numbers = new int[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+    var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
-    int i = 0;
+    var i = 0;
     var immediateQuery = numbers
         .Select(x =>  ++i)
         .ToList();
@@ -3476,7 +3521,7 @@ public void Linq100()
     Console.WriteLine("The current value of i is {0}", i); //i has been incremented
 
     immediateQuery.ForEach(item => Console.WriteLine($"v = {item}, i = {i}"));
-} 
+}
 ```
 ```python
 #python
@@ -3509,12 +3554,13 @@ def linq100():
     v = 10, i = 10
 
 ### linq101: Query Reuse
+>The following sample shows how, because of deferred execution, queries can be used again after data changes and will then operate on the new data.
 ```csharp
 //c#
-public void Linq101() 
-{ 
+static void Linq101()
+{
     // Deferred execution lets us define a query once and then reuse it later in various ways.
-    int[] numbers = new int[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+    var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
     var lowNumbers = numbers
         .Where(num => num <= 3);
 
@@ -3522,7 +3568,7 @@ public void Linq101()
     lowNumbers.ForEach(Console.WriteLine);
 
     // Modify the source data.
-    for (int i = 0; i < 10; i++)
+    for (var i = 0; i < 10; i++)
     {
         numbers[i] = -numbers[i];
     }
@@ -3532,7 +3578,7 @@ public void Linq101()
     // of numbers[], producing different results:
     Console.WriteLine("Second run numbers <= 3:");
     lowNumbers.ForEach(Console.WriteLine);
-} 
+}   
 ```
 ```python
 #python

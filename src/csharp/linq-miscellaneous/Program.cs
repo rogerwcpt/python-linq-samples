@@ -10,13 +10,13 @@ namespace linq_miscellaneous
         static void Main(string[] args)
         {
             Linq94();
-//             Linq95();
-//            Linq96();
-//            Linq97();
+        //    Linq95();
+        //    Linq96();
+        //    Linq97();
         }
 
         [Category("Miscellaneous Operators")]
-        [Description(@"This sample uses Concat to create one sequence that contains each array's values, one after the other.")]
+        [Description("This sample creates a contatenation of each array's values, one after the other.")]
         static void Linq94()
         {
             int[] numbersA = { 0, 2, 4, 5, 6, 8, 9 };
@@ -29,7 +29,7 @@ namespace linq_miscellaneous
         }
 
 [       Category("Miscellaneous Operators")]
-        [Description("This sample uses Concat to create one sequence that contains the names of all customers and products, including any duplicates.")]
+        [Description("This sample creates a contatenation that contains the names of all customers and products, including any duplicates.")]
         static void Linq95()
         {
             var customers = GetCustomerList();
@@ -45,7 +45,7 @@ namespace linq_miscellaneous
         }
 
         [Category("Miscellaneous Operators")]
-        [Description("This sample uses SequenceEquals to see if two sequences match on all elements in the same order.")]
+        [Description("This sample checks if two sequences match on all elements in the same order.")]
         static void Linq96()
         {
             var wordsA = new[] { "cherry", "apple", "blueberry" };
@@ -57,7 +57,7 @@ namespace linq_miscellaneous
         }
 
         [Category("Miscellaneous Operators")]
-        [Description("This sample uses SequenceEqual to see if two sequences match on all elements in the same order.")]
+        [Description("This sample checks if two sequences match on all elements in the same order.")]
         static void Linq97()
         {
             var wordsA = new[] { "cherry", "apple", "blueberry" };
@@ -67,5 +67,5 @@ namespace linq_miscellaneous
 
             Console.WriteLine($"The sequences match: {match}");
         }          
-}
+    }
 }
