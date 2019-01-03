@@ -11,16 +11,11 @@ Source for both C# and Python are included in the [src](src) folder in this repo
 - To run the respective C# projects (*.csproj*), open the containing folder in [Visual Studio Code](https://code.visualstudio.com/) use the Debug command 
 - To run the respective Python files (*.py*), open the file in [Visual Studio Code](https://code.visualstudio.com/) use the *Run Python File in Terminal* right click menu command (requirses the Python extension)
 
-Where I haven't been able to figure out the Python implemention, I've created an empty function like this:
-```python
-def f:
-    pass
-```
 
 ### Operation Comparison Matrix
 |Operation|C#|python|Comment|
 |---------|--|----|-------|
-|**Restriction**|`Where`|`filter`||
+|**Filter**|`Where`|`filter`||
 |**Projection**|`Select`|`map`||
 ||`SelectMany`||Custom [select_many](#python-utils-added) utility added|
 |**Partitioning**|`Take(n)`|`array[:n]`||
@@ -67,45 +62,21 @@ def f:
 ||`SequenceEqual(IEnumerable)`|`list1==list2`||
 
 #### Source
-- [Restriction Operators](#linq1-where---simple-1)
-  -  [Python: linq-restrictions.py](src/python/linq-restrictions.py) 
-  -  [C#: linq-restrictions/Program.cs](src/csharp/linq-restrictions/Program.cs)
-- [Projection Operators](#linq---projection-operators)
-  - [Python: linq-projections.py](src/python/linq-projections.py)
-  - [C#: linq-projections/Program.cs](src/csharp/linq-projections/Program.cs)
-- [Partitioning Operators](#linq---partitioning-operators)
-  - [Python: linq-partitions.py](src/python/linq-partitions.py)
-  - [C#](src/csharp/linq-partitioning/Program.cs)
-- [Ordering Operators](#linq---ordering-operators)
-  - [Python]src/python/linq-ordering.py)
-  - [C#](src/csharp/linq-ordering/Program.cs)
-- [Grouping Operators](#linq---grouping-operators)
-  - [Python](src/python/linq-grouping.python)
-  - [C#](src/csharp/linq-grouping/Program.cs)
-- [Set Operators](#linq---set-operators)
-  - [Python](src/python/linq-setoperations.py)
-  - [C#](src/csharp/linq-sets/Program.cs)
-- [Conversion Operators](#linq---conversion-operators)
-  - [Python](src/python/linq-conversion.py)
-  - [C#](src/csharp/linq-conversion/Program.cs)
-- [Element Operators](#linq---element-operators)
-  - [Python](bin/linq-elementoperations.python)
-  - [C#](src/csharp/linq-element/Program.cs)
-- [Python Operators](#linq---generation-operators)
-  - [python](bin/linq-generationoperations.python)
-  - [C#](src/csharp/linq-generation/Program.cs)
-- [Quantifiers](#linq---quantifiers)
-  - [Python](bin/linq-quantifiers.python)
-  - [C#](src/csharp/linq-quantifiers/Program.cs)
-- [Aggregate Operators](#linq---aggregate-operators)
-  - [Python](bin/linq-aggregateoperations.python)
-  - [C#](src/csharp/linq-aggregate/Program.cs)
-- [Miscellaneous Operators](#linq---miscellaneous-operators)
-  - [Python](bin/linq-miscellaneousoperations.python)
-  - [C#](src/csharp/linq-miscellaneous/Program.cs)
-- [Query Execution](#linq---query-execution)
-  - [Python](bin/linq-queryexecution.python)
-  - [C#](src/csharp/linq-query/Program.cs)
+|Operation/Section|Python Source|C# Source|
+|-----------------|-------------|---------|
+|[Filter](#linq1-where---simple-1)|[linq-restrictions.py](src/python/linq-restrictions.py)|[linq-restrictions/Program.cs](src/csharp/linq-restrictions/Program.cs)|
+|[Projection](#linq---projection-opnerators)|[linq-projections.py](src/python/linq-projections.py)|[linq-projections/Program.cs](src/csharp/linq-projections/Program.cs)|
+|[Partitioning](#linq---partitioning-operators)|[linq-partitions.py](src/python/linq-partitions.py)|[linq-partitioning/Program.cs](src/csharp/linq-partitioning/Program.cs)|
+|[Ordering](#linq---ordering-operators)|[linq-ordering.py](src/python/linq-ordering.py)|[linq-ordering/Program.cs](src/csharp/linq-ordering/Program.cs)|
+|[Grouping](#linq---grouping-operators)|[linq-grouping.py](src/python/linq-grouping.py)|[linq-grouping/Program.cs](src/csharp/linq-grouping/Program.cs)|
+|[Set](#linq---set-operators)|[linq-setoperations.py](src/python/linq-setoperations.py)|[linq-sets/Program.cs](src/csharp/linq-sets/Program.cs)|
+|[Conversion](#linq---conversion-operators)|[linq-conversion.py](src/python/linq-conversion.py)|[linq-conversion/Program.cs](src/csharp/linq-conversion/Program.cs)|
+|[Element](#linq---element-operators)|[linq-element.py](src/python/linq-element.py)|[linq-element/Program.cs)](src/csharp/linq-element/Program.cs)|
+|[Generation](#linq---generation-operators)|[generationon.py](src/python/linq-generation.py)|[linq-generation/Program.cs](src/csharp/linq-generation/Program.cs)|
+|[Quantifiers](#linq---quantifiers)|[linq-quantifiers.py](src/python/linq-quantifiers.py)|[linq-quantifiers/Program.cs](src/csharp/linq-quantifiers/Program.cs)|
+|[Aggregate](#linq---aggregate-operators)|[linq-aggregate.py](src/python/linq-aggregate.py)|[linq-aggregate/Program.cs](src/csharp/linq-aggregate/Program.cs)|
+|[Miscellaneous](#linq---miscellaneous-operators)|[linq-miscellaneous.py](src/python/linq-miscellaneous.py)|[linq-miscellaneous/Program.cs](src/csharp/linq-miscellaneous/Program.cs)|
+|[Query](#linq---query-execution)|[linq-queryexecution.py](src/python/linq-queryexecution.py)|[linq-query/Program.cs](src/csharp/linq-query/Program.cs)|
 
 ##  Side-by-side - C# LINQ vs python functional collections
 
@@ -115,24 +86,29 @@ For a side-by-side comparison, the original **C#** source code is displayed abov
   - Outputs ending with `...` illustrates only a partial response is displayed. 
   - The source-code for C# and python utils used are included once under the first section they're used in.
   - The C# ObjectDumper util used is downloadable from MSDN - [ObjectDumper.zip](http://code.msdn.microsoft.com/Visual-Studio-2008-C-d295cdba/file/46086/1/ObjectDumper.zip)
-
-LINQ - Restriction Operators
-----------------------------
+  - Where I haven't been able to figure out the Python implemention, I've created an empty function like this:
+  
+```python
+def f:
+    pass
+```
+LINQ - Filter Operators
+-----------------------
 
 ### linq1: Where - Simple 1
-> This sample uses the where/filter to find all elements of an array with a value less than 5.
+> This sample uses a filter to find all elements of an array with a value less than 5.
 
 ```csharp
 //c#
-public void Linq1() 
-{ 
-    var numbers = new int[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+static void Linq1()
+{
+    var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
     var lowNums = numbers.Where(n => n < 5);
 
     Console.WriteLine("Numbers < 5:");
-    lowNums.ForEach((x) => Console.WriteLine(x));
-}  
+    lowNums.ForEach(Console.WriteLine);
+}  lowNums.ForEach((x) => Console.WriteLine(x));
 ```
 ```python
 #python
@@ -154,18 +130,18 @@ def linq1():
     0
   
 ### linq2: Where - Simple 2
->This sample uses the Where/filter to find all products that are out of stock.
+>This sample uses a filter to find all products that are out of stock.
 ```csharp
 //c#
-public void Linq2() 
-{ 
+static void Linq2()
+{
     var products = GetProductList();
 
     var soldOutProducts = products.Where(p => p.UnitsInStock == 0);
 
     Console.WriteLine("Sold out products:");
     soldOutProducts.ForEach(x => Console.WriteLine($"{x.ProductName} is sold out!"));
-} 
+}
 ```
 ```python
 #python
@@ -177,7 +153,6 @@ def linq2():
     print("Sold out products:")
     for item in sold_out_products:
         print("%s is sold out!" % item.ProductName)
-
 ```
 #### Output
 
@@ -189,19 +164,18 @@ def linq2():
     Perth Pasties is sold out!
 
 ### linq3: Where - Simple 3
-> This sample uses the Where/filter to find all products that are in stock and cost more than 3.00 per unit.
+>This sample uses a filter to find all products that are in stock and cost more than 3.00 per unit.
 ```csharp
 //c#
-public void Linq3() 
-{ 
+public static void Linq3()
+{
     var products = GetProductList();
 
     var expensiveInStockProducts = products.Where(p => p.UnitsInStock > 0 && p.UnitPrice > 3.00M);
 
     Console.WriteLine("In-stock products that cost more than 3.00:");
-    expensiveInStockProducts.ForEach((product) => Console.WriteLine($"{product.ProductName} is in stock and costs more than 3.00."));
-  
-} 
+    expensiveInStockProducts.ForEach(product => Console.WriteLine($"{product.ProductName} is in stock and costs more than 3.00."));
+}
 ```
 ```python
 #python
@@ -223,25 +197,25 @@ def linq3():
     ...
 
 ### linq4: Where - Drilldown
-> This sample uses the Where/filter to find all customers in Washington and then it uses a foreach loop to iterate over the orders collection that belongs to each customer.
+>This sample uses a filter to find all customers in Washington and then it uses a foreach loop to iterate over the orders collection that belongs to each customer.
 ```csharp
 //c#
-public void Linq4() 
-{ 
+static void Linq4()
+{
     var customers = GetCustomerList();
 
     Console.WriteLine("Customers from Washington and their orders:");
     var waCustomers = customers.Where(c => c.Region == "WA");
-    
+
     waCustomers.ForEach((customer) =>
     {
-        Console.WriteLine("Customer {customer.CustomerID}: {customer.CompanyName}");
+        Console.WriteLine($"Customer {customer.CustomerID}: {customer.CompanyName}");
         customer.Orders.ForEach((order) => 
         {
             Console.WriteLine($"  Order {order.OrderID}: {order.OrderDate}");
         });
     });
-} 
+}
 ```
 ```python
 #python
@@ -255,7 +229,6 @@ def linq4():
             print("Customer %s : %s" % (customer.CustomerID, customer.CompanyName))
             for order in customer.Orders:
                     print("     Order %s: %s" % (order.OrderID, order.OrderDate))
-
 ```
 #### Output
 
@@ -270,11 +243,11 @@ def linq4():
     ...
 
 ### linq5: Where - Indexed
->This sample demonstrates an indexed Where/filter that returns digits whose name is shorter than their value.
+>This sample demonstrates an indexed filter that returns digits whose name is shorter than their value.
 ```csharp
 //c#
-public void Linq5() 
-{ 
+static void Linq5()
+{
     var digits = new[] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 
     var shortDigits = digits.Where((digit, index) => digit.Length < index);
@@ -286,22 +259,22 @@ public void Linq5()
 ```python
 #python
 def linq5():
-        digits = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
-  
-        index = 0
+    digits = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
 
-        # Lambdas cant have multiple lines, so create a filter function
-        def filter_func(digit):
-                nonlocal index
-                result = len(digit) < index
-                index += 1
-                return result
+    index = 0
 
-        short_digits = filter(lambda digit: filter_func(digit), digits)
-  
-        print("Short digits:"); 
-        for d in short_digits:
-                print("The word %s is shorter than its value." % d)
+    # Lambdas cant have multiple lines, so create a filter function
+    def filter_func(digit):
+        nonlocal index
+        result = len(digit) < index
+        index += 1
+        return result
+
+    short_digits = filter(lambda digit: filter_func(digit), digits)
+
+    print("Short digits:")
+    for d in short_digits:
+            print("The word %s is shorter than its value." % d)
 ```
 #### Output
 
@@ -313,7 +286,7 @@ def linq5():
     The word nine is shorter than its value.
 
 
-LINQ - Projection Operators
+LINQ - Projection Operators (Select/map)
 ---------------------------
 
 ### Python utils added
@@ -345,24 +318,24 @@ def select_many(outer_list, inner_item_list_key, filter_lambda):
 ```
 
 ### linq6: Select - Simple 1
->This sample uses Select/map to produce a sequence of ints one higher than those in an existing array of integers.
+>his sample projects a sequence of ints 1+ higher than those in an existing array of ints.
 ```csharp
 //c#
-public void Linq6() 
-{ 
-    var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+    static void Linq6()
+    {
+        var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
-    var numsPlusOne = numbers.Select(n => n + 1);
+        var numsPlusOne = numbers.Select(n => n + 1);
 
-    Console.WriteLine("Numbers + 1:");
-    numsPlusOne.ForEach(Console.WriteLine);
-}
+        Console.WriteLine("Numbers + 1:");
+        numsPlusOne.ForEach(Console.WriteLine);
+    }
 ```
 ```python
 #python
 def linq6():
     numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
-    
+
     nums_plus_one = map(lambda n: n + 1, numbers)
 
     print("Numbers + 1:")
@@ -374,11 +347,11 @@ Numbers + 1:
 [6, 5, 2, 4, 10, 9, 7, 8, 3, 1]
 
 ### linq7: Select - Simple 2
->This sample uses Select/map to return a sequence of just the names of a list of products.
+>This sample projects a sequence of just the names of a list of products.
 ```csharp
 //c#
-public void Linq7() 
-{ 
+static void Linq7()
+{
     var products = GetProductList();
 
     var productNames = products.Select(p => p.ProductName);
@@ -392,10 +365,10 @@ public void Linq7()
 def linq7():
     products = shared.getProductList()
 
-    productNames = map(lambda p: p.ProductName, products)
-  
+    product_names = map(lambda p: p.ProductName, products)
+
     print("Product Names:")
-    shared.printS(productNames)
+    shared.printS(product_names)
 ```
 #### Output
 
@@ -408,11 +381,11 @@ def linq7():
     ...
 
 ### linq8: Select - Transformation
->This sample uses Select/map to produce a sequence of strings representing the text version of a sequence of integers.
+>This sample projects a sequence of strings representing the text version of a sequence of integers.
 ```csharp
 //c#
-public void Linq8() 
-{ 
+static void Linq8()
+{
     var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
     var strings = new [] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 
@@ -427,11 +400,11 @@ public void Linq8()
 def linq8():
     numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
     strings = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
-  
-    textNums = map(lambda n : strings[n], numbers) 
-  
+
+    text_nums = map(lambda n: strings[n], numbers)
+
     print("Number strings:")
-    shared.printS(textNums)
+    shared.printS(text_nums)
 ```
 #### Output
 
@@ -448,14 +421,19 @@ def linq8():
     zero
 
 ### linq9: Select - Anonymous Types 1
->This sample uses Select/map to produce a sequence of the uppercase and lowercase versions of each word in the original array.
+>"This sample projects a sequence of the uppercase and lowercase versions of each word in the original array.
 ```csharp
 //c#
-public void Linq9() 
-{ 
+static void Linq9()
+{
     var words = new[] { "aPPLE", "BlUeBeRrY", "cHeRry" };
 
-    var upperLowerWords = words.Select(w => new { Upper = w.ToUpper(), Lower = w.ToLower() });
+    var upperLowerWords = words.Select(w => 
+        new
+        {
+            Upper = w.ToUpper(), 
+            Lower = w.ToLower()
+        });
 
     upperLowerWords.ForEach(ul => Console.WriteLine($"Uppercase: {ul.Upper}, Lowercase: {ul.Lower}"));
 }
@@ -464,9 +442,10 @@ public void Linq9()
 #python
 def linq9():
     words = ["aPPLE", "BlUeBeRrY", "cHeRry"]
-    
-    upperLowerWords = map(lambda w : SimpleNamespace(Upper=w.upper(), Lower=w.lower()), words)
-    for word in upperLowerWords:
+
+    upper_lower_words = map(lambda w: SimpleNamespace(Upper=w.upper(),
+                                                      Lower=w.lower()), words)
+    for word in upper_lower_words:
         print("Uppercase: %s, Lowercase: %s" % (word.Upper, word.Lower))
 ```
 #### Output
@@ -476,15 +455,20 @@ def linq9():
     Uppercase: CHERRY, Lowercase: cherry
 
 ### linq10: Select - Anonymous Types 2
->This sample uses Select/map to produce a sequence containing text representations of digits and whether their length is even or odd.
+>This sample projects a sequence containing text representations of digits and whether their length is even or odd.
 ```csharp
 //c#
-public void Linq10() 
-{ 
+static void Linq10()
+{
     var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
     var strings = new[] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 
-    var digitOddEvens = numbers.Select(n => new { Digit = strings[n], Even = (n % 2 == 0) });
+    var digitOddEvens = numbers.Select(n => 
+        new
+        {
+            Digit = strings[n], 
+            Even = (n % 2 == 0)
+        });
     
     digitOddEvens.ForEach(d => Console.WriteLine($"The digit {d.Digit} is {(d.Even ? "even" : "odd")}."));
 }
@@ -495,7 +479,8 @@ def linq10():
     numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
     strings = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
 
-    digit_odd_evens = map(lambda n: SimpleNamespace(Digit=strings[n], Even=(n % 2 == 0)), numbers)
+    digit_odd_evens = map(lambda n: SimpleNamespace(Digit=strings[n],
+                                                    Even=(n % 2 == 0)), numbers)
 
     for d in digit_odd_evens:
         print("The digit %s is %s" % (d.Digit, 'even' if d.Even else 'odd'))
@@ -514,29 +499,38 @@ def linq10():
     The digit zero is even.
 
 ### linq11: Select - Anonymous Types 3
->This sample uses Select/map to produce a sequence containing some properties of Products, including UnitPrice which is renamed to Price in the resulting type.
+>This sample projects a sequence containing some properties of Products, including UnitPrice which is renamed to Price in the resulting type.
 ```csharp
 //c#
-public void Linq11() 
-{ 
-    var products = GetProductList();
+    static void Linq11()
+    {
+        var products = GetProductList();
 
-    var productInfos = products.Select(p => new { p.ProductName, p.Category, Price = p.UnitPrice });
+        var productInfos = products.Select(p => 
+            new
+            {
+                p.ProductName, 
+                p.Category, 
+                Price = p.UnitPrice
+            });
 
-    Console.WriteLine("Product Info:");
-    productInfos.ForEach(productInfo => Console.WriteLine($"{productInfo.ProductName} is in the category {productInfo.Category} and costs {productInfo.Price} per unit."));
- }
+        Console.WriteLine("Product Info:");
+        productInfos.ForEach(productInfo => Console.WriteLine($"{productInfo.ProductName} is in the category {productInfo.Category} and costs {productInfo.Price} per unit."));
+    }
 ```
 ```python
 #python
 def linq11():
     products = shared.getProductList()
 
-    product_info = map(lambda p: SimpleNamespace(ProductName=p.ProductName, Category=p.Category, Price=p.UnitPrice), products)
+    product_info = map(lambda p: SimpleNamespace(ProductName=p.ProductName,
+                                                 Category=p.Category,
+                                                 Price=p.UnitPrice), products)
 
     print("Product Info:")
     for product in product_info:
         print("%s is in the category %s and costs %.2f per unit." % (product.ProductName, product.Category, product.Price))
+
 ```
 #### Output
 
@@ -547,14 +541,19 @@ def linq11():
     ...
 
 ### linq12: Select - Indexed
->This sample uses an indexed Select/map to determine if the value of ints in an array match their position in the array.
+>This sample uses an indexed projection to determine if the value of integers in an array match their position in the array.
 ```csharp
 //c#
-public void Linq12() 
-{ 
+static void Linq12()
+{
     var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
-    var numsInPlace = numbers.Select((num, index) => new { Num = num, InPlace = (num == index) });
+    var numsInPlace = numbers.Select((num, index) => 
+        new
+        {
+            Num = num, 
+            InPlace = (num == index)
+        });
 
     Console.WriteLine("Number: In-place?");
     numsInPlace.ForEach(n => Console.WriteLine($"{n.Num}: {n.InPlace}"));
@@ -563,20 +562,21 @@ public void Linq12()
 ```python
 #python
 def linq12():
-    numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]
-  
+    numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
+
     index = 0
 
-    def CheckInPlace(digit):
+    def digit_equals_index(digit):
         nonlocal index
         result = digit == index
         index += 1
         return result
 
-    numsInPlace = map(lambda num: SimpleNamespace(Num=num, InPlace=CheckInPlace(num)), numbers)
-  
+    nums_in_place = map(lambda num: SimpleNamespace(Num=num,
+                                                    InPlace=digit_equals_index(num)), numbers)
+
     print("Number: In-place?")
-    for n in numsInPlace:
+    for n in nums_in_place:
         print("%d: %s" % (n.Num, n.InPlace))
 ```
 #### Output
@@ -594,10 +594,11 @@ def linq12():
     0: false
 
 ### linq13: Select - Filtered
+>This sample first filters, then projects to make a simple query that returns the text form of each digit less than 5.
 ```csharp
 //c#
-public void Linq13() 
-{ 
+static void Linq13()
+{
     var numbers = new []{ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
     var  digits = new [] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 
@@ -607,6 +608,7 @@ public void Linq13()
 
     Console.WriteLine("Numbers < 5:");
     lowNums.ForEach(Console.WriteLine);
+}
 ```
 ```python
 #python
@@ -618,7 +620,6 @@ def linq13():
 
     print("Numbers < 5:")
     shared.printS(result)
-
 ```
 #### Output
 
@@ -630,10 +631,11 @@ def linq13():
     zero
 
 ### linq14: SelectMany - Compound from 1
+>This sample projects a combination of 2 source arrays, then filters all pairs of numbers from both arrays such that the number from numbersA is less than the number from numbersB.
 ```csharp
 //c#
-public void Linq14() 
-{ 
+static void Linq14()
+{
     var numbersA = new [] { 0, 2, 4, 5, 6, 8, 9 };
     var numbersB = new []{ 1, 3, 5, 7, 8 };
 
@@ -647,16 +649,15 @@ public void Linq14()
 ```
 ```python
 #python
-def linq_14():
+def linq14():
     numbers_a = [0, 2, 4, 5, 6, 8, 9]
     numbers_b = [1, 3, 5, 7, 8]
 
-    pairs = filter(lambda pair: pair.a < pair.b, select_many(numbers_a, numbers_b))
+    pairs = filter(lambda pair: pair.item_a < pair.item_b, functions.left_outer_join(numbers_a, numbers_b))
 
     print("Pairs where a < b:")
     for p in pairs:
-        print("%d is less than %d}" % (p.a, p.b))
-
+        print("%d is less than %d}" % (p.item_a, p.item_b))
 ```
 #### Output
 
@@ -679,16 +680,23 @@ def linq_14():
     6 is less than 8
 
 ### linq15: SelectMany - Compound from 2
+>TThis sample uses a nested projection to flatten the customer orders, then filtes the order total is less than 500.00.
 ```csharp
 //c#
-public void Linq15() 
-{ 
+static void Linq15()
+{
     var customers = GetCustomerList();
 
     var orders = customers
         .SelectMany(customer => customer.Orders, (customer, order) => new { customer, order })
         .Where(x => x.order.Total < 500.00M)
-        .Select(x =>  new { x.customer.CustomerID, x.order.OrderID, x.order.Total });
+        .Select(x => 
+            new
+            {
+                x.customer.CustomerID, 
+                x.order.OrderID, 
+                x.order.Total
+            });
 
     ObjectDumper.Write(orders);
 }
@@ -698,8 +706,11 @@ public void Linq15()
 def linq15():
     customers = shared.getCustomerList()
 
-    customer_orders = filter(lambda x: x.item_b.Total < 500.00, functions.select_many(customers, "Orders")
-    orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID, order_id=x.item_b.OrderID, total=x.item_b.Total), customer_orders))
+    orders_less_than_500 = functions.select_many(customers, "Orders", lambda x: x.item_b.Total < 500.00)
+    orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID,
+                                           order_id=x.item_b.OrderID,
+                                           total=x.item_b.Total),
+                 orders_less_than_500)
 
     shared.print_namespace(orders)
 ```
@@ -712,16 +723,23 @@ def linq15():
     ...
 
 ### linq16: SelectMany - Compound from 3
+>This sample uses a nested projection to flatten the customer orders, the filters all orders that was made in 1998 or later.
 ```csharp
 //c#
-public void Linq16() 
-{ 
+static void Linq16()
+{
     var customers = GetCustomerList();
 
     var orders = customers
         .SelectMany(customer => customer.Orders, (customer, order) => new { customer, order })
         .Where(x => x.order.OrderDate >= new DateTime(1998, 1, 1))
-        .Select(x => new { x.customer.CustomerID, x.order.OrderID, x.order.OrderDate });
+        .Select(x => 
+            new
+            {
+                x.customer.CustomerID, 
+                x.order.OrderID, 
+                x.order.OrderDate
+            });
 
     ObjectDumper.Write(orders);
 }
@@ -732,9 +750,12 @@ def linq16():
     customers = shared.getCustomerList()
 
     the_date = datetime.datetime(1998, 1, 1)
-    
+
     order_greater_than_date = functions.select_many(customers, "Orders", lambda x: x.item_b.OrderDate > the_date)
-    orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID, order_id=x.item_b.OrderID, orderDate=x.item_b.OrderDate), order_greater_than_date)
+    orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID,
+                                           order_id=x.item_b.OrderID,
+                                           orderDate=x.item_b.OrderDate),
+                 order_greater_than_date)
 
     shared.print_namespace(orders)
 ```
@@ -748,16 +769,23 @@ def linq16():
     ...
 
 ### linq17: SelectMany - from Assignment
+>This sample uses a nested projection to flatten the customer orders, then filters the orders where the order total is greater than 2000.00.
 ```csharp
 //c#
-public void Linq17() 
-{ 
+static void Linq17()
+{
     var customers = GetCustomerList();
 
     var orders = customers
         .SelectMany(customer => customer.Orders, (customer, order) => new { customer, order })
         .Where(x => x.order.Total >= 2000.00M)
-        .Select(x => new { x.customer.CustomerID, x.order.OrderID, x.order.Total });
+        .Select(x => 
+            new
+            {
+                x.customer.CustomerID,
+                x.order.OrderID, 
+                x.order.Total
+            });
 
     ObjectDumper.Write(orders);
 }
@@ -768,7 +796,10 @@ def linq17():
     customers = shared.getCustomerList()
 
     orders_greater_than_2000 = functions.select_many(customers, "Orders", lambda x: x.item_b.Total > 2000)
-    orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID, order_id=x.item_b.OrderID, total=x.item_b.Total), orders_greater_than_2000)
+    orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID,
+                                           order_id=x.item_b.OrderID,
+                                           total=x.item_b.Total),
+                 orders_greater_than_2000)
 
     shared.print_namespace(orders)
 ```
@@ -782,10 +813,11 @@ def linq17():
     ...
 
 ### linq18: SelectMany - Multiple from
+>This sample fist filters on all Customers in Washington, then uses a nested projection to flatten the customer orders, then filtering on all orders greater than the cut-off date
 ```csharp
 //c#
-public void Linq18() 
-{ 
+static void Linq18()
+{
     var customers = GetCustomerList();
 
     var cutoffDate = new DateTime(1997, 1, 1);
@@ -794,46 +826,39 @@ public void Linq18()
         .Where(c => c.Region == "WA")
         .SelectMany(customer => customer.Orders, (customer, order) => new { customer, order })
         .Where(x => x.order.OrderDate >= cutoffDate)
-        .Select(x => new { x.customer.CustomerID, x.customer.Region, x.order.OrderID });
+        .Select(x => 
+            new
+            {
+                x.customer.CustomerID, 
+                x.customer.Region, 
+                x.order.OrderID
+            });
 
     ObjectDumper.Write(orders);
 }
 ```
 ```python
 #python
-linq18(){
-  var customers = customersList(); 
+def linq18():
+    customers = shared.getCustomerList()
 
-  var cutoffDate = new DateTime(1997, 1, 1); 
-  
-  var orders = customers
-    .where((c) => c.region == "WA")
-    .expand((c) => c.orders
-      .where((o) => o.orderDate.isAfter(cutoffDate))
-      .map((o) => { 'CustomerId': c.customerId, 'OrderId':o.orderId }));
-  
-  orders.forEach(print);   
-}
+    the_date = datetime.datetime(1998, 1, 1)
+
+    order_greater_than_date = functions.select_many(customers, "Orders", lambda x: x.item_b.OrderDate > the_date)
+    orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID,
+                                           order_id=x.item_b.OrderID,
+                                           orderDate=x.item_b.OrderDate), order_greater_than_date)
+
+    shared.print_namespace(orders)
 ```
 #### Output
 
-    {CustomerId: LAZYK, OrderId: 10482}
-    {CustomerId: LAZYK, OrderId: 10545}
-    {CustomerId: TRAIH, OrderId: 10574}
-    {CustomerId: TRAIH, OrderId: 10577}
-    {CustomerId: TRAIH, OrderId: 10822}
-    {CustomerId: WHITC, OrderId: 10469}
-    {CustomerId: WHITC, OrderId: 10483}
-    {CustomerId: WHITC, OrderId: 10504}
-    {CustomerId: WHITC, OrderId: 10596}
-    {CustomerId: WHITC, OrderId: 10693}
-    {CustomerId: WHITC, OrderId: 10696}
-    {CustomerId: WHITC, OrderId: 10723}
-    {CustomerId: WHITC, OrderId: 10740}
-    {CustomerId: WHITC, OrderId: 10861}
-    {CustomerId: WHITC, OrderId: 10904}
-    {CustomerId: WHITC, OrderId: 11032}
-    {CustomerId: WHITC, OrderId: 11066}
+(customer_id='ALFKI', orderDate=datetime.datetime(1998, 1, 15, 0, 0), order_id=10835)
+(customer_id='ALFKI', orderDate=datetime.datetime(1998, 3, 16, 0, 0), order_id=10952)
+(customer_id='ALFKI', orderDate=datetime.datetime(1998, 4, 9, 0, 0), order_id=11011)
+(customer_id='ANATR', orderDate=datetime.datetime(1998, 3, 4, 0, 0), order_id=10926)
+(customer_id='ANTON', orderDate=datetime.datetime(1998, 1, 28, 0, 0), order_id=10856)
+...
 
 ### linq19: SelectMany - Indexed
 ```csharp
@@ -852,19 +877,8 @@ public void Linq19()
 ```
 ```python
 #python
-linq19(){
-  var customers = customersList(); 
-
-  int custIndex = 0;
-  var customerOrders = 
-    customers.expand((cust){
-      custIndex++;
-      return cust.orders.map((o) => 
-        "Customer #${custIndex} has an order with OrderID ${o.orderId}");
-    }); 
-    
-  customerOrders.forEach(print);   
-}
+def linq19():
+    pass
 ```
 #### Output
 
@@ -884,10 +898,11 @@ LINQ - Partitioning Operators
 -----------------------------
 
 ### linq20: Take - Simple
+>This sample uses a partition/slice to get only the first 3 elements of the array.
 ```csharp
 //c#
-public void Linq20() 
-{ 
+static void Linq20()
+{
     var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
     var first3Numbers = numbers.Take(3);
@@ -905,7 +920,6 @@ def linq20():
 
     print("First 3 numbers:")
     shared.printN(first3_numbers)
-}
 ```
 #### Output
 
@@ -915,16 +929,23 @@ def linq20():
     1
 
 ### linq21: Take - Nested
+>This sample uses a partition/slice to get the first 3 orders from customers in Washington.
 ```csharp
 //c#
-public void Linq21()   
-{ 
+static void Linq21()
+{
     var customers = GetCustomerList();
 
     var first3WAOrders = customers
         .Where(c => c.Region == "WA")
         .SelectMany(customer => customer.Orders, (customer, order) => new { customer, order })
-        .Select(x => new { x.customer.CustomerID, x.order.OrderID, x.order.OrderDate })
+        .Select(x => 
+            new
+            {
+                x.customer.CustomerID, 
+                x.order.OrderID, 
+                x.order.OrderDate
+            })
         .Take(3);
 
     Console.WriteLine("First 3 orders in WA:");
@@ -933,18 +954,20 @@ public void Linq21()
 ```
 ```python
 #python
-linq21(){
-  var customers = customersList(); 
-  
-  var first3WAOrders = customers
-    .where((c) => c.region == "WA")
-    .expand((c) => c.orders
-      .map((o) => { 'CustomerId': c.customerId, 'OrderId':o.orderId, 'OrderDate':o.orderDate }))
-    .take(3);
-  
-  print("First 3 orders in WA:");
-  first3WAOrders.forEach(print);
-}
+def linq21():
+    customers = shared.getCustomerList()
+
+    the_date = datetime.datetime(1998, 1, 1)
+
+    order_greater_than_date = functions.select_many(customers, "Orders", lambda x: x.item_b.OrderDate > the_date)
+    orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID,
+                                           order_id=x.item_b.OrderID,
+                                           orderDate=x.item_b.OrderDate), order_greater_than_date)
+
+    first_3_orders = list(orders)[:3]
+
+    print("First 3 orders in WA:")
+    shared.print_namespace(first_3_orders)
 ```
 #### Output
 
@@ -955,10 +978,11 @@ linq21(){
 
 
 ### linq22: Skip - Simple
+>This sample uses a partition to get all but the first four elements of the array.
 ```csharp
 //c#
-public void Linq22() 
-{ 
+static void Linq22()
+{
     var numbers = new []{ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
     var allButFirst4Numbers = numbers.Skip(4);
@@ -987,21 +1011,28 @@ def linq22():
     0
 
 ### linq23: Skip - Nested
+>This sample uses Take to get all but the first 2 orders from customers in Washington.
 ```csharp
 //c#
-public void Linq23()   
-{ 
+static void Linq23()
+{
     var customers = GetCustomerList();
 
     var waOrders = customers
         .Where(c => c.Region == "WA")
         .SelectMany(customer => customer.Orders, (customer, order) => new { customer, order })
-        .Select(x => new { x.customer.CustomerID, x.order.OrderID, x.order.OrderDate });
+        .Select(x => 
+            new
+            {
+                x.customer.CustomerID, 
+                x.order.OrderID, 
+                x.order.OrderDate
+            });
 
     var allButFirst2Orders = waOrders.Skip(2);
 
     Console.WriteLine("All but first 2 orders in WA:");
-    allButFirst2Orders.ForEach(ObjectDumper.Write);
+    ObjectDumper.Write(allButFirst2Orders);
 }
 ```
 ```python
@@ -1011,11 +1042,14 @@ def linq23():
 
     wa_customers = filter(lambda c: c.Region == "WA", customers)
     wa_customer_orders = functions.select_many(wa_customers, "Orders")
-    customer_orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID, order_id=x.item_b.OrderID, order_date=x.item_b.OrderDate), wa_customer_orders)
+    customer_orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID,
+                                                    order_id=x.item_b.OrderID,
+                                                    order_date=x.item_b.OrderDate),
+                          wa_customer_orders)
 
     all_but_first2 = list(customer_orders)[2:]
 
-    print("All but first 2 orders in WA:");
+    print("All but first 2 orders in WA:")
     shared.print_namespace(all_but_first2)
 ```
 #### Output
@@ -1040,10 +1074,11 @@ def linq23():
     {CustomerId: WHITC, OrderId: 11066, OrderDate: 1998-05-01 00:00:00.000}
 
 ### linq24: TakeWhile - Simple
+>This sample uses a partition to return elements starting from the beginning of the array until a number is read whose value is not less than 6.
 ```csharp
 //c#
-public void Linq24() 
-{ 
+static void Linq24()
+{
     var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
     var firstNumbersLessThan6 = numbers.TakeWhile(n => n < 6);
@@ -1054,14 +1089,13 @@ public void Linq24()
 ```
 ```python
 #python
-linq24(){
-  var numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]; 
-  
-  var firstNumbersLessThan6 = numbers.takeWhile((n) => n < 6); 
-  
-  print("First numbers less than 6:"); 
-  firstNumbersLessThan6.forEach(print);
-}
+def linq24():
+    numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
+
+    first_numbers_less_than6 = takewhile(lambda x: x < 6, numbers)
+
+    print("First numbers less than 6:")
+    shared.printN(first_numbers_less_than6)
 ```
 #### Output
 
@@ -1072,10 +1106,11 @@ linq24(){
     3
 
 ### linq25: TakeWhile - Indexed
+>This sample uses a partition to return elements starting from the beginning of the array until a number is hit that is less than its position in the array.
 ```csharp
 //c#
-public void Linq25() 
-{ 
+static void Linq25()
+{
     var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
     var firstSmallNumbers = numbers.TakeWhile((n, index) => n >= index);
@@ -1097,7 +1132,7 @@ def linq25():
         index += 1
         return result
 
-    first_small_numbers = itertools.takewhile(lambda x: digit_greater_equal_to_index(x), numbers)
+    first_small_numbers = takewhile(lambda x: digit_greater_equal_to_index(x), numbers)
 
     print("First numbers not less than their position:")
     shared.printN(first_small_numbers)
@@ -1109,10 +1144,11 @@ def linq25():
     4
 
 ### linq26: SkipWhile - Simple
+>This sample uses a partition to get the elements of the array starting from the first element divisible by 3.
 ```csharp
 //c#
-public void Linq26() 
-{ 
+static void Linq26()
+{
     var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
     var allButFirst3Numbers = numbers.SkipWhile(n => n % 3 != 0);
@@ -1126,7 +1162,7 @@ public void Linq26()
 def linq26():
     numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
 
-    all_but_first3_numbers = itertools.dropwhile(lambda n:  n % 3 != 0, numbers)
+    all_but_first3_numbers = dropwhile(lambda n:  n % 3 != 0, numbers)
 
     print("All elements starting from first element divisible by 3:")
     shared.printN(all_but_first3_numbers)
@@ -1143,10 +1179,11 @@ def linq26():
     0
 
 ### linq27: SkipWhile - Indexed
+>This sample uses a partition to get the elements of the array starting from the first element less than its position.
 ```csharp
 //c#
-public void Linq27() 
-{ 
+static void Linq27()
+{
     var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
     var laterNumbers = numbers.SkipWhile((n, index) => n >= index);
@@ -1157,15 +1194,21 @@ public void Linq27()
 ```
 ```python
 #python
-linq27(){
-  var numbers = [ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 ]; 
-  
-  int index = 0;
-  var laterNumbers = numbers.skipWhile((n) => n >= index++); 
-  
-  print("All elements starting from first element less than its position:"); 
-  laterNumbers.forEach(print);
-}
+def linq27():
+    numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
+
+    index = 0
+
+    def digit_greater_equal_to_index(digit):
+        nonlocal index
+        result = digit >= index
+        index += 1
+        return result
+
+    later_numbers = dropwhile(lambda x: digit_greater_equal_to_index(x), numbers)
+
+    print("All elements starting from first element less than its position:")
+    shared.printN(later_numbers)
 ```
 #### Output
 
@@ -1183,24 +1226,12 @@ linq27(){
 LINQ - Ordering Operators
 -------------------------
 
-### C# utils added
-
-```csharp  
-// No utils reuired, use built in comparer
-StringComparer.CurrentCultureIgnoreCase
-```
-
-### Python utils added
-
-```python
-
-```
-
 ### linq28: OrderBy - Simple 1
+>This sample uses ordering to sort a list of words alphabetically.
 ```csharp
 //c#
-public void Linq28() 
-{ 
+static void Linq28()
+{
     var words = new [] { "cherry", "apple", "blueberry" };
 
     var sortedWords = words.OrderBy(w => w);
@@ -1211,14 +1242,13 @@ public void Linq28()
 ```
 ```python
 #python
-linq28(){
-  var words = [ "cherry", "apple", "blueberry" ]; 
-  
-  var sortedWords = order(words);
-  
-  print("The sorted list of words:"); 
-  sortedWords.forEach(print);
-}
+def linq28():
+    words = ["cherry", "apple", "blueberry"]
+
+    sorted_words = sorted(words)
+
+    print("The sorted list of words:")
+    shared.printS(sorted_words)
 ```
 #### Output
 
@@ -1228,10 +1258,11 @@ linq28(){
     cherry
 
 ### linq29: OrderBy - Simple 2
+>This sample uses ordering to sort a list of words by length.
 ```csharp
 //c#
-public void Linq29() 
-{ 
+static void Linq29()
+{
     var words = new [] { "cherry", "apple", "blueberry" };
 
     var sortedWords = words.OrderBy(w => w.Length);
@@ -1242,7 +1273,7 @@ public void Linq29()
 ```
 ```python
 #python
-linq29(){
+def linq29():
     words = ["cherry", "apple", "blueberry"]
 
     sorted_words = sorted(words, key=lambda x: len(x))
@@ -1258,10 +1289,11 @@ linq29(){
     blueberry
 
 ### linq30: OrderBy - Simple 3
+>This sample uses ordering to sort a list of products by name.
 ```csharp
 //c#
-public void Linq30() 
-{ 
+static void Linq30()
+{
     var products = GetProductList();
 
     var sortedProducts = products.OrderBy(p => p.ProductName);
@@ -1288,16 +1320,17 @@ def linq30():
     ...
 
 ### linq31: OrderBy - Comparer
+>This sample uses case-insensitive ordering to sort the words in an array.
 ```csharp
 //c#
-public void Linq31() 
-{ 
+static void Linq31()
+{
     var words = new [] { "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" }; 
 
     var sortedWords = words.OrderBy(a => a, StringComparer.CurrentCultureIgnoreCase); 
 
     ObjectDumper.Write(sortedWords); 
-} 
+}
 ```
 ```python
 #python
@@ -1318,10 +1351,11 @@ def linq31():
     ClOvEr
 
 ### linq32: OrderByDescending - Simple 1
+>This sample uses reverse ordering to sort a list of doubles from highest to lowest.
 ```csharp
 //c#
-public void Linq32() 
-{ 
+static void Linq32()
+{
     var doubles = new[]{ 1.7, 2.3, 1.9, 4.1, 2.9 };
 
     var sortedDoubles = doubles.OrderByDescending(d => d);
@@ -1350,10 +1384,11 @@ def linq32():
     1.7
 
 ### linq33: OrderByDescending - Simple 2
+>This sample uses reverse ordering to sort a list of products by units in stock from highest to lowest.
 ```csharp
 //c#
-public void Linq33() 
-{ 
+static void Linq33()
+{
     var products = GetProductList();
 
     var sortedProducts = products.OrderByDescending(p => p.UnitsInStock);
@@ -1366,7 +1401,7 @@ public void Linq33()
 def linq33():
     products = shared.getProductList()
 
-    sorted_products = sorted(products, key=lambda p: p.UnitsInStock, reverse=True);
+    sorted_products = sorted(products, key=lambda p: p.UnitsInStock, reverse=True)
 
     shared.print_namespace(sorted_products)
 ```
@@ -1380,23 +1415,24 @@ def linq33():
     ...
 
 ### linq34: OrderByDescending - Comparer
+>This sample uses reverse case-insensitive ordering to sort the words in an array.
 ```csharp
 //c#
-public void Linq34() 
-{ 
+static void Linq34()
+{
     var words = new [] { "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" };
 
     var sortedWords = words.OrderByDescending(a => a, StringComparer.CurrentCultureIgnoreCase); 
 
     ObjectDumper.Write(sortedWords);
-} 
+}
 ```
 ```python
 #python
 def linq34():
     words = ["aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry"]
 
-    sorted_words = sorted(words, key=lambda s: s.casefold(), reverse=True);
+    sorted_words = sorted(words, key=lambda s: s.casefold(), reverse=True)
 
     shared.print_namespace(sorted_words)
 ```
@@ -1410,10 +1446,11 @@ def linq34():
     AbAcUs
 
 ### linq35: ThenBy - Simple
+>This sample uses nested ordering, first by length of their name, and then alphabetically by the name itself.
 ```csharp
 //c#
-public void Linq35() 
-{ 
+static void Linq35()
+{
     var digits = new [] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 
     var sortedDigits = digits
@@ -1449,10 +1486,11 @@ def linq35():
     three
 
 ### linq36: ThenBy - Comparer
+>This sample uses case-insensitive nested ordering, with a custom comparer to sort first by word length and then by a case-insensitive sort of the words in an array.
 ```csharp
 //c#
-public void Linq36() 
-{ 
+static void Linq36()
+{
     var words = new [] { "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" };
 
     var sortedWords = words
@@ -1460,7 +1498,7 @@ public void Linq36()
         .ThenBy(a => a, StringComparer.CurrentCultureIgnoreCase);
 
     ObjectDumper.Write(sortedWords);
-} 
+}
 ```
 ```python
 #python
@@ -1469,7 +1507,7 @@ def linq36():
 
     sorted_words = sorted(words, key=lambda word: (len(word), word.casefold()))
 
-    shared.print_namespace(sorted_words)
+    shared.printS(sorted_words)
 ```
 #### Output
 
@@ -1481,6 +1519,7 @@ def linq36():
     BlUeBeRrY
 
 ### linq37: ThenByDescending - Simple
+>This sample uses nested ordering to sort a list of products, first by category, and then by unit price, from highest to lowest.
 ```csharp
 //c#
 public void Linq37() 
@@ -1503,7 +1542,6 @@ def linq37():
     sorted_products = sorted(products, key=lambda product: (product.Category, -product.UnitPrice))
 
     shared.print_namespace(sorted_products)
-
 ```
 #### Output
 
@@ -1519,10 +1557,11 @@ def linq37():
     ...
 
 ### linq38: ThenByDescending - Comparer
+>This sample uses uses case-insensitive reverse nested ordering to sort first by word length and then by a case-insensitive descending sort of the words in an array.
 ```csharp
 //c#
-public void Linq38() 
-{ 
+static void Linq38()
+{
     var words = new [] { "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" };
 
     var sortedWords = words
@@ -1530,7 +1569,7 @@ public void Linq38()
         .ThenByDescending(a => a, StringComparer.CurrentCultureIgnoreCase);
 
     ObjectDumper.Write(sortedWords);
-} 
+}
 ```
 ```python
 #python
@@ -1541,9 +1580,7 @@ def linq38():
     sorted_words = sorted(words, key=lambda word: word.casefold(), reverse=True)
     sorted_words = sorted(sorted_words, key=lambda word: len(word))
 
-
     shared.printS(sorted_words)
-}
 ```
 #### Output
 
@@ -1555,10 +1592,11 @@ def linq38():
     BlUeBeRrY
 
 ### linq39: Reverse
+>This sample uses reverse ordering to create a list of all digits in the array whose second letter is 'i' that is reversed from the order in the original array.
 ```csharp
 //c#
-public void Linq39() 
-{ 
+static void Linq39()
+{
     var digits = new [] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 
     var reversedIDigits = digits
@@ -1571,17 +1609,13 @@ public void Linq39()
 ```
 ```python
 #python
-linq39(){
-  var digits = [ "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" ]; 
-  
-  var reversedIDigits = digits
-    .where((d) => d[1] == 'i')
-    .toList()
-    .reversed; 
-  
-  print("A backwards list of the digits with a second character of 'i':");
-  reversedIDigits.forEach(print);
-}
+def linq39():
+    digits = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+
+    reversed_i_digits = reversed(list(filter(lambda digit: digit[1] == "i", digits)))
+
+    print("A backwards list of the digits with a second character of 'i':")
+    shared.printS(reversed_i_digits)
 ```
 #### Output
 
@@ -1595,83 +1629,27 @@ linq39(){
 LINQ - Grouping Operators
 -------------------------
 
-### C# utils added
-
-```csharp
-public class AnagramEqualityComparer : IEqualityComparer<string> 
-{ 
-    public bool Equals(string x, string y) 
-    { 
-        return getCanonicalString(x) == getCanonicalString(y); 
-    } 
-  
-    public int GetHashCode(string obj) 
-    { 
-        return getCanonicalString(obj).GetHashCode(); 
-    } 
-  
-    private string getCanonicalString(string word) 
-    { 
-        char[] wordChars = word.ToCharArray(); 
-        Array.Sort<char>(wordChars); 
-        return new string(wordChars); 
-    } 
-} 
-```
-
-### python utils added
-
-```python
-anagramEqualityComparer(a, b) => 
-  new String.fromCharCodes(orderBy(a.codeUnits.toList()))
-  .compareTo(new String.fromCharCodes(orderBy(b.codeUnits.toList())));
-
-List<Group> group(Iterable seq, {by(x):null, Comparator matchWith:null, valuesAs(x):null}){
-  var ret = [];
-  var map = new Map<dynamic, Group>();
-  seq.forEach((x){
-    var val = by(x);
-    var key = matchWith != null
-      ? map.keys.firstWhere((k) => matchWith(val, k) == 0, orElse:() => val)
-      : val;
-    
-    if (!map.containsKey(key))
-      map[key] = new Group(val);
-    
-    if (valuesAs != null)
-      x = valuesAs(x);
-    
-    map[key].add(x);
-  });
-  return map.values.toList();
-}
-
-class Group extends IterableBase {
-  var key;
-  List _list;
-  Group(this.key) : _list = [];
-
-  get iterator => _list.iterator;
-  void add(e) => _list.add(e);  
-  get values => _list;
-}
-```
-
 ### linq40: GroupBy - Simple 1
+>This sample uses grouping to partition a list of numbers by their remainder when divided by 5.
 ```csharp
 //c#
-public void Linq40() 
-{ 
+static void Linq40()
+{
     var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
 
     var numberGroups = numbers
         .GroupBy(n => n % 5)
-        .Select(x => new {Remainder = x.Key, Numbers = x});
+        .Select(x => 
+            new
+            {
+                Remainder = x.Key, 
+                Numbers = x
+            });
 
     numberGroups.ForEach((g) => 
     {
-        Console.WriteLine("Numbers with a remainder of {0} when divided by 5:", g.Remainder);
-        g.Numbers.ForEach(Console.WriteLine);
+            Console.WriteLine("Numbers with a remainder of {0} when divided by 5:", g.Remainder);
+            g.Numbers.ForEach(Console.WriteLine);
     });
 }
 ```
@@ -1681,7 +1659,10 @@ def linq40():
     numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
 
     # First create a record of numbers and their modulus of 5
-    number_remainders = map(lambda n: SimpleNamespace(Number=n, Remainder=n % 5), numbers)
+    number_remainders = map(lambda n: SimpleNamespace(Number=n,
+                                                      Remainder=n % 5),
+                            numbers)
+
     # Group By only works on sorted lists, so sort by both fields
     sorted_by_reminder = sorted(number_remainders, key=lambda x: (x.Remainder, x.Number))
     remainder_groups = groupby(sorted_by_reminder, key=lambda nr: nr.Remainder)
@@ -1710,15 +1691,21 @@ def linq40():
     9
 
 ### linq41: GroupBy - Simple 2
+>This sample uses grouping to partition a list of words by their first letter.
 ```csharp
 //c#
-public void Linq41() 
-{ 
+static void Linq41()
+{
     var words = new [] { "blueberry", "chimpanzee", "abacus", "banana", "apple", "cheese" }; 
 
     var wordGroups = words
         .GroupBy(w => w[0])
-        .Select(g => new { FirstLetter = g.Key, Words = g });
+        .Select(g => 
+            new
+            {
+                FirstLetter = g.Key, 
+                Words = g
+            });
 
     wordGroups.ForEach((g) => 
     {
@@ -1732,7 +1719,10 @@ public void Linq41()
 def linq41():
     words = ["blueberry", "chimpanzee", "abacus", "banana", "apple", "cheese"]
 
-    first_letter_words = map(lambda w: SimpleNamespace(Letter=w[0], Word=w), words)
+    first_letter_words = map(lambda w: SimpleNamespace(Letter=w[0],
+                                                       Word=w),
+                             words)
+
     # Group By only works on sorted lists, so sort by both fields
     sorted_letter_words = sorted(first_letter_words, key=lambda x: (x.Word, x.Letter))
     letter_groups = groupby(sorted_letter_words, key=lambda nr: nr.Letter)
@@ -1755,25 +1745,30 @@ def linq41():
     chimpanzee
 
 ### linq42: GroupBy - Simple 3
+>This sample uses grouping to partition a list of products by category.
 ```csharp
 //c#
-public void Linq42() 
-{ 
+static void Linq42()
+{
     var products = GetProductList(); 
     
     var orderGroups = products
         .GroupBy(p => p.Category)
-        .Select(g => new { Category = g.Key, Products = g }); 
+        .Select(g => 
+            new
+            {
+                Category = g.Key, 
+                Products = g
+            }); 
 
     ObjectDumper.Write(orderGroups, 1); 
-} 
+}
 ```
 ```python
 #python
 def linq42():
     products = shared.getProductList()
 
-    # Group By only works on sorted lists, so sort by Category first, which is the grouping key
     sorted_by_category = sorted(products, key=lambda p: p.Category)
     order_groups = groupby(sorted_by_category, key=lambda p: p.Category)
 
@@ -1783,7 +1778,6 @@ def linq42():
 ```
 #### Output
 
-/home/roger/PycharmProjects/untitled/venv/bin/python /home/roger/Projects/GitHub.Personal/python-linq-samples/src/python/linq-grouping.py
 Products in the category 'Beverages':
 [{productId: 1, productName: Chai, category: Beverages, unitPrice: 18.00, unitsInStock: 39}, {productId: 2, productName: Products in the category 'Condiments':
 [{productId: 3, productName: Aniseed Syrup, category: Condiments, unitPrice: 10.00, unitsInStock: 13}, {productId: 4, Products in the category 'Confections':
@@ -1795,6 +1789,7 @@ Products in the category 'Beverages':
 [{productId: 10, productName: Ikura, category: Seafood, unitPrice: 31.00, unitsInStock: 31}, {productId: 13, productName: 
 
 ### linq43: GroupBy - Nested
+>This sample uses nested grouping to partition a list of each customer's orders, first by year, and then by month.
 ```csharp
 //c#
 public void Linq43() 
@@ -1840,71 +1835,22 @@ def linq43():
     {CompanyName: Alfreds Futterkiste, YearGroups: {{Year: 1997, MonthGroups: {{Month: 8, Orders: {{orderId: 10643, orderDate: 1997-08-25 00:00:00.000, total: 814.5}}}, {Month: 10, Orders: {{orderId: 10692, orderDate: 1997-10-03 00:00:00.000, total: 878.0}, {orderId: 10702, orderDate: 1997-10-13 00:00:00.000, total: 330.0}}}}}, {Year: 1998, MonthGroups: {{Month: 1, Orders: {{orderId: 10835, orderDate: 1998-01-15 00:00:00.000, total: 845.8}}}, {Month: 3, Orders: {{orderId: 10952, orderDate: 1998-03-16 00:00:00.000, total: 471.2}}}, {Month: 4, Orders: {{orderId: 11011, orderDate: 1998-04-09 00:00:00.000, total: 933.5}}}}}}}
     {CompanyName: Ana Trujillo Emparedados y helados, YearGroups: {{Year: 1996, MonthGroups: {{Month: 9, Orders: {{orderId: 10308, orderDate: 1996-09-18 00:00:00.000, total: 88.8}}}}}, {Year: 1997, MonthGroups: {{Month: 8, Orders: {{orderId: 10625, orderDate: 1997-08-08 00:00:00.000, total: 479.75}}}, {Month: 11, Orders: {{orderId: 10759, orderDate: 1997-11-28 00:00:00.000, total: 320.0}}}}}, {Year: 1998, MonthGroups: {{Month: 3, Orders: {{orderId: 10926, orderDate: 1998-03-04 00:00:00.000, total: 514.4}}}}}}}
 
-### linq44: GroupBy - Comparer
-```csharp
-//c#
-public void Linq44() 
-{ 
-    var anagrams = new [] { "from    ", " salt", " earn ", "  last   ", " near ", " form  " }; 
-    var orderGroups = anagrams
-        .GroupBy(w => w.Trim(), new AnagramEqualityComparer());
-
-    ObjectDumper.Write(orderGroups, 1); 
-} 
-```
-```python
-#python
-def linq44():
-    pass
-```
-#### Output
-
-    [ salt,   last   ]
-    [ earn ,  near ]
-    [from   ,  form  ]
-
-### linq45: GroupBy - Comparer, Mapped    
-```csharp
-//c#
-public void Linq45() 
-{ 
-    var anagrams = new [] { "from   ", " salt", " earn ", "  last   ", " near ", " form  " }; 
-
-    var orderGroups = anagrams.GroupBy( 
-                w => w.Trim(),
-                a => a.ToUpper(), 
-                new AnagramEqualityComparer() 
-                ); 
-
-    ObjectDumper.Write(orderGroups, 1); 
-} 
-```
-```python
-#python
-def linq45():
-    pass
-```
-#### Output
-
-    [ SALT,   LAST   ]
-    [ EARN ,  NEAR ]
-    [FROM   ,  FORM  ]
-
 
 LINQ - Set Operators
 --------------------
 
 ### linq46: Distinct - 1
+>This sample removes all duplicate elements in a sequence of factors of 300.
 ```csharp
 //c#
-public void Linq46() 
-{ 
+static void Linq46()
+{
     int[] factorsOf300 = { 2, 2, 3, 5, 5 };
 
     var uniqueFactors = factorsOf300.Distinct();
 
     Console.WriteLine("Prime factors of 300:");
-    uniqueFactors.ForEach(Console.WriteLine); 
+    uniqueFactors.ForEach(Console.WriteLine);
 }
 ```
 ```python
@@ -1914,6 +1860,7 @@ def linq46():
 
     unique_factors = set(factors_of300)
 
+    print("Prime factors of 300:")
     shared.printN(unique_factors)
 ```
 #### Output
@@ -1924,10 +1871,11 @@ def linq46():
     5
 
 ### linq47: Distinct - 2
+>This sample gets distint Category names from all the products.
 ```csharp
 //c#
-public void Linq47() 
-{ 
+static void Linq47()
+{
     var products = GetProductList();
 
     var categoryNames = products
@@ -1961,10 +1909,11 @@ def linq47():
     Beverages
 
 ### linq48: Union - 1
+>This sample creates a Union of sequences that contains unique values from both arrays.
 ```csharp
 //c#
-public void Linq48() 
-{ 
+static void Linq48()
+{
     int[] numbersA = { 0, 2, 4, 5, 6, 8, 9 };
     int[] numbersB = { 1, 3, 5, 7, 8 };
 
@@ -1972,7 +1921,7 @@ public void Linq48()
 
     Console.WriteLine("Unique numbers from both arrays:");
     uniqueNumbers.ForEach(Console.WriteLine);
-}
+}  
 ```
 ```python
 #python
@@ -2000,17 +1949,16 @@ def linq48():
     9
 
 ### linq49: Union - 2
+>This sample creates a Union of sequences that contains the distinct first letter from both product and customer names
 ```csharp
 //c#
-public void Linq49() 
-{ 
+static void Linq49()
+{
     var products = GetProductList();
     var customers = GetCustomerList();
 
-    var productFirstChars = products
-        .Select(p => p.ProductName[0]);
-    var customerFirstChars = customers
-        .Select(c => c.CompanyName[0]);
+    var productFirstChars = products.Select(p => p.ProductName[0]);
+    var customerFirstChars = customers.Select(c => c.CompanyName[0]);
 
     var uniqueFirstChars = productFirstChars.Union(customerFirstChars);
 
@@ -2061,10 +2009,11 @@ def linq49():
     U
 
 ### linq50: Intersect - 1
+>This sample creates Intersection that contains the common values shared by both arrays.
 ```csharp
 //c#
-public void Linq50() 
-{ 
+static void Linq50()
+{
     int[] numbersA = { 0, 2, 4, 5, 6, 8, 9 };
     int[] numbersB = { 1, 3, 5, 7, 8 };
 
@@ -2092,23 +2041,22 @@ def linq50():
     5
 
 ### linq51: Intersect - 2
+>This sample creates Intersection that contains contains the common first letter from both product and customer names.
 ```csharp
 //c#
-public void Linq51() 
-{ 
+static void Linq51()
+{
     var products = GetProductList();
     var customers = GetCustomerList();
 
-    var productFirstChars = products
-        .Select(p => p.ProductName[0]);
-    var customerFirstChars = customers
-        .Select(c => c.CompanyName[0]);
+    var productFirstChars = products.Select(p => p.ProductName[0]);
+    var customerFirstChars = customers.Select(c => c.CompanyName[0]);
 
-    var commonFirstChars = productFirstChars.Intersect(customerFirstChars)
+    var commonFirstChars = productFirstChars.Intersect(customerFirstChars);
 
     Console.WriteLine("Common first letters from Product names and Customer names:");
     commonFirstChars.ForEach(Console.WriteLine);
-}
+} 
 ```
 ```python
 #python
@@ -2148,10 +2096,11 @@ def linq51():
     R
 
 ### linq52: Except - 1
+>This sample creates a sequence that excludes the values from the second sequence.
 ```csharp
 //c#
-public void Linq52() 
-{ 
+static void Linq52()
+{
     int[] numbersA = { 0, 2, 4, 5, 6, 8, 9 };
     int[] numbersB = { 1, 3, 5, 7, 8 };
 
@@ -2182,23 +2131,22 @@ def linq52():
     6
 
 ### linq53: Except - 2
+>This sample creates a sequence that the first letters of product names that but excludes letters of customer names first letter.
 ```csharp
 //c#
-public void Linq53() 
-{ 
+static void Linq53()
+{
     var products = GetProductList();
     var customers = GetCustomerList();
 
-    var productFirstChars = products
-        .Select(p => p.ProductName[0]);
-    var customerFirstChars = customers
-        .Select(c => c.CompanyName[0]);
+    var productFirstChars = products.Select(p => p.ProductName[0]);
+    var customerFirstChars = customers.Select(c => c.CompanyName[0]);
 
     var productOnlyFirstChars = productFirstChars.Except(customerFirstChars);
 
     Console.WriteLine("First letters from Product names, but not from Customer names:");
     productOnlyFirstChars.ForEach(Console.WriteLine);
-}
+}   
 ```
 ```python
 #python
@@ -2226,18 +2174,19 @@ LINQ - Conversion Operators
 ---------------------------
 
 ### linq54: ToArray
+>This sample converts a list ti an array.
 ```csharp
 //c#
-public void Linq54() 
-{ 
-    double[] doubles = { 1.7, 2.3, 1.9, 4.1, 2.9 };
+static void Linq54()
+{
+    var list = new List<double> { 1.7, 2.3, 1.9, 4.1, 2.9 };
 
-    var sortedDoubles = doubles.OrderByDescending(d => d);
+    var doublesArray = list
+        .OrderByDescending(d => d)
+        .ToArray();
         
-    var doublesArray = sortedDoubles.ToArray();
-
     Console.WriteLine("Every other double from highest to lowest:");
-    for (int d = 0; d < doublesArray.Length; d += 2)
+    for (var d = 0; d < doublesArray.Length; d += 2)
     {
         Console.WriteLine(doublesArray[d]);
     }
@@ -2246,7 +2195,7 @@ public void Linq54()
 ```python
 #python
 def linq54():
-    doubles = [ 1.7, 2.3, 1.9, 4.1, 2.9 ]
+    doubles = [1.7, 2.3, 1.9, 4.1, 2.9]
   
     sorted_doubles = sorted(doubles, reverse=True)
 
@@ -2266,15 +2215,16 @@ def linq54():
     1.7
 
 ### linq55: ToList
+>This sample converts an array to a list
 ```csharp
 //c#
-public void Linq55() 
-{ 
-    string[] words = { "cherry", "apple", "blueberry" };
+static void Linq55()
+{
+    var words = new[] { "cherry", "apple", "blueberry" };
 
-    var sortedWords = words.OrderBy(x => x);
-
-    var wordList = sortedWords.ToList();
+    var wordList = words
+        .OrderBy(x => x)
+        .ToList();
 
     Console.WriteLine("The sorted word list:");
     wordList.ForEach(Console.WriteLine);
@@ -2282,7 +2232,7 @@ public void Linq55()
 ```
 ```python
 #python
-def  linq55():
+def linq55():
     words = ["cherry", "apple", "blueberry"]
 
     sorted_words = sorted(words)
@@ -2300,16 +2250,18 @@ def  linq55():
     cherry
 
 ### linq56: ToDictionary
+>This sample converts an array of records to a dictionary
 ```csharp
 //c#
-public void Linq56() 
-{ 
-    var scoreRecords = new[] 
-    { 
-        new {Name = "Alice", Score = 50},
-        new {Name = "Bob"  , Score = 40},
-        new {Name = "Cathy", Score = 45}
-    };
+static void Linq56()
+{
+    var scoreRecords = 
+        new[] 
+        { 
+            new {Name = "Alice", Score = 50},
+            new {Name = "Bob"  , Score = 40},
+            new {Name = "Cathy", Score = 45}
+        };
 
     var scoreRecordsDict = scoreRecords.ToDictionary(sr => sr.Name);
 
@@ -2320,8 +2272,8 @@ public void Linq56()
 #python
 def linq56():
     score_records = [{'Name': "Alice", 'Score': 50},
-                    {'Name': "Bob", 'Score': 40},
-                    {'Name': "Cathy", 'Score': 45}]
+                     {'Name': "Bob", 'Score': 40},
+                     {'Name': "Cathy", 'Score': 45}]
 
     index = map(lambda s: s["Name"], score_records)
 
@@ -2333,18 +2285,19 @@ def linq56():
 
     Bob's score: {Name: Bob, Score: 40}
 
-### linq57: OfType    
+### linq57: OfType
+>This sample filters all elements that matches the type double/float.
 ```csharp
 //c#
-public void Linq57() 
-{ 
-    object[] numbers = { null, 1.0, "two", 3, "four", 5, "six", 7.0 };
+static void Linq57()
+{
+    var numbers = new object[]{ null, 1.0, "two", 3, "four", 5, "six", 7.0 };
 
     var doubles = numbers.OfType<double>();
 
     Console.WriteLine("Numbers stored as doubles:");
     doubles.ForEach(Console.WriteLine);
-}
+} 
 ```
 ```python
 #python
@@ -2367,15 +2320,14 @@ LINQ - Element Operators
 ------------------------
 
 ### linq58: First - Simple
+>This sample returns the first matching element as a Product, instead of as a sequence containing a Product.
 ```csharp
 //c#
-public void Linq58() 
-{ 
+static void Linq58()
+{
     var products = GetProductList();
 
-    var product12 = products
-        .Where(p => p.ProductID == 12)
-        .First();
+    var product12 = products.First(p => p.ProductID == 12);
 
     ObjectDumper.Write(product12);
 }
@@ -2394,11 +2346,12 @@ def linq58():
     {productId: 12, productName: Queso Manchego La Pastora, category: Dairy Products, unitPrice: 38.0, unitsInStock: 86}
 
 ### linq59: First - Condition
+>This sample finds the first element in the array that starts with 'o'.
 ```csharp
 //c#
-public void Linq59() 
-{ 
-    var strings = new []{ "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+static void Linq59()
+{
+        var strings = new []{ "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 
     var startsWithO = strings.First(s => s.StartsWith('o'));
 
@@ -2419,10 +2372,11 @@ def linq59():
     A string starting with 'o': one
 
 ### linq61: FirstOrDefault - Simple
+>This sample returns the first or default if nothing is found, to try to return the first element of the sequence unless there are no elements, in which case the default value for that type is returned.
 ```csharp
 //c#
-public void Linq61() 
-{ 
+static void Linq61()
+{
     var numbers = new int[0];
 
     var firstNumOrDefault = numbers.FirstOrDefault();
@@ -2435,7 +2389,7 @@ public void Linq61()
 def linq61():
     numbers = []
 
-    first_num_or_default = next(filter(lambda x: true, numbers), 0)
+    first_num_or_default = next(filter(lambda x: True, numbers), 0)
 
     print(first_num_or_default)
 ```
@@ -2444,10 +2398,11 @@ def linq61():
     0
 
 ### linq62: FirstOrDefault - Condition
+>This sample returns the first or default if nothing is found, to return the first product whose ProductID is 789 as a single Product object, unless there is no match, in which case null is returned.
 ```csharp
 //c#
-public void Linq62() 
-{ 
+static void Linq62()
+{
     var products = GetProductList();
 
     var product789 = products.FirstOrDefault(p => p.ProductID == 789);
@@ -2469,10 +2424,11 @@ def linq62():
     Product 789 exists: false
 
 ### linq64: ElementAt
+>This sample retrieve the second number greater than 5 from an array.
 ```csharp
 //c#
-public void Linq64() 
-{ 
+static void Linq64()
+{
     var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
     var fourthLowNum = numbers
@@ -2480,7 +2436,7 @@ public void Linq64()
         .ElementAt(1);
 
     Console.WriteLine("Second number > 5: {0}", fourthLowNum);
-}
+}           
 ```
 ```python
 #python
@@ -2500,15 +2456,20 @@ LINQ - Generation Operators
 ---------------------------
 
 ### linq65: Range
+>This sample uses generates a sequence of numbers from 100 to 149 that is used to find which numbers in that range are odd and even.
 ```csharp
 //c#
-public void Linq65() 
-{ 
+static void Linq65()
+{
     var numbers = Enumerable.Range(100, 50)
-        .Select(n => new { Number = n, OddEven = n % 2 == 1 ? "odd" : "even" });
+        .Select(n => 
+            new
+            {
+                Number = n, 
+                OddEven = n % 2 == 1 ? "odd" : "even"
+            });
 
     numbers.ForEach((n) => Console.WriteLine("The number {0} is {1}.", n.Number, n.OddEven));
-
 }
 ```
 ```python
@@ -2537,14 +2498,15 @@ def linq65():
     ...
 
 ### linq66: Repeat
+>This sample uses generates a sequence of repeated numbers that contains the number 7 ten times.
 ```csharp
 //c#
-public void Linq66() 
-{ 
+static void Linq66()
+{
     var numbers = Enumerable.Repeat(7, 10);
 
     numbers.ForEach(Console.WriteLine);
-}
+}  
 ```
 ```python
 #python
@@ -2571,10 +2533,11 @@ LINQ - Quantifiers
 ------------------
 
 ### linq67: Any - Simple
+>This sample uses determines if Any of the words in the array contain the substring 'ei'.
 ```csharp
 //c#
-public void Linq67() 
-{ 
+static void Linq67()
+{
     var words = new []{ "believe", "relief", "receipt", "field" };
 
     var iAfterE = words.Any(w => w.Contains("ei"));
@@ -2596,16 +2559,22 @@ def linq67():
     There is a word that contains in the list that contains 'ei': true
 
 ### linq69: Any - Grouped
+>This sample determines if Any of the grouped a list of products only for categories that have at least one product that is out of stock.
 ```csharp
 //c#
-public void Linq69() 
-{ 
+static void Linq69()
+{
     var products = GetProductList();
 
     var productGroups = products
         .GroupBy(prod => prod.Category)
         .Where(prodGroup => prodGroup.Any(p => p.UnitsInStock == 0))
-        .Select(prodGroup => new { Category = prodGroup.Key, Products = prodGroup });
+        .Select(prodGroup => 
+            new
+            {
+                Category = prodGroup.Key, 
+                Products = prodGroup
+            });
 
     ObjectDumper.Write(productGroups, 1);
 }
@@ -2622,10 +2591,11 @@ def linq69():
     ...
 
 ### linq70: All - Simple
+>This sample determines if All the elements in the array contain only odd numbers.
 ```csharp
 //c#
-public void Linq70() 
-{  
+static void Linq70()
+{
     var numbers = new [] { 1, 11, 3, 19, 41, 65, 19 };
 
     var onlyOdd = numbers.All(n => n % 2 == 1);
@@ -2646,17 +2616,23 @@ def linq70():
 
     The list contains only odd numbers: true
 
-### linq72: All - Grouped    
+### linq72: All - Grouped
+>This sample determines if All elements in the grouped a list of products by categories, have all of their products in stock.
 ```csharp
 //c#
-public void Linq72() 
-{ 
+static void Linq72()
+{
     var products = GetProductList();
 
     var productGroups = products
         .GroupBy(prod => prod.Category)
         .Where(prodGroup => prodGroup.All(p => p.UnitsInStock > 0))
-        .Select(prodGroup => new { Category = prodGroup.Key, Products = prodGroup });
+        .Select(prodGroup => 
+            new
+            {
+                Category = prodGroup.Key, 
+                Products = prodGroup
+            });
 
     ObjectDumper.Write(productGroups, 1);
 }
@@ -2677,6 +2653,7 @@ LINQ - Aggregate Operators
 
 
 ### linq73: Count - Simple
+>This sample gets the number of unique prime factors of 300.
 ```csharp
 //c#
 public void Linq73() 
