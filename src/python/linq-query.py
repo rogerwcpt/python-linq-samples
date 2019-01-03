@@ -8,7 +8,7 @@ def linq99():
         i = i + 1
         return n
 
-    q = map(lambda n: add_to_i(n), numbers)
+    q = map(add_to_i, numbers)
 
     for v in q:
         print("v = %d, i = %d" % (v, i))
@@ -24,7 +24,7 @@ def linq100():
         i = i + 1
         return n
 
-    q = list(map(lambda n: add_to_i(n), numbers))
+    q = list(map(add_to_i, numbers))
 
     for v in q:
         print("v = %d, i = %d" % (v, i))
@@ -34,6 +34,6 @@ def linq101():
     pass
 
 
-linq99()
-# linq100()
+# linq99()
+linq100()
 # linq101()

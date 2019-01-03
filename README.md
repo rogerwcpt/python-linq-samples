@@ -270,7 +270,7 @@ def linq5():
         index += 1
         return result
 
-    short_digits = filter(lambda digit: filter_func(digit), digits)
+    short_digits = filter(filter_func, digits)
 
     print("Short digits:")
     for d in short_digits:
@@ -1132,7 +1132,7 @@ def linq25():
         index += 1
         return result
 
-    first_small_numbers = takewhile(lambda x: digit_greater_equal_to_index(x), numbers)
+    first_small_numbers = takewhile(digit_greater_equal_to_index, numbers)
 
     print("First numbers not less than their position:")
     shared.printN(first_small_numbers)
@@ -1205,7 +1205,7 @@ def linq27():
         index += 1
         return result
 
-    later_numbers = dropwhile(lambda x: digit_greater_equal_to_index(x), numbers)
+    later_numbers = dropwhile(digit_greater_equal_to_index, numbers)
 
     print("All elements starting from first element less than its position:")
     shared.printN(later_numbers)
@@ -3486,7 +3486,7 @@ def linq99():
         i = i + 1
         return n
 
-    q = map(lambda n: add_to_i(n), numbers)
+    q = map(add_to_i, numbers)
 
     for v in q:
         print("v = %d, i = %d" % (v, i))
@@ -3535,7 +3535,7 @@ def linq100():
         i = i + 1
         return n
 
-    q = list(map(lambda n: add_to_i(n), numbers))
+    q = list(map(add_to_i, numbers))
 
     for v in q:
         print("v = %d, i = %d" % (v, i))

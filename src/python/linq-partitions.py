@@ -77,7 +77,7 @@ def linq25():
         index += 1
         return result
 
-    first_small_numbers = takewhile(lambda x: digit_greater_equal_to_index(x), numbers)
+    first_small_numbers = takewhile(digit_greater_equal_to_index, numbers)
 
     print("First numbers not less than their position:")
     shared.printN(first_small_numbers)
@@ -103,17 +103,17 @@ def linq27():
         index += 1
         return result
 
-    later_numbers = dropwhile(lambda x: digit_greater_equal_to_index(x), numbers)
+    later_numbers = dropwhile(digit_greater_equal_to_index, numbers)
 
     print("All elements starting from first element less than its position:")
     shared.printN(later_numbers)
 
 
-linq20()
+# linq20()
 # linq21()
 # linq22()
 # linq23()
 # linq24()
 # linq25()
 # linq26()
-# linq27()
+linq27()

@@ -54,7 +54,7 @@ def linq5():
         index += 1
         return result
 
-    short_digits = filter(lambda digit: filter_func(digit), digits)
+    short_digits = filter(filter_func, digits)
 
     print("Short digits:")
     for d in short_digits:
