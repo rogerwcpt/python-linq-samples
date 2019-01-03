@@ -6,6 +6,7 @@ def linq46():
 
     unique_factors = set(factors_of300)
 
+    print("Prime factors of 300:")
     shared.printN(unique_factors)
 
 

@@ -17,7 +17,7 @@ namespace linq_quantifiers
         }
 
         [Category("Quantifiers")]
-        [Description("This sample uses Any to determine if any of the words in the array contain the substring 'ei'.")]
+        [Description("This sample uses determines if Any of the words in the array contain the substring 'ei'.")]
         static void Linq67()
         {
             var words = new []{ "believe", "relief", "receipt", "field" };
@@ -28,7 +28,7 @@ namespace linq_quantifiers
         }
 
         [Category("Quantifiers")]
-        [Description("This sample uses Any to return a grouped a list of products only for categories that have at least one product that is out of stock.")]
+        [Description("This sample determines if Any of the grouped a list of products only for categories that have at least one product that is out of stock.")]
         static void Linq69()
         {
             var products = GetProductList();
@@ -47,7 +47,7 @@ namespace linq_quantifiers
         }
 
         [Category("Quantifiers")]
-        [Description("This sample uses All to determine whether an array contains only odd numbers.")]
+        [Description("This sample determines if All the elements in the array contain only odd numbers.")]
         static void Linq70()
         {
             var numbers = new [] { 1, 11, 3, 19, 41, 65, 19 };
@@ -58,7 +58,7 @@ namespace linq_quantifiers
         }
 
         [Category("Quantifiers")]
-        [Description("This sample uses All to return a grouped a list of products only for categories that have all of their products in stock.")]
+        [Description("This sample determines if All elements in the grouped a list of products by categories, have all of their products in stock.")]
         static void Linq72()
         {
             var products = GetProductList();

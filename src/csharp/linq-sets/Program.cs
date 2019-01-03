@@ -21,7 +21,7 @@ namespace linq_sets
 
 
         [Category("Set Operators")]
-        [Description("This sample uses Distinct to remove duplicate elements in a sequence of factors of 300.")]
+        [Description("This sample removes all duplicate elements in a sequence of factors of 300.")]
         static void Linq46()
         {
             int[] factorsOf300 = { 2, 2, 3, 5, 5 };
@@ -33,7 +33,7 @@ namespace linq_sets
         }
 
         [Category("Set Operators")]
-        [Description("This sample uses Distinct to find the unique Category names.")]
+        [Description("This sample gets distint Category names from all the products.")]
         static void Linq47()
         {
             var products = GetProductList();
@@ -47,7 +47,7 @@ namespace linq_sets
         }
 
         [Category("Set Operators")]
-        [Description("This sample uses Union to create one sequence that contains the unique values from both arrays.")]
+        [Description("This sample creates a Union of sequences that contains unique values from both arrays.")]
         static void Linq48()
         {
             int[] numbersA = { 0, 2, 4, 5, 6, 8, 9 };
@@ -60,7 +60,7 @@ namespace linq_sets
         }        
         
         [Category("Set Operators")]
-        [Description("This sample uses the Union method to create one sequence that contains the unique first letter from both product and customer names")]
+        [Description("This sample creates a Union of sequences that contains the distinct first letter from both product and customer names")]
         static void Linq49()
         {
             var products = GetProductList();
@@ -76,7 +76,7 @@ namespace linq_sets
         }
 
         [Category("Set Operators")]
-        [Description("This sample uses Intersect to create one sequence that contains the common values shared by both arrays.")]
+        [Description("This sample creates Intersection that contains the common values shared by both arrays.")]
         static void Linq50()
         {
             int[] numbersA = { 0, 2, 4, 5, 6, 8, 9 };
@@ -89,8 +89,8 @@ namespace linq_sets
         }
 
         [Category("Set Operators")]
-        [Description("This sample uses Intersect to create one sequence that contains the common first lette from both product and customer names.")]
-        private static void Linq51()
+        [Description("This sample creates Intersection that contains contains the common first letter from both product and customer names.")]
+        static void Linq51()
         {
             var products = GetProductList();
             var customers = GetCustomerList();
@@ -106,8 +106,8 @@ namespace linq_sets
 
         
         [Category("Set Operators")]
-        [Description("This sample uses Except to create a sequence that contains the values from numbersA that are not also in numbersB.")]
-        private static void Linq52()
+        [Description("This sample creates a sequence that excludes the values from the second sequence.")]
+        static void Linq52()
         {
             int[] numbersA = { 0, 2, 4, 5, 6, 8, 9 };
             int[] numbersB = { 1, 3, 5, 7, 8 };
@@ -119,8 +119,8 @@ namespace linq_sets
         }
 
         [Category("Set Operators")]
-        [Description("This sample uses Except to create one sequence that contains the first letters of product names that are not also first letters of customer names.")]
-        private static void Linq53()
+        [Description("This sample creates a sequence that the first letters of product names that but excludes letters of customer names first letter.")]
+        static void Linq53()
         {
             var products = GetProductList();
             var customers = GetCustomerList();

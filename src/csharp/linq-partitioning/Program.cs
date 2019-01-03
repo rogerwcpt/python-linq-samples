@@ -20,8 +20,8 @@ namespace linq_partitioning
         }
 
         [Category("Partitioning Operators")]
-        [Description("This sample uses Take to get only the first 3 elements of the array.")]
-        private static void Linq20()
+        [Description("This sample uses a partition/slice to get only the first 3 elements of the array.")]
+        static void Linq20()
         {
             var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
@@ -32,8 +32,8 @@ namespace linq_partitioning
         }
 
         [Category("Partitioning Operators")]
-        [Description("This sample uses Take to get the first 3 orders from customers in Washington.")]
-        private static void Linq21()
+        [Description("This sample uses a partition/slice to get the first 3 orders from customers in Washington.")]
+        static void Linq21()
         {
             var customers = GetCustomerList();
 
@@ -54,8 +54,8 @@ namespace linq_partitioning
         }
 
         [Category("Partitioning Operators")]
-        [Description("This sample uses Skip to get all but the first four elements of the array.")]
-        public static void Linq22()
+        [Description("This sample uses a partition to get all but the first four elements of the array.")]
+        static void Linq22()
         {
             var numbers = new []{ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
@@ -67,7 +67,7 @@ namespace linq_partitioning
 
         [Category("Partitioning Operators")]
         [Description("This sample uses Take to get all but the first 2 orders from customers in Washington.")]
-        public static void Linq23()
+        static void Linq23()
         {
             var customers = GetCustomerList();
 
@@ -89,8 +89,8 @@ namespace linq_partitioning
         }
 
         [Category("Partitioning Operators")]
-        [Description("This sample uses TakeWhile to return elements starting from the beginning of the array until a number is read whose value is not less than 6.")]
-        public static void Linq24()
+        [Description("This sample uses a partition to return elements starting from the beginning of the array until a number is read whose value is not less than 6.")]
+        static void Linq24()
         {
             var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
@@ -101,8 +101,8 @@ namespace linq_partitioning
         }
 
         [Category("Partitioning Operators")]
-        [Description("This sample uses TakeWhile to return elements starting from the beginning of the array until a number is hit that is less than its position in the array.")]
-        public static void Linq25()
+        [Description("This sample uses a partition to return elements starting from the beginning of the array until a number is hit that is less than its position in the array.")]
+        static void Linq25()
         {
             var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
@@ -113,8 +113,8 @@ namespace linq_partitioning
         }
 
         [Category("Partitioning Operators")]
-        [Description("This sample uses SkipWhile to get the elements of the array starting from the first element divisible by 3.")]
-        public static void Linq26()
+        [Description("This sample uses a partition to get the elements of the array starting from the first element divisible by 3.")]
+        static void Linq26()
         {
             var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
@@ -125,8 +125,8 @@ namespace linq_partitioning
         }
 
         [Category("Partitioning Operators")]
-        [Description("This sample uses SkipWhile to get the elements of the array starting from the first element less than its position.")]
-        public static void Linq27()
+        [Description("This sample uses a partition to get the elements of the array starting from the first element less than its position.")]
+        static void Linq27()
         {
             var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 

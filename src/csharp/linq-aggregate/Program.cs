@@ -33,7 +33,7 @@ namespace linq_aggregate
         }
 
         [Category("Aggregate Operators")]
-        [Description("This sample uses Count to get the number of unique prime factors of 300.")]
+        [Description("This sample gets the number of unique prime factors of 300.")]
         static void Linq73()
         {
             var primeFactorsOf300 = new [] { 2, 2, 3, 5, 5 };
@@ -44,7 +44,7 @@ namespace linq_aggregate
         }
 
         [Category("Aggregate Operators")]
-        [Description("This sample uses Count to get the number of odd ints in the array.")]
+        [Description("This sample gets the number of odd ints in the array.")]
         static void Linq74()
         {
             var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };

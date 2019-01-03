@@ -144,28 +144,30 @@ def linq17():
 
 
 def linq18():
-    def linq16():
-        customers = shared.getCustomerList()
+    customers = shared.getCustomerList()
 
-        the_date = datetime.datetime(1998, 1, 1)
+    the_date = datetime.datetime(1998, 1, 1)
 
-        order_greater_than_date = functions.select_many(customers, "Orders", lambda x: x.item_b.OrderDate > the_date)
-        orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID,
-                                               order_id=x.item_b.OrderID,
-                                               orderDate=x.item_b.OrderDate), order_greater_than_date)
+    order_greater_than_date = functions.select_many(customers, "Orders", lambda x: x.item_b.OrderDate > the_date)
+    orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID,
+                                           order_id=x.item_b.OrderID,
+                                           orderDate=x.item_b.OrderDate), order_greater_than_date)
 
-        shared.print_namespace(orders)
+    shared.print_namespace(orders)
+
+def linq19():
+    pass
 
 linq6()
-linq7()
-linq8()
-linq9()
-linq10()
-linq11()
-linq12()
-linq13()
-linq14()
-linq15()
-linq16()
-linq17()
-linq18()
+# linq7()
+# linq8()
+# linq9()
+# linq10()
+# linq11()
+# linq12()
+# linq13()
+# linq14()
+# linq15()
+# linq16()
+# linq17()
+# linq18()

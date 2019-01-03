@@ -39,8 +39,8 @@ namespace linq_grouping
         } 
         
         [Category("Grouping Operators")]
-        [Description("This sample uses group by to partition a list of numbers by their remainder when divided by 5.")]
-        private static void Linq40()
+        [Description("This sample uses grouping to partition a list of numbers by their remainder when divided by 5.")]
+        static void Linq40()
         {
             var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 }; 
 
@@ -61,8 +61,8 @@ namespace linq_grouping
         }
 
         [Category("Grouping Operators")]
-        [Description("This sample uses group by to partition a list of words by their first letter.")]
-        private static void Linq41()
+        [Description("This sample uses grouping to partition a list of words by their first letter.")]
+        static void Linq41()
         {
             var words = new [] { "blueberry", "chimpanzee", "abacus", "banana", "apple", "cheese" }; 
 
@@ -83,8 +83,8 @@ namespace linq_grouping
         }
 
         [Category("Grouping Operators")]
-        [Description("This sample uses group by to partition a list of products by category.")]
-        private static void Linq42()
+        [Description("This sample uses grouping to partition a list of products by category.")]
+        static void Linq42()
         {
             var products = GetProductList(); 
             
@@ -101,8 +101,8 @@ namespace linq_grouping
         }
 
         [Category("Grouping Operators")]
-        [Description("This sample uses group by to partition a list of each customer's orders, first by year, and then by month.")]
-        private static void Linq43()
+        [Description("This sample uses nested grouping to partition a list of each customer's orders, first by year, and then by month.")]
+        static void Linq43()
         {
             var customers = GetCustomerList(); 
 
@@ -136,7 +136,7 @@ namespace linq_grouping
 
         [Category("Grouping Operators")]
         [Description("This sample uses GroupBy to partition trimmed elements of an array using a custom comparer that matches words that are anagrams of each other.")]
-        private static void Linq44()
+        static void Linq44()
         {
             var anagrams = new [] { "from    ", " salt", " earn ", "  last   ", " near ", " form  " }; 
             var orderGroups = anagrams
@@ -147,7 +147,7 @@ namespace linq_grouping
 
         [Category("Grouping Operators")]
         [Description("This sample uses GroupBy to partition trimmed elements of an array using a custom comparer that matches words that are anagrams of each other, and then converts the results to uppercase.")]
-        private static void Linq45()
+        static void Linq45()
         {
             var anagrams = new [] { "from   ", " salt", " earn ", "  last   ", " near ", " form  " }; 
         

@@ -14,7 +14,7 @@ namespace linq_generation
         }
 
         [Category("Generation Operators")]
-        [Description("This sample uses Range to generate a sequence of numbers from 100 to 149 that is used to find which numbers in that range are odd and even.")]
+        [Description("This sample uses generates a sequence of numbers from 100 to 149 that is used to find which numbers in that range are odd and even.")]
         static void Linq65()
         {
             var numbers = Enumerable.Range(100, 50)
@@ -29,7 +29,7 @@ namespace linq_generation
         }
 
         [Category("Generation Operators")]
-        [Description("This sample uses Repeat to generate a sequence that contains the number 7 ten times.")]
+        [Description("This sample uses generates a sequence of repeated numbers that contains the number 7 ten times.")]
         static void Linq66()
         {
             var numbers = Enumerable.Repeat(7, 10);

@@ -25,7 +25,7 @@ namespace linq_ordering
 
 
         [Category("Ordering Operators")]
-        [Description("This sample uses orderby to sort a list of words alphabetically.")]
+        [Description("This sample uses ordering to sort a list of words alphabetically.")]
         static void Linq28()
         {
             var words = new [] { "cherry", "apple", "blueberry" };
@@ -37,7 +37,7 @@ namespace linq_ordering
         }
 
         [Category("Ordering Operators")]
-        [Description("This sample uses orderby to sort a list of words by length.")]
+        [Description("This sample uses ordering to sort a list of words by length.")]
         static void Linq29()
         {
             var words = new [] { "cherry", "apple", "blueberry" };
@@ -49,7 +49,7 @@ namespace linq_ordering
         }
 
         [Category("Ordering Operators")]
-        [Description("This sample uses orderby to sort a list of products by name. Use the \"descending\" keyword at the end of the clause to perform a reverse ordering.")]
+        [Description("This sample uses ordering to sort a list of products by name.")]
         static void Linq30()
         {
             var products = GetProductList();
@@ -60,7 +60,7 @@ namespace linq_ordering
         }
         
         [Category("Ordering Operators")]
-        [Description("This sample uses an OrderBy clause with a custom comparer to do a case-insensitive sort of the words in an array.")]
+        [Description("This sample uses case-insensitive ordering to sort the words in an array.")]
         static void Linq31()
         {
             var words = new [] { "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" }; 
@@ -71,7 +71,7 @@ namespace linq_ordering
         }
 
         [Category("Ordering Operators")]
-        [Description("This sample uses OrderBy and descending to sort a list of doubles from highest to lowest.")]
+        [Description("This sample uses reverse ordering to sort a list of doubles from highest to lowest.")]
         static void Linq32()
         {
             var doubles = new[]{ 1.7, 2.3, 1.9, 4.1, 2.9 };
@@ -83,7 +83,7 @@ namespace linq_ordering
         }
 
         [Category("Ordering Operators")]
-        [Description("This sample uses OrderBy to sort a list of products by units in stock from highest to lowest.")]
+        [Description("This sample uses reverse ordering to sort a list of products by units in stock from highest to lowest.")]
         static void Linq33()
         {
             var products = GetProductList();
@@ -94,7 +94,7 @@ namespace linq_ordering
         }
 
         [Category("Ordering Operators")]
-        [Description("This sample uses OrderByDescending with a custom comparer.")]
+        [Description("This sample uses reverse case-insensitive ordering to sort the words in an array.")]
         static void Linq34()
         {
             var words = new [] { "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" };
@@ -105,7 +105,7 @@ namespace linq_ordering
         }
 
         [Category("Ordering Operators")]
-        [Description("This sample uses aOrderByto sort a list of digits, first by length of their name, and then alphabetically by the name itself.")]
+        [Description("This sample uses nested ordering, first by length of their name, and then alphabetically by the name itself.")]
         static void Linq35()
         {
             var digits = new [] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
@@ -119,7 +119,7 @@ namespace linq_ordering
         }
 
         [Category("Ordering Operators")]
-        [Description("The first query in this sample uses OrderBy and ThenBy with a custom comparer to sort first by word length and then by a case-insensitive sort of the words in an array.")]
+        [Description("This sample uses case-insensitive nested ordering, with a custom comparer to sort first by word length and then by a case-insensitive sort of the words in an array.")]
         static void Linq36()
         {
             var words = new [] { "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" };
@@ -132,7 +132,7 @@ namespace linq_ordering
         }
 
         [Category("Ordering Operators")]
-        [Description("This sample uses OrderBy and ThenByDescendingo sort a list of products, first by category, and then by unit price, from highest to lowest.")]
+        [Description("This sample uses nested ordering to sort a list of products, first by category, and then by unit price, from highest to lowest.")]
         static void Linq37()
         {
            var products = GetProductList();
@@ -145,7 +145,7 @@ namespace linq_ordering
         }
 
         [Category("Ordering Operators")]
-        [Description("This sample uses an OrderBy and a ThenBy clause with a custom comparer to sort first by word length and then by a case-insensitive descending sort of the words in an array.")]
+        [Description("This sample uses uses case-insensitive reverse nested ordering to sort first by word length and then by a case-insensitive descending sort of the words in an array.")]
         static void Linq38()
         {
             var words = new [] { "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" };
@@ -158,7 +158,7 @@ namespace linq_ordering
         }
 
         [Category("Ordering Operators")]
-        [Description("This sample uses Reverse to create a list of all digits in the array whose second letter is 'i' that is reversed from the order in the original array.")]
+        [Description("This sample uses reverse ordering to create a list of all digits in the array whose second letter is 'i' that is reversed from the order in the original array.")]
         static void Linq39()
         {
             var digits = new [] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };

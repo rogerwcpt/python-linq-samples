@@ -43,22 +43,22 @@ def linq4():
 
 
 def linq5():
-        digits = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
-  
-        index = 0
+    digits = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
 
-        # Lambdas cant have multiple lines, so create a filter function
-        def filter_func(digit):
-                nonlocal index
-                result = len(digit) < index
-                index += 1
-                return result
+    index = 0
 
-        short_digits = filter(lambda digit: filter_func(digit), digits)
-  
-        print("Short digits:")
-        for d in short_digits:
-                print("The word %s is shorter than its value." % d)
+    # Lambdas cant have multiple lines, so create a filter function
+    def filter_func(digit):
+        nonlocal index
+        result = len(digit) < index
+        index += 1
+        return result
+
+    short_digits = filter(lambda digit: filter_func(digit), digits)
+
+    print("Short digits:")
+    for d in short_digits:
+            print("The word %s is shorter than its value." % d)
 
         
 linq1()

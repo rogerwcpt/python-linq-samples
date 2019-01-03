@@ -11,23 +11,23 @@ namespace linq_projections
         static void Main(string[] args)
         {
             Linq6();
-            Linq7();
-            Linq8();
-            Linq9();
-            Linq10();
-            Linq11();
-            Linq12();
-            Linq13();
-            Linq14();
-            Linq15();
-            Linq16();
-            Linq17();
-            Linq18();
-            Linq19();
+            // Linq7();
+            // Linq8();
+            // Linq9();
+            // Linq10();
+            // Linq11();
+            // Linq12();
+            // Linq13();
+            // Linq14();
+            // Linq15();
+            // Linq16();
+            // Linq17();
+            // Linq18();
+            // Linq19();
         }
 
         [Category("Projection Operators")]
-        [Description("This sample uses select to produce a sequence of ints one higher than those in an existing array of ints.")]
+        [Description("This sample projects a sequence of ints 1+ higher than those in an existing array of ints.")]
         static void Linq6()
         {
             var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
@@ -39,7 +39,7 @@ namespace linq_projections
         }
 
         [Category("Projection Operators")]
-        [Description("This sample uses select to return a sequence of just the names of a list of products.")]
+        [Description("This sample projects a sequence of just the names of a list of products.")]
         static void Linq7()
         {
             var products = GetProductList();
@@ -51,7 +51,7 @@ namespace linq_projections
         }
 
         [Category("Projection Operators")]
-        [Description("This sample uses select to produce a sequence of strings representing the text version of a sequence of ints.")]
+        [Description("This sample projects a sequence of strings representing the text version of a sequence of integers.")]
         static void Linq8()
         {
             var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
@@ -64,7 +64,7 @@ namespace linq_projections
         }
 
         [Category("Projection Operators")]
-        [Description("This sample uses select to produce a sequence of the uppercase and lowercase versions of each word in the original array.")]
+        [Description("This sample projects a sequence of the uppercase and lowercase versions of each word in the original array.")]
         static void Linq9()
         {
             var words = new[] { "aPPLE", "BlUeBeRrY", "cHeRry" };
@@ -80,7 +80,7 @@ namespace linq_projections
         }
 
         [Category("Projection Operators")]
-        [Description("This sample uses select to produce a sequence containing text representations of digits and whether their length is even or odd.")]
+        [Description("This sample projects a sequence containing text representations of digits and whether their length is even or odd.")]
         static void Linq10()
         {
             var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
@@ -97,7 +97,7 @@ namespace linq_projections
         }
 
         [Category("Projection Operators")]
-        [Description("This sample uses select to produce a sequence containing some properties of Products, including UnitPrice which is renamed to Price in the resulting type.")]
+        [Description("This sample projects a sequence containing some properties of Products, including UnitPrice which is renamed to Price in the resulting type.")]
         static void Linq11()
         {
             var products = GetProductList();
@@ -116,7 +116,7 @@ namespace linq_projections
 
 
         [Category("Projection Operators")]
-        [Description("This sample uses an indexed Select clause to determine if the value of ints in an array match their position in the array.")]
+        [Description("This sample uses an indexed projection to determine if the value of integers in an array match their position in the array.")]
         static void Linq12()
         {
             var numbers = new[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
@@ -133,7 +133,7 @@ namespace linq_projections
         }
 
         [Category("Projection Operators")]
-        [Description("This sample combines select and where to make a simple query that returns the text form of each digit less than 5.")]
+        [Description("This sample first filters, then projects to make a simple query that returns the text form of each digit less than 5.")]
         static void Linq13()
         {
             var numbers = new []{ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
@@ -148,7 +148,7 @@ namespace linq_projections
         }
 
         [Category("Projection Operators")]
-        [Description("This sample uses a compound from clause to make a query that returns all pairs of numbers from both arrays such that the number from numbersA is less than the number from numbersB.")]
+        [Description("This sample projects a combination of 2 source arrays, then filters all pairs of numbers from both arrays such that the number from numbersA is less than the number from numbersB.")]
         static void Linq14()
         {
             var numbersA = new [] { 0, 2, 4, 5, 6, 8, 9 };
@@ -163,7 +163,7 @@ namespace linq_projections
         }
 
         [Category("Projection Operators")]
-        [Description("This sample uses a compound from clause to select all orders where the order total is less than 500.00.")]
+        [Description("This sample uses a nested projection to flatten the customer orders, then filtes the order total is less than 500.00.")]
         static void Linq15()
         {
             var customers = GetCustomerList();
@@ -183,7 +183,7 @@ namespace linq_projections
         }
 
         [Category("Projection Operators")]
-        [Description("This sample uses a compound from clause to select all orders where the order was made in 1998 or later.")]
+        [Description("This sample uses a nested projection to flatten the customer orders, the filters all orders that was made in 1998 or later.")]
         static void Linq16()
         {
             var customers = GetCustomerList();
@@ -203,7 +203,7 @@ namespace linq_projections
         }
 
         [Category("Projection Operators")]
-        [Description("This sample uses a compound from clause to select all orders where the order total is greater than 2000.00 and uses from assignment to avoid requesting the total twice.")]
+        [Description("This sample uses a nested projection to flatten the customer orders, then filters the orders where the order total is greater than 2000.00.")]
         static void Linq17()
         {
             var customers = GetCustomerList();
@@ -223,7 +223,7 @@ namespace linq_projections
         }
 
         [Category("Projection Operators")]
-        [Description("This sample uses multiple from clauses so that filtering on customers can be done before selecting their orders.  This makes the query more efficient by not selecting and then discarding orders for customers outside of Washington.")]
+        [Description("This sample fist filters on all Customers in Washington, then uses a nested projection to flatten the customer orders, then filtering on all orders greater than the cut-off date")]
         static void Linq18()
         {
             var customers = GetCustomerList();

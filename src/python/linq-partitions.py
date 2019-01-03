@@ -1,5 +1,6 @@
 import shared
 import functions
+import datetime
 
 from types import SimpleNamespace
 
@@ -14,6 +15,22 @@ def linq20():
 
     print("First 3 numbers:")
     shared.printN(first3_numbers)
+
+
+def linq21():
+    customers = shared.getCustomerList()
+
+    the_date = datetime.datetime(1998, 1, 1)
+
+    order_greater_than_date = functions.select_many(customers, "Orders", lambda x: x.item_b.OrderDate > the_date)
+    orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID,
+                                           order_id=x.item_b.OrderID,
+                                           orderDate=x.item_b.OrderDate), order_greater_than_date)
+
+    first_3_orders = list(orders)[:3]
+
+    print("First 3 orders in WA:")
+    shared.print_namespace(first_3_orders)
 
 
 def linq22():
@@ -93,6 +110,7 @@ def linq27():
 
 
 linq20()
+# linq21()
 # linq22()
 # linq23()
 # linq24()

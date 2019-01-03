@@ -18,7 +18,7 @@ namespace linq_restrictions
         }
 
         [Category("Restriction Operators")]
-        [Description("This sample uses the where clause to find all elements of an array with a value less than 5.")]
+        [Description("This sample uses a filter to find all elements of an array with a value less than 5.")]
         static void Linq1()
         {
             var numbers = new [] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
@@ -30,7 +30,7 @@ namespace linq_restrictions
         }
 
         [Category("Restriction Operators")]
-        [Description("This sample uses the where clause to find all products that are out of stock.")]
+        [Description("This sample uses a filter to find all products that are out of stock.")]
         static void Linq2()
         {
             var products = GetProductList();
@@ -42,7 +42,7 @@ namespace linq_restrictions
         }
 
         [Category("Restriction Operators")]
-        [Description("This sample uses the where clause to find all products that are in stock and cost more than 3.00 per unit.")]
+        [Description("This sample uses a filter to find all products that are in stock and cost more than 3.00 per unit.")]
         public static void Linq3()
         {
             var products = GetProductList();
@@ -54,7 +54,7 @@ namespace linq_restrictions
         }
 
         [Category("Restriction Operators")]
-        [Description("This sample uses the where clause to find all customers in Washington and then it uses a foreach loop to iterate over the orders collection that belongs to each customer.")]
+        [Description("This sample uses a filter to find all customers in Washington and then it uses a foreach loop to iterate over the orders collection that belongs to each customer.")]
         static void Linq4()
         {
             var customers = GetCustomerList();
@@ -72,7 +72,7 @@ namespace linq_restrictions
             });
         }
 
-        [Description("This sample demonstrates an indexed where clause that returns digits whose name is shorter than their value.")]
+        [Description("This sample demonstrates an indexed filter that returns digits whose name is shorter than their value.")]
         static void Linq5()
         {
             var digits = new[] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
