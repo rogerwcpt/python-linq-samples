@@ -34,8 +34,8 @@ Source for both C# and Python are included in the [src](src) folder in this repo
 ||`Union`|`union`||
 ||`Interect`|`intersection`||
 ||`Except`|`difference`||
-|**Conversion**|`ToArray`|`toList`||
-||`ToList`|`toList`||
+|**Conversion**|`ToArray`|`list`||
+||`ToList`|`list`||
 ||`ToDictionary`|`dict`|Often used in conjuction with `zip`|
 ||`OfType`|`'filter` using `isinstance` as predicate|
 |**Element**|`First`|`next`||
