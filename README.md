@@ -11,13 +11,13 @@ Source for both C# and Python are included in the [src](src) folder in this repo
 - To run the respective C# projects (*.csproj*), open the containing folder in [Visual Studio Code](https://code.visualstudio.com/) use the Debug command 
 - To run the respective Python files (*.py*), open the file in [Visual Studio Code](https://code.visualstudio.com/) use the *Run Python File in Terminal* right click menu command (requirses the Python extension)
 
-
+[do_thing_to(x) for x in source if your_filter(x)]
 ### Operation Comparison Matrix
 |Operation|C#|python|Comment|
 |---------|--|----|-------|
-|**Filter**|`Where`|`filter`||
-|**Projection**|`Select`|`map`||
-||`SelectMany`||Custom [select_many](#python-utils-added) utility added|
+|**Filter**|`Where`|`(x for x in sequence if fiter(x))`|Can also use `filter(f(x), sequence)`|
+|**Projection**|`Select`|`(f(x) for x in sequence)`|Can also use `map(f(x), sequence)`|
+||`SelectMany`|`(f(x, y) for x in sequence1 for y in sequence2)`|||
 |**Partitioning**|`Take(n)`|`array[:n]`||
 ||`TakeWhile(predicate)`|`takewhile(predicate)`|`from itertools import takewhile`|
 ||`Skip(n)`|`array[n:]`||
@@ -30,17 +30,17 @@ Source for both C# and Python are included in the [src](src) folder in this repo
 ||`ThenByDescending`|`sequence.sort(key=lambda (key1, -key2))` <br/>*or* <br/> `sorted(sequence, key=lambda (key1, -key2))` <br/> *or use a 2 pass sort, starting with least significant* <br/> `ordered =  sorted(unordered, key=lambda (key2))`  <br/> `ordered =  sorted(ordered, key=lambda (key1))` |
 ||`Reverse`|`sequence.reverse()` <br/> *or* <br/> `reversed(sequence)`||
 |**Grouping**|`GroupBy`|`groupby`|`from itertools. import groupby`<br/>Grouping  works on sorted sequences <br> Once you've iterated over the grouping, you can't access it again, its empty
-|**Sets**|`Distinct`|`set`||
+|**Sets**|`Distinct`|`set`|or Set comprehension <br/> {x for x in sequence}
 ||`Union`|`union`||
 ||`Interect`|`intersection`||
 ||`Except`|`difference`||
 |**Conversion**|`ToArray`|`list`||
 ||`ToList`|`list`||
-||`ToDictionary`|`dict`|Often used in conjuction with `zip`|
+||`ToDictionary`|`{key:value for (key,value) in sequence}`|or use `dict` in conjuction with `zip` >|
 ||`OfType`|`'filter` using `isinstance` as predicate|
 |**Element**|`First`|`next`||
-||`First(lambda)`|`next(filter(lambda)`||
-||`FirstOrDefault`|`next(filter(lambda), default)`|
+||`First(lambda)`|`next(list)`|`next(filter(lambda)`|
+||`FirstOrDefault`|`next(list)`|`next(filter(lambda), default)`|
 ||`ElementAt`|`list[0]`||
 |**Generation**|`Enumerable.Range`|range|
 ||`Enumerable.Repeat`|`[x] * n` <br/> *or* <br /> `repeat(x, n)`|`from itertools import repeat`|
@@ -76,7 +76,7 @@ Source for both C# and Python are included in the [src](src) folder in this repo
 |[Quantifiers](#linq---quantifiers)|[linq-quantifiers.py](src/python/linq-quantifiers.py)|[linq-quantifiers/Program.cs](src/csharp/linq-quantifiers/Program.cs)|
 |[Aggregate](#linq---aggregate-operators)|[linq-aggregate.py](src/python/linq-aggregate.py)|[linq-aggregate/Program.cs](src/csharp/linq-aggregate/Program.cs)|
 |[Miscellaneous](#linq---miscellaneous-operators)|[linq-miscellaneous.py](src/python/linq-miscellaneous.py)|[linq-miscellaneous/Program.cs](src/csharp/linq-miscellaneous/Program.cs)|
-|[Query](#linq---query-execution)|[linq-queryexecution.py](src/python/linq-query.py)|[linq-query/Program.cs](src/csharp/linq-query/Program.cs)|
+|[Query](#linq---query-execution)|[linq-query.py](src/python/linq-query.py)|[linq-query/Program.cs](src/csharp/linq-query/Program.cs)|
 
 ##  Side-by-side - C# LINQ vs python functional collections
 
@@ -115,8 +115,8 @@ static void Linq1()
 def linq1():
     numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
 
-    low_nums = filter(lambda x: x < 5, numbers)
-    
+    low_nums = (x for x in numbers if x < 5)
+
     print("Numbers < 5:")
     shared.printN(low_nums)
 ```
@@ -148,7 +148,7 @@ static void Linq2()
 def linq2():
     products = shared.getProductList()
 
-    sold_out_products = filter(lambda x: x.UnitsInStock == 0, products)
+    sold_out_products = (x for x in products if x.UnitsInStock == 0)
 
     print("Sold out products:")
     for item in sold_out_products:
@@ -182,7 +182,7 @@ public static void Linq3()
 def linq3():
     products = shared.getProductList()
 
-    expensive_in_stock_products = filter(lambda x: x.UnitsInStock > 0 and x.UnitPrice > 3.0000, products)
+    expensive_in_stock_products = (x for x in products if x.UnitsInStock > 0 and x.UnitPrice > 3.0000)
 
     print("In-stock products that cost more than 3.00:")
     for item in expensive_in_stock_products:
@@ -222,13 +222,14 @@ static void Linq4()
 def linq4():
     customers = shared.getCustomerList()
 
-    wa_customers = filter(lambda x: x.Region == "WA", customers)
+    wa_customers = (x for x in customers if x.Region == "WA")
 
     print("Customers from Washington and their orders:")
     for customer in wa_customers:
             print("Customer %s : %s" % (customer.CustomerID, customer.CompanyName))
             for order in customer.Orders:
                     print("     Order %s: %s" % (order.OrderID, order.OrderDate))
+
 ```
 #### Output
 
@@ -289,36 +290,8 @@ def linq5():
 LINQ - Projection Operators
 ---------------------------
 
-### Python utils added
-
-```python
-from types import SimpleNamespace
-
-def select(item, the_list):
-    return map(lambda b: SimpleNamespace(item_a=item, item_b=b), the_list)
-
-
-def left_outer_join(outer_list, inner_list):
-
-    result = []
-    for outer_item in outer_list:
-        result.extend(select(outer_item, inner_list))
-    return result
-
-
-def select_many(outer_list, inner_item_list_key, filter_lambda):
-    result = []
-    for outer_item in outer_list:
-        result.extend(select(outer_item, getattr(outer_item, inner_item_list_key)))
-
-    if filter_lambda:
-        return filter(filter_lambda, result)
-
-    return result
-```
-
 ### linq6: Select - Simple 1
->his sample projects a sequence of ints 1+ higher than those in an existing array of ints.
+>This sample projects a sequence of ints 1+ higher than those in an existing array of ints.
 ```csharp
 //c#
     static void Linq6()
@@ -336,15 +309,24 @@ def select_many(outer_list, inner_item_list_key, filter_lambda):
 def linq6():
     numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
 
-    nums_plus_one = map(lambda n: n + 1, numbers)
+    nums_plus_one = (n+1 for n in numbers)
 
     print("Numbers + 1:")
-    print(list(nums_plus_one))
+    shared.printN(nums_plus_one)
 ```
 #### Output
 
     Numbers + 1:
-    [6, 5, 2, 4, 10, 9, 7, 8, 3, 1]
+    6
+    5
+    2
+    4
+    10
+    9
+    7
+    8
+    3
+    1
 
 ### linq7: Select - Simple 2
 >This sample projects a sequence of just the names of a list of products.
@@ -365,7 +347,7 @@ static void Linq7()
 def linq7():
     products = shared.getProductList()
 
-    product_names = map(lambda p: p.ProductName, products)
+    product_names = (p.ProductName for p in products)
 
     print("Product Names:")
     shared.printS(product_names)
@@ -401,7 +383,7 @@ def linq8():
     numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
     strings = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
 
-    text_nums = map(lambda n: strings[n], numbers)
+    text_nums = (strings[n] for n in numbers)
 
     print("Number strings:")
     shared.printS(text_nums)
@@ -443,8 +425,10 @@ static void Linq9()
 def linq9():
     words = ["aPPLE", "BlUeBeRrY", "cHeRry"]
 
-    upper_lower_words = map(lambda w: SimpleNamespace(Upper=w.upper(),
-                                                      Lower=w.lower()), words)
+    upper_lower_words = (SimpleNamespace(Upper=w.upper(),
+                                         Lower=w.lower())
+                         for w in words)
+
     for word in upper_lower_words:
         print("Uppercase: %s, Lowercase: %s" % (word.Upper, word.Lower))
 ```
@@ -478,9 +462,10 @@ static void Linq10()
 def linq10():
     numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
     strings = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
-
-    digit_odd_evens = map(lambda n: SimpleNamespace(Digit=strings[n],
-                                                    Even=(n % 2 == 0)), numbers)
+    
+    digit_odd_evens = (SimpleNamespace(Digit=strings[n],
+                                       Even=(n % 2 == 0))
+                       for n in numbers)
 
     for d in digit_odd_evens:
         print("The digit %s is %s" % (d.Digit, 'even' if d.Even else 'odd'))
@@ -523,14 +508,14 @@ def linq10():
 def linq11():
     products = shared.getProductList()
 
-    product_info = map(lambda p: SimpleNamespace(ProductName=p.ProductName,
-                                                 Category=p.Category,
-                                                 Price=p.UnitPrice), products)
+    product_info = (SimpleNamespace(ProductName=p.ProductName,
+                                    Category=p.Category,
+                                    Price=p.UnitPrice)
+                    for p in products)
 
     print("Product Info:")
     for product in product_info:
         print("%s is in the category %s and costs %.2f per unit." % (product.ProductName, product.Category, product.Price))
-
 ```
 #### Output
 
@@ -572,8 +557,9 @@ def linq12():
         index += 1
         return result
 
-    nums_in_place = map(lambda num: SimpleNamespace(Num=num,
-                                                    InPlace=digit_equals_index(num)), numbers)
+    nums_in_place = (SimpleNamespace(Num=num,
+                                     InPlace=digit_equals_index(num))
+                     for num in numbers)
 
     print("Number: In-place?")
     for n in nums_in_place:
@@ -582,16 +568,16 @@ def linq12():
 #### Output
 
     Number: In-place?
-    5: false
-    4: false
-    1: false
-    3: true
-    9: false
-    8: false
-    6: true
-    7: true
-    2: false
-    0: false
+    5: False
+    4: False
+    1: False
+    3: True
+    9: False
+    8: False
+    6: True
+    7: True
+    2: False
+    0: False
 
 ### linq13: Select - Filtered
 >This sample first filters, then projects to make a simple query that returns the text form of each digit less than 5.
@@ -616,7 +602,7 @@ def linq13():
     numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
     digits = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
 
-    result = map(lambda n: digits[n], filter(lambda n: n < 5, numbers))
+    result = (digits[n] for n in numbers if n < 5)
 
     print("Numbers < 5:")
     shared.printS(result)
@@ -653,11 +639,11 @@ def linq14():
     numbers_a = [0, 2, 4, 5, 6, 8, 9]
     numbers_b = [1, 3, 5, 7, 8]
 
-    pairs = filter(lambda pair: pair.item_a < pair.item_b, functions.left_outer_join(numbers_a, numbers_b))
+    pairs = ((a, b) for a in numbers_a for b in numbers_b if (a < b))
 
     print("Pairs where a < b:")
     for p in pairs:
-        print("%d is less than %d}" % (p.item_a, p.item_b))
+        print("%d is less than %d" % (p[0], p[1]))
 ```
 #### Output
 
@@ -706,11 +692,14 @@ static void Linq15()
 def linq15():
     customers = shared.getCustomerList()
 
-    orders_less_than_500 = functions.select_many(customers, "Orders", lambda x: x.item_b.Total < 500.00)
-    orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID,
-                                           order_id=x.item_b.OrderID,
-                                           total=x.item_b.Total),
-                 orders_less_than_500)
+    orders_less_than_500 = ((customer, order)
+                            for customer in customers
+                            for order in customer.Orders
+                            if order.Total < 500.00)
+    orders = (SimpleNamespace(customer_id=x[0].CustomerID,
+                              order_id=x[1].OrderID,
+                              total=x[1].Total)
+              for x in orders_less_than_500)
 
     shared.print_namespace(orders)
 ```
@@ -751,11 +740,14 @@ def linq16():
 
     the_date = datetime.datetime(1998, 1, 1)
 
-    order_greater_than_date = functions.select_many(customers, "Orders", lambda x: x.item_b.OrderDate > the_date)
-    orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID,
-                                           order_id=x.item_b.OrderID,
-                                           orderDate=x.item_b.OrderDate),
-                 order_greater_than_date)
+    order_greater_than_date = ((customer, order)
+                            for customer in customers
+                            for order in customer.Orders
+                            if order.OrderDate > the_date)
+    orders = (SimpleNamespace(customer_id=x[0].CustomerID,
+                              order_id=x[1].OrderID,
+                              orderDate=x[1].OrderDate)
+              for x in order_greater_than_date)
 
     shared.print_namespace(orders)
 ```
@@ -795,21 +787,24 @@ static void Linq17()
 def linq17():
     customers = shared.getCustomerList()
 
-    orders_greater_than_2000 = functions.select_many(customers, "Orders", lambda x: x.item_b.Total > 2000)
-    orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID,
-                                           order_id=x.item_b.OrderID,
-                                           total=x.item_b.Total),
-                 orders_greater_than_2000)
-
+    orders_greater_than_2000 = ((customer, order)
+                                for customer in customers
+                                for order in customer.Orders
+                                if order.Total > 2000.00)
+    orders = (SimpleNamespace(customer_id=x[0].CustomerID,
+                              order_id=x[1].OrderID,
+                              total=x[1].Total)
+              for x in orders_greater_than_2000)
+    
     shared.print_namespace(orders)
 ```
 #### Output
 
-    {CustomerId: ANTON, OrderId: 10573, Total: 2082.0}
-    {CustomerId: AROUT, OrderId: 10558, Total: 2142.9}
-    {CustomerId: AROUT, OrderId: 10953, Total: 4441.25}
-    {CustomerId: BERGS, OrderId: 10384, Total: 2222.4}
-    {CustomerId: BERGS, OrderId: 10524, Total: 3192.65}
+    (customer_id='ANTON', order_id=10573, total=2082.0)
+    (customer_id='AROUT', order_id=10558, total=2142.9)
+    (customer_id='AROUT', order_id=10953, total=4441.25)
+    (customer_id='BERGS', order_id=10384, total=2222.4)
+    (customer_id='BERGS', order_id=10524, total=3192.65)
     ...
 
 ### linq18: SelectMany - Multiple from
@@ -819,8 +814,6 @@ def linq17():
 static void Linq18()
 {
     var customers = GetCustomerList();
-
-    var cutoffDate = new DateTime(1997, 1, 1);
 
     var orders = customers
         .Where(c => c.Region == "WA")
@@ -844,10 +837,14 @@ def linq18():
 
     the_date = datetime.datetime(1998, 1, 1)
 
-    order_greater_than_date = functions.select_many(customers, "Orders", lambda x: x.item_b.OrderDate > the_date)
-    orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID,
-                                           order_id=x.item_b.OrderID,
-                                           orderDate=x.item_b.OrderDate), order_greater_than_date)
+    order_greater_than_date = ((customer, order)
+                               for customer in customers
+                               for order in customer.Orders
+                               if order.OrderDate > the_date)
+    orders = (SimpleNamespace(customer_id=x[0].CustomerID,
+                              order_id=x[1].OrderID,
+                              orderDate=x[1].OrderDate)
+              for x in order_greater_than_date)
 
     shared.print_namespace(orders)
 ```
@@ -878,7 +875,19 @@ public void Linq19()
 ```python
 #python
 def linq19():
-    pass
+    customers = shared.getCustomerList()
+
+    index = 0
+
+    def get_cust_index_func():
+        nonlocal index
+        index += 1
+        return index
+
+    customer_orders = ((cust, get_cust_index_func(), order) for cust in customers for order in cust.Orders)
+
+    for triplet in customer_orders:
+        print("Customer #%d has an order with OrderID %d" % (triplet[1], triplet[2].OrderID))
 ```
 #### Output
 
@@ -957,14 +966,16 @@ static void Linq21()
 def linq21():
     customers = shared.getCustomerList()
 
-    the_date = datetime.datetime(1998, 1, 1)
+    order_greater_than_date = ((cust, order)
+                               for cust in customers
+                               for order in cust.Orders
+                               if cust.Region == "WA")
+    orders = [SimpleNamespace(customer_id=x[0].CustomerID,
+                              order_id=x[1].OrderID,
+                              orderDate=x[1].OrderDate)
+              for x in order_greater_than_date]
 
-    order_greater_than_date = functions.select_many(customers, "Orders", lambda x: x.item_b.OrderDate > the_date)
-    orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID,
-                                           order_id=x.item_b.OrderID,
-                                           orderDate=x.item_b.OrderDate), order_greater_than_date)
-
-    first_3_orders = list(orders)[:3]
+    first_3_orders = orders[:3]
 
     print("First 3 orders in WA:")
     shared.print_namespace(first_3_orders)
@@ -972,9 +983,9 @@ def linq21():
 #### Output
 
     First 3 orders in WA:
-    {CustomerId: LAZYK, OrderId: 10482, OrderDate: 1997-03-21 00:00:00.000}
-    {CustomerId: LAZYK, OrderId: 10545, OrderDate: 1997-05-22 00:00:00.000}
-    {CustomerId: TRAIH, OrderId: 10574, OrderDate: 1997-06-19 00:00:00.000}
+    (customer_id='LAZYK', orderDate=datetime.datetime(1997, 3, 21, 0, 0), order_id=10482)
+    (customer_id='LAZYK', orderDate=datetime.datetime(1997, 5, 22, 0, 0), order_id=10545)
+    (customer_id='TRAIH', orderDate=datetime.datetime(1997, 6, 19, 0, 0), order_id=10574)
 
 
 ### linq22: Skip - Simple
@@ -1055,23 +1066,24 @@ def linq23():
 #### Output
 
     All but first 2 orders in WA:
-    {CustomerId: TRAIH, OrderId: 10574, OrderDate: 1997-06-19 00:00:00.000}
-    {CustomerId: TRAIH, OrderId: 10577, OrderDate: 1997-06-23 00:00:00.000}
-    {CustomerId: TRAIH, OrderId: 10822, OrderDate: 1998-01-08 00:00:00.000}
-    {CustomerId: WHITC, OrderId: 10269, OrderDate: 1996-07-31 00:00:00.000}
-    {CustomerId: WHITC, OrderId: 10344, OrderDate: 1996-11-01 00:00:00.000}
-    {CustomerId: WHITC, OrderId: 10469, OrderDate: 1997-03-10 00:00:00.000}
-    {CustomerId: WHITC, OrderId: 10483, OrderDate: 1997-03-24 00:00:00.000}
-    {CustomerId: WHITC, OrderId: 10504, OrderDate: 1997-04-11 00:00:00.000}
-    {CustomerId: WHITC, OrderId: 10596, OrderDate: 1997-07-11 00:00:00.000}
-    {CustomerId: WHITC, OrderId: 10693, OrderDate: 1997-10-06 00:00:00.000}
-    {CustomerId: WHITC, OrderId: 10696, OrderDate: 1997-10-08 00:00:00.000}
-    {CustomerId: WHITC, OrderId: 10723, OrderDate: 1997-10-30 00:00:00.000}
-    {CustomerId: WHITC, OrderId: 10740, OrderDate: 1997-11-13 00:00:00.000}
-    {CustomerId: WHITC, OrderId: 10861, OrderDate: 1998-01-30 00:00:00.000}
-    {CustomerId: WHITC, OrderId: 10904, OrderDate: 1998-02-24 00:00:00.000}
-    {CustomerId: WHITC, OrderId: 11032, OrderDate: 1998-04-17 00:00:00.000}
-    {CustomerId: WHITC, OrderId: 11066, OrderDate: 1998-05-01 00:00:00.000}
+    (customer_id='TRAIH', orderDate=datetime.datetime(1997, 6, 19, 0, 0), order_id=10574)
+    (customer_id='TRAIH', orderDate=datetime.datetime(1997, 6, 23, 0, 0), order_id=10577)
+    (customer_id='TRAIH', orderDate=datetime.datetime(1998, 1, 8, 0, 0), order_id=10822)
+    (customer_id='WHITC', orderDate=datetime.datetime(1996, 7, 31, 0, 0), order_id=10269)
+    (customer_id='WHITC', orderDate=datetime.datetime(1996, 11, 1, 0, 0), order_id=10344)
+    (customer_id='WHITC', orderDate=datetime.datetime(1997, 3, 10, 0, 0), order_id=10469)
+    (customer_id='WHITC', orderDate=datetime.datetime(1997, 3, 24, 0, 0), order_id=10483)
+    (customer_id='WHITC', orderDate=datetime.datetime(1997, 4, 11, 0, 0), order_id=10504)
+    (customer_id='WHITC', orderDate=datetime.datetime(1997, 7, 11, 0, 0), order_id=10596)
+    (customer_id='WHITC', orderDate=datetime.datetime(1997, 10, 6, 0, 0), order_id=10693)
+    (customer_id='WHITC', orderDate=datetime.datetime(1997, 10, 8, 0, 0), order_id=10696)
+    (customer_id='WHITC', orderDate=datetime.datetime(1997, 10, 30, 0, 0), order_id=10723)
+    (customer_id='WHITC', orderDate=datetime.datetime(1997, 11, 13, 0, 0), order_id=10740)
+    (customer_id='WHITC', orderDate=datetime.datetime(1998, 1, 30, 0, 0), order_id=10861)
+    (customer_id='WHITC', orderDate=datetime.datetime(1998, 2, 24, 0, 0), order_id=10904)
+    (customer_id='WHITC', orderDate=datetime.datetime(1998, 4, 17, 0, 0), order_id=11032)
+    (customer_id='WHITC', orderDate=datetime.datetime(1998, 5, 1, 0, 0), order_id=11066)
+
 
 ### linq24: TakeWhile - Simple
 >This sample uses a partition to return elements starting from the beginning of the array until a number is read whose value is not less than 6.
@@ -1891,7 +1903,7 @@ static void Linq47()
 def linq47():
     products = shared.getProductList()
 
-    category_names = set(map(lambda p: p.Category, products))
+    category_names = {p.Category for p in products}
 
     print("Category names:")
     shared.printS(category_names)
@@ -1899,14 +1911,14 @@ def linq47():
 #### Output
 
     Category names:
+    Beverages
     Dairy Products
-    Grains/Cereals
-    Confections
-    Seafood
     Condiments
     Meat/Poultry
     Produce
-    Beverages
+    Seafood
+    Grains/Cereals
+    Confections
 
 ### linq48: Union - 1
 >This sample creates a Union of sequences that contains unique values from both arrays.
@@ -1972,10 +1984,10 @@ def linq49():
     products = shared.getProductList()
     customers = shared.getCustomerList()
 
-    product_first_chars = map(lambda p: p.ProductName[0], products)
-    customer_first_chars = map(lambda c: c.CompanyName[0], customers)
+    product_first_chars = {p.ProductName[0] for p in products}
+    customer_first_chars = {c.CompanyName[0] for c in customers}
 
-    unique_first_chars = set(product_first_chars).union(set(customer_first_chars))
+    unique_first_chars = product_first_chars.union(customer_first_chars)
 
     print("Unique first letters from Product names and Customer names:")
     shared.printS(unique_first_chars)
@@ -1983,30 +1995,30 @@ def linq49():
 #### Output
 
     Unique first letters from Product names and Customer names:
-    S
-    F
-    T
-    N
-    K
-    E
-    V
-    Z
-    Q
-    M
-    C
-    L
-    A
-    J
+    G
     W
-    P
-    B
-    O
-    H
-    D
     R
     I
-    G
+    P
+    Z
+    L
     U
+    C
+    O
+    N
+    F
+    A
+    D
+    T
+    E
+    J
+    K
+    S
+    Q
+    H
+    M
+    B
+    V
 
 ### linq50: Intersect - 1
 >This sample creates Intersection that contains the common values shared by both arrays.
@@ -2064,10 +2076,10 @@ def linq51():
     products = shared.getProductList()
     customers = shared.getCustomerList()
 
-    product_first_chars = map(lambda p: p.ProductName[0], products)
-    customer_first_chars = map(lambda c: c.CompanyName[0], customers)
+    product_first_chars = {p.ProductName[0] for p in products}
+    customer_first_chars = {c.CompanyName[0] for c in customers}
 
-    unique_first_chars = set(product_first_chars).intersection(set(customer_first_chars))
+    unique_first_chars = product_first_chars.intersection(customer_first_chars)
 
     print("Common first letters from Product names and Customer names:")
     shared.printS(unique_first_chars)
@@ -2075,24 +2087,24 @@ def linq51():
 #### Output
 
     Common first letters from Product names and Customer names:
-    F
-    S
-    T
-    N
-    K
-    E
-    V
-    Q
-    M
-    C
-    L
     A
+    T
+    C
+    E
+    Q
     O
     W
     P
-    B
-    I
+    F
+    S
     G
+    L
+    V
+    M
+    K
+    N
+    I
+    B
     R
 
 ### linq52: Except - 1
@@ -2154,10 +2166,10 @@ def linq53():
     products = shared.getProductList()
     customers = shared.getCustomerList()
 
-    product_first_chars = map(lambda p: p.ProductName[0], products)
-    customer_first_chars = map(lambda c: c.CompanyName[0], customers)
+    product_first_chars = {p.ProductName[0] for p in products}
+    customer_first_chars = {c.CompanyName[0] for c in customers}
 
-    unique_first_chars = set(product_first_chars).difference(set(customer_first_chars))
+    unique_first_chars = product_first_chars.difference(customer_first_chars)
 
     print("First letters from Product names, but not from Customer names:")
     shared.printS(unique_first_chars)
@@ -2275,9 +2287,7 @@ def linq56():
                      {'Name': "Bob", 'Score': 40},
                      {'Name': "Cathy", 'Score': 45}]
 
-    index = map(lambda s: s["Name"], score_records)
-
-    score_records_dict = dict(zip(index, score_records))
+    score_records_dict = {s['Name']:s['Score'] for s in score_records}
 
     print("Bob's score: %s" % score_records_dict["Bob"])
 ```
@@ -2304,7 +2314,7 @@ static void Linq57()
 def linq57():
     numbers = [None, 1.0, "two", 3, "four", 5, "six", 7.0]
 
-    floats = filter(lambda n: isinstance(n, float), numbers)
+    floats = (n for n in numbers if isinstance(n, float))
 
     print("Numbers stored as floats:")
     shared.printN(floats)
@@ -2351,7 +2361,7 @@ def linq58():
 //c#
 static void Linq59()
 {
-        var strings = new []{ "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+    var strings = new []{ "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 
     var startsWithO = strings.First(s => s.StartsWith('o'));
 
@@ -2363,7 +2373,7 @@ static void Linq59()
 def linq59():
     strings = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
 
-    starts_with_o = next(filter(lambda s: s[0] == 'o', strings))
+    starts_with_o = next(s for s in strings if s[0] == 'o')
 
     print("A string starting with 'o': %s" % starts_with_o)
 ```
@@ -2389,7 +2399,7 @@ static void Linq61()
 def linq61():
     numbers = []
 
-    first_num_or_default = next(filter(lambda x: True, numbers), 0)
+    first_num_or_default = next((n for n in numbers), 0)
 
     print(first_num_or_default)
 ```
@@ -2415,13 +2425,13 @@ static void Linq62()
 def linq62():
     products = shared.getProductList()
 
-    product789 = next(filter(lambda p: p.ProductID == 789, products), None)
+    product789 = next((p for p in products if p.ProductID == 789), None)
 
     print("Product 789 exists: %s" % (product789 is not None))
 ```
 #### Output
 
-    Product 789 exists: false
+    Product 789 exists: False
 
 ### linq64: ElementAt
 >This sample retrieve the second number greater than 5 from an array.
@@ -2443,9 +2453,9 @@ static void Linq64()
 def linq64():
     numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
 
-    fourth_low_num = list(filter(lambda n: n > 5, numbers))[1]
+    second_number_greater_than_5 = [n for n in numbers if n > 5][1]
 
-    print("Second number > 5: %d" % fourth_low_num)
+    print("Second number > 5: %d" % second_number_greater_than_5)
 ```
 #### Output
 
@@ -2477,10 +2487,11 @@ static void Linq65()
 def linq65():
     numbers = range(100, 150)
 
-    odd_even = map(lambda n: {'Number': n, 'OddEven': ("odd" if (n % 2 == 1) else "even")}, numbers)
+    odd_even = ({'Number': n, 'OddEven': ("odd" if (n % 2 == 1) else "even")} for n in numbers)
 
     for item in odd_even:
         print("The number %s is %s" % (item['Number'], item['OddEven']))
+
 ```
 #### Output
 
@@ -3377,10 +3388,10 @@ def linq95():
     products = shared.getProductList()
     customers = shared.getCustomerList()
 
-    customer_names = map(lambda c: c.CompanyName, customers)
-    product_names = map(lambda p: p.ProductName, products)
+    customer_names = [p.ProductName for p in products]
+    product_names = [c.CompanyName for c in customers]
 
-    all_names = list(customer_names) + list(product_names)
+    all_names = customer_names + product_names
 
     print("Customer and product names:")
     shared.printS(all_names)

@@ -31,9 +31,7 @@ def linq56():
                      {'Name': "Bob", 'Score': 40},
                      {'Name': "Cathy", 'Score': 45}]
 
-    index = map(lambda s: s["Name"], score_records)
-
-    score_records_dict = dict(zip(index, score_records))
+    score_records_dict = {s['Name']:s['Score'] for s in score_records}
 
     print("Bob's score: %s" % score_records_dict["Bob"])
 
@@ -41,7 +39,7 @@ def linq56():
 def linq57():
     numbers = [None, 1.0, "two", 3, "four", 5, "six", 7.0]
 
-    floats = filter(lambda n: isinstance(n, float), numbers)
+    floats = (n for n in numbers if isinstance(n, float))
 
     print("Numbers stored as floats:")
     shared.printN(floats)

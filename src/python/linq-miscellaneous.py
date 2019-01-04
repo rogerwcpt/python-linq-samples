@@ -15,10 +15,10 @@ def linq95():
     products = shared.getProductList()
     customers = shared.getCustomerList()
 
-    customer_names = map(lambda c: c.CompanyName, customers)
-    product_names = map(lambda p: p.ProductName, products)
+    customer_names = [p.ProductName for p in products]
+    product_names = [c.CompanyName for c in customers]
 
-    all_names = list(customer_names) + list(product_names)
+    all_names = customer_names + product_names
 
     print("Customer and product names:")
     shared.printS(all_names)

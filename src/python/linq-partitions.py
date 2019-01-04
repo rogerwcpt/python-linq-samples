@@ -20,14 +20,16 @@ def linq20():
 def linq21():
     customers = shared.getCustomerList()
 
-    the_date = datetime.datetime(1998, 1, 1)
+    order_greater_than_date = ((cust, order)
+                               for cust in customers
+                               for order in cust.Orders
+                               if cust.Region == "WA")
+    orders = [SimpleNamespace(customer_id=x[0].CustomerID,
+                              order_id=x[1].OrderID,
+                              orderDate=x[1].OrderDate)
+              for x in order_greater_than_date]
 
-    order_greater_than_date = functions.select_many(customers, "Orders", lambda x: x.item_b.OrderDate > the_date)
-    orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID,
-                                           order_id=x.item_b.OrderID,
-                                           orderDate=x.item_b.OrderDate), order_greater_than_date)
-
-    first_3_orders = list(orders)[:3]
+    first_3_orders = orders[:3]
 
     print("First 3 orders in WA:")
     shared.print_namespace(first_3_orders)
@@ -44,14 +46,16 @@ def linq22():
 def linq23():
     customers = shared.getCustomerList()
 
-    wa_customers = filter(lambda c: c.Region == "WA", customers)
-    wa_customer_orders = functions.select_many(wa_customers, "Orders")
-    customer_orders = map(lambda x: SimpleNamespace(customer_id=x.item_a.CustomerID,
-                                                    order_id=x.item_b.OrderID,
-                                                    order_date=x.item_b.OrderDate),
-                          wa_customer_orders)
+    order_greater_than_date = ((cust, order)
+                               for cust in customers
+                               for order in cust.Orders
+                               if cust.Region == "WA")
+    orders = [SimpleNamespace(customer_id=x[0].CustomerID,
+                              order_id=x[1].OrderID,
+                              orderDate=x[1].OrderDate)
+              for x in order_greater_than_date]
 
-    all_but_first2 = list(customer_orders)[2:]
+    all_but_first2 = orders[2:]
 
     print("All but first 2 orders in WA:")
     shared.print_namespace(all_but_first2)
@@ -116,4 +120,4 @@ def linq27():
 # linq24()
 # linq25()
 # linq26()
-linq27()
+# linq27()

@@ -11,6 +11,8 @@ def linq40():
                                                       Remainder=n % 5),
                             numbers)
 
+    number_remainders = (SimpleNamespace(Number=n, Remainder=n % 5) for n in numbers)
+
     # Group By only works on sorted lists, so sort by both fields
     sorted_by_reminder = sorted(number_remainders, key=lambda x: (x.Remainder, x.Number))
     remainder_groups = groupby(sorted_by_reminder, key=lambda nr: nr.Remainder)

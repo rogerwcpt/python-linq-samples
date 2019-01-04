@@ -34,6 +34,6 @@ def linq101():
     pass
 
 
-# linq99()
-linq100()
+linq99()
+# linq100()
 # linq101()

@@ -13,7 +13,7 @@ def linq46():
 def linq47():
     products = shared.getProductList()
 
-    category_names = set(map(lambda p: p.Category, products))
+    category_names = {p.Category for p in products}
 
     print("Category names:")
     shared.printS(category_names)
@@ -33,10 +33,10 @@ def linq49():
     products = shared.getProductList()
     customers = shared.getCustomerList()
 
-    product_first_chars = map(lambda p: p.ProductName[0], products)
-    customer_first_chars = map(lambda c: c.CompanyName[0], customers)
+    product_first_chars = {p.ProductName[0] for p in products}
+    customer_first_chars = {c.CompanyName[0] for c in customers}
 
-    unique_first_chars = set(product_first_chars).union(set(customer_first_chars))
+    unique_first_chars = product_first_chars.union(customer_first_chars)
 
     print("Unique first letters from Product names and Customer names:")
     shared.printS(unique_first_chars)
@@ -56,10 +56,10 @@ def linq51():
     products = shared.getProductList()
     customers = shared.getCustomerList()
 
-    product_first_chars = map(lambda p: p.ProductName[0], products)
-    customer_first_chars = map(lambda c: c.CompanyName[0], customers)
+    product_first_chars = {p.ProductName[0] for p in products}
+    customer_first_chars = {c.CompanyName[0] for c in customers}
 
-    unique_first_chars = set(product_first_chars).intersection(set(customer_first_chars))
+    unique_first_chars = product_first_chars.intersection(customer_first_chars)
 
     print("Common first letters from Product names and Customer names:")
     shared.printS(unique_first_chars)
@@ -79,10 +79,10 @@ def linq53():
     products = shared.getProductList()
     customers = shared.getCustomerList()
 
-    product_first_chars = map(lambda p: p.ProductName[0], products)
-    customer_first_chars = map(lambda c: c.CompanyName[0], customers)
+    product_first_chars = {p.ProductName[0] for p in products}
+    customer_first_chars = {c.CompanyName[0] for c in customers}
 
-    unique_first_chars = set(product_first_chars).difference(set(customer_first_chars))
+    unique_first_chars = product_first_chars.difference(customer_first_chars)
 
     print("First letters from Product names, but not from Customer names:")
     shared.printS(unique_first_chars)

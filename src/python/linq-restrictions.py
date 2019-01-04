@@ -4,8 +4,8 @@ import shared
 def linq1():
     numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0]
 
-    low_nums = filter(lambda x: x < 5, numbers)
-    
+    low_nums = (x for x in numbers if x < 5)
+
     print("Numbers < 5:")
     shared.printN(low_nums)
 
@@ -13,7 +13,7 @@ def linq1():
 def linq2():
     products = shared.getProductList()
 
-    sold_out_products = filter(lambda x: x.UnitsInStock == 0, products)
+    sold_out_products = (x for x in products if x.UnitsInStock == 0)
 
     print("Sold out products:")
     for item in sold_out_products:
@@ -23,7 +23,7 @@ def linq2():
 def linq3():
     products = shared.getProductList()
 
-    expensive_in_stock_products = filter(lambda x: x.UnitsInStock > 0 and x.UnitPrice > 3.0000, products)
+    expensive_in_stock_products = (x for x in products if x.UnitsInStock > 0 and x.UnitPrice > 3.0000)
 
     print("In-stock products that cost more than 3.00:")
     for item in expensive_in_stock_products:
@@ -33,7 +33,7 @@ def linq3():
 def linq4():
     customers = shared.getCustomerList()
 
-    wa_customers = filter(lambda x: x.Region == "WA", customers)
+    wa_customers = (x for x in customers if x.Region == "WA")
 
     print("Customers from Washington and their orders:")
     for customer in wa_customers:
