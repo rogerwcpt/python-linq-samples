@@ -36,7 +36,7 @@ Source for both C# and Python are included in the [src](src) folder in this repo
 ||`Except`|`difference`||
 |**Conversion**|`ToArray`|`list`||
 ||`ToList`|`list`||
-||`ToDictionary`|`{key:value for (key,value) in sequence}`|or use `dict` in conjuction with `zip` >|
+||`ToDictionary`|`{key:value for (key,value) in sequence}`|or use `dict` in conjuction with `zip`|
 ||`OfType`|`'filter` using `isinstance` as predicate|
 |**Element**|`First`|`next`||
 ||`First(lambda)`|`next(list)`|`next(filter(lambda)`|
@@ -108,7 +108,7 @@ static void Linq1()
 
     Console.WriteLine("Numbers < 5:");
     lowNums.ForEach(Console.WriteLine);
-}  lowNums.ForEach((x) => Console.WriteLine(x));
+}
 ```
 ```python
 #python
