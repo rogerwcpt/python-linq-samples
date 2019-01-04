@@ -11,7 +11,6 @@ Source for both C# and Python are included in the [src](src) folder in this repo
 - To run the respective C# projects (*.csproj*), open the containing folder in [Visual Studio Code](https://code.visualstudio.com/) use the Debug command 
 - To run the respective Python files (*.py*), open the file in [Visual Studio Code](https://code.visualstudio.com/) use the *Run Python File in Terminal* right click menu command (requirses the Python extension)
 
-[do_thing_to(x) for x in source if your_filter(x)]
 ### Operation Comparison Matrix
 |Operation|C#|python|Comment|
 |---------|--|----|-------|
